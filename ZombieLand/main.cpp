@@ -286,14 +286,16 @@ void processNormalKeys(unsigned char key, int x, int y) {
 	case 27:  exit(0); break;
 	}
 	if (player.getPosition().getZ() >= -49 && player.getPosition().getZ() <= -46.5 &&
-		player.getPosition().getX() >= 35.5 && player.getPosition().getX() <= 45.5)
+		player.getPosition().getX() >= 35.5 && player.getPosition().getX() <= 45.5 &&
+		player.getPosition().getY() <= 5.4)
 	{
 		float ratio = (player.getPosition().getX() - 35.5) / 10;
 		player.setY(ratio*3.5);
 	}
 
 	else if (player.getPosition().getZ() >= -13.5 && player.getPosition().getZ() <= -11 &&
-		player.getPosition().getX() >= 15 && player.getPosition().getX() <= 25)
+		player.getPosition().getX() >= 15 && player.getPosition().getX() <= 25 &&
+		player.getPosition().getY() <= 5.4)
 	{
 		float ratio = (25 - player.getPosition().getX()) / 10;
 		player.setY(ratio*3.5);
