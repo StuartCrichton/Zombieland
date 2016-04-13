@@ -16,6 +16,7 @@ public:
 	Vector getLookVector();
 	Vector getNewPosition(int id);
 	Vector getUnitVector();
+	float getThetha();
 	const int FORWARD = 0;
 	const int BACKWARD = 1;
 	const int LEFT = 2;

@@ -39,6 +39,10 @@ Vector Character::getLookVector()
 	return look_v;
 }
 
+float Character::getThetha() {
+	return thetha;
+}
+
 Vector Character::getNewPosition(int id)//return the new position of where the character should be if he moves
 {
 	if (id == FORWARD)
