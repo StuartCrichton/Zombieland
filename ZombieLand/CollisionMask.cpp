@@ -30,12 +30,18 @@ bool CollisionMask::intersectsPlane(CollisionPlane *plane) {
 		if (plane->getNormal().getX() != 0) {
 			float minZ = minN(plane->getV1().getZ(), plane->getV3().getZ());
 			float maxZ = maxN(plane->getV1().getZ(), plane->getV3().getZ());
-			if (position.getZ() >= minZ && position.getZ() <= maxZ) return true;
+			float minY = minN(plane->getV1().getY(), plane->getV2().getY());
+			float maxY = maxN(plane->getV1().getY(), plane->getV2().getY());
+			if (position.getZ() >= minZ && position.getZ() <= maxZ
+				&& position.getY()-1 >= minY && position.getY()-1 <= maxY) return true;
 		}
 		else if (plane->getNormal().getZ() != 0) {
 			float minX = minN(plane->getV1().getX(), plane->getV3().getX());
 			float maxX = maxN(plane->getV1().getX(), plane->getV3().getX());
-			if (position.getX() >= minX && position.getX() <= maxX)return true;
+			float minY = minN(plane->getV1().getY(), plane->getV2().getY());
+			float maxY = maxN(plane->getV1().getY(), plane->getV2().getY());
+			if (position.getX() >= minX && position.getX() <= maxX
+				&& position.getY()-1 >= minY && position.getY()-1 <= maxY)return true;
 		}
 	}
 	return false;
