@@ -13,6 +13,7 @@ public:
 	void moveForward();
 	void moveForward(float steps);
 	Vector getPosition();
+	Vector getLookVector();
 	Vector getNewPosition(int id);
 	Vector getUnitVector();
 	const int FORWARD = 0;

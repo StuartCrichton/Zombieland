@@ -28,7 +28,7 @@ Vector v;
 bool canMove = true; //keeps track if a character can move for collision detection
 vector<CollisionPlane*>* planes;
 HUD *hud = new HUD(player.getHealth(), player.getAmmoCartridge(), player.getAmmoTotal(),
-	player.getScore(), player.getWaveNumber());
+	player.getScore(), player.getWaveNumber(), player.getPosition(), player.getLookVector());
 
 int dimx = 60;
 int dimy = 5;
@@ -141,7 +141,7 @@ void render()
 		<< player.getPosition().getZ() << endl;*/
 
 		//update and display the HUD
-	hud->update(player.getHealth(), player.getAmmoCartridge(), player.getAmmoTotal(), player.getScore(), player.getWaveNumber());
+	hud->update(player.getHealth(), player.getAmmoCartridge(), player.getAmmoTotal(), player.getScore(), player.getWaveNumber(), player.getPosition(), player.getLookVector());
 	hud->render();
 
 	int a;
@@ -388,7 +388,7 @@ void WaveTimer(int value) {
 			currentTimerDuration = wave->WAVE_DURATION;
 			timerInterval = wave->getZombieSpawnInterval();
 			player.setWaveNumber(wave->waveNumber);
-			hud->update(player.getHealth(), player.getAmmoCartridge(), player.getAmmoTotal(), player.getScore(), player.getWaveNumber());
+			hud->update(player.getHealth(), player.getAmmoCartridge(), player.getAmmoTotal(), player.getScore(), player.getWaveNumber(), player.getPosition(), player.getLookVector());
 			isWave = true;
 		}
 		else {

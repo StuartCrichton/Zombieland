@@ -16,23 +16,32 @@ HUD::HUD() {
 
 }
 
-HUD::HUD(int health, int ammoCartridge, int ammoTotal, int score, int waveNumber) {
+HUD::HUD(int health, int ammoCartridge, int ammoTotal, int score, int waveNumber, Vector pos_v, Vector look_v) {
 	this->health = health;
 	this->ammoCartridge = ammoCartridge;
 	this->ammoTotal = ammoTotal;
 	this->score = score;
 	this->waveNumber = waveNumber;
+	this->pos_v = pos_v;
+	this->look_v = look_v;
 }
 
-void HUD::update(int health, int ammoCartridge, int ammoTotal, int score, int waveNumber) {
+void HUD::update(int health, int ammoCartridge, int ammoTotal, int score, int waveNumber, Vector pos_v, Vector look_v) {
 	this->health = health;
 	this->ammoCartridge = ammoCartridge;
 	this->ammoTotal = ammoTotal;
 	this->score = score;
 	this->waveNumber = waveNumber;
+	this->pos_v = pos_v;
+	this->look_v = look_v;
 }
 
 void HUD::renderGun() {
+	glPushMatrix();
+	glTranslatef(pos_v.getX(), pos_v.getY(), pos_v.getZ());
+	world.gun.Draw(3);
+	glPopMatrix();
+	/*
 	glPushMatrix();
 	glDisable(GL_LIGHTING);
 	glDisable(GL_DEPTH_TEST);
@@ -87,6 +96,7 @@ void HUD::renderGun() {
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_LIGHTING);
 	glPopMatrix();
+	*/
 }
 
 void HUD::renderCrosshair() {

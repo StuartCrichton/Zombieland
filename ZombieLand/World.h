@@ -13,6 +13,7 @@ public:
 	World();
 	AssimpModelLoader building;
 	AssimpModelLoader ammoBox;
+	AssimpModelLoader gun;
 	vector<CollisionPlane*> planes;
 	vector<CollisionPlane*>* getPlanes();
 	void init();
