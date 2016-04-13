@@ -138,6 +138,6 @@ void AssimpModelLoader::loadObjFile(const char *filename)
 	glDisable(GL_TEXTURE_2D);
 }
 
-void AssimpModelLoader::Draw() {
-	glCallList(1);
+void AssimpModelLoader::Draw(int id) {
+	glCallList(id);
 }

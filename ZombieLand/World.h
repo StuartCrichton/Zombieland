@@ -12,6 +12,7 @@ class World
 public:
 	World();
 	AssimpModelLoader building;
+	AssimpModelLoader ammoBox;
 	vector<CollisionPlane*> planes;
 	vector<CollisionPlane*>* getPlanes();
 	void init();

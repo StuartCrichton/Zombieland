@@ -16,6 +16,7 @@
 #include "Ray.h"
 #include "Wave.h";
 #include "BloodSplatter.h"
+#include "AmmoBox.h"
 
 using namespace std;
 // Global variables
@@ -52,6 +53,8 @@ bool isWave = true;
 //Stuff pertaining to particles
 BloodSplatter *bloodSplatter;
 
+//Stuff pertaining to ammo box
+AmmoBox ammoBox;
 
 void initGL()
 {
@@ -95,6 +98,8 @@ void initGL()
 	glEnable(GL_LIGHT7);//below
 
 	glEnable(GL_DEPTH_TEST); // turns on hidden surface removal so that objects behind other objects do not get displayed
+
+	ammoBox.update();
 }
 
 void render()
@@ -119,7 +124,7 @@ void render()
 	//Draw the building
 	GLfloat color[] = { 0.5f, 0.5f, 0.5f, 1.0f };
 	glMaterialfv(GL_FRONT, GL_DIFFUSE, color);
-	world.building.Draw();
+	world.building.Draw(1);
 	/*vector<CollisionPlane*>* planes = world.getPlanes();
 	for (CollisionPlane* p : *planes) {
 		p->debug();
@@ -128,6 +133,9 @@ void render()
 	for (int i = 0; i < wave->v_zombies.size(); i++) {
 		wave->v_zombies[i]->render(player.getPosition());
 	}
+
+	ammoBox.draw();
+
 	/*cout << player.getPosition().getX() << " "
 		<< player.getPosition().getY() << " "
 		<< player.getPosition().getZ() << endl;*/
