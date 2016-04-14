@@ -8,9 +8,7 @@ public:
 	Player();
 	void setY(float x);
 	void init();
-	void lookUp();
 	void rotateY(int angle);
-	void lookDown();
 	void moveBackward();
 	void strafeLeft();
 	void strafeRight();
@@ -28,6 +26,7 @@ public:
 	int getWaveNumber();
 	void setWaveNumber(int waveNumber);
 	int getScore();
+	float getPhi();
 	virtual ~Player();
 
 protected:
