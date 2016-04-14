@@ -418,7 +418,7 @@ int main(int argc, char** argv)
 	glutInitWindowSize(1024, 720);
 	glutInitWindowPosition(50, 50);
 	glutCreateWindow("ZombieLand Survivor");
-	glutFullScreen();
+	//glutFullScreen();
 	world.init();
 
 	glutDisplayFunc(display);
