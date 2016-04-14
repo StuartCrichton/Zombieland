@@ -97,6 +97,7 @@ void AssimpModelLoader::loadObjFile(const char *filename)
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
 			SDL_FreeSurface(surface);
+			glDisable(GL_TEXTURE_2D);
 		}
 
 
@@ -123,19 +124,17 @@ void AssimpModelLoader::loadObjFile(const char *filename)
 				glVertex3f(mesh->mVertices[vertex].x,
 					mesh->mVertices[vertex].y,
 					mesh->mVertices[vertex].z);
-				//cout << mesh->mVertices[vertex].z << endl;
+				/*cout << mesh->mVertices[vertex].x << 
+					mesh->mVertices[vertex].y << 
+					mesh->mVertices[vertex].z << endl;*/
 
 			
 			}
-			
 			glEnd();
-
 			glDisable(GL_TEXTURE_2D);
-
 		}
 	}
 	glEndList();
-	glDisable(GL_TEXTURE_2D);
 }
 
 void AssimpModelLoader::Draw(int id) {
