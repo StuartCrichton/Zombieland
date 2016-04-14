@@ -139,12 +139,12 @@ void render()
 	/*cout << player.getPosition().getX() << " "
 		<< player.getPosition().getY() << " "
 		<< player.getPosition().getZ() << endl;*/
-	/*glPushMatrix();
-	glTranslatef(player.getPosition().getX(), player.getPosition().getY(),
-		player.getPosition().getZ());
-	glRotatef(player.getThetha(), 0, 1, 0);
-	glCallList(3);
-	glPopMatrix();*/
+		/*glPushMatrix();
+		glTranslatef(player.getPosition().getX(), player.getPosition().getY(),
+			player.getPosition().getZ());
+		glRotatef(player.getThetha(), 0, 1, 0);
+		glCallList(3);
+		glPopMatrix();*/
 		//update and display the HUD
 	hud->update(player.getHealth(), player.getAmmoCartridge(), player.getAmmoTotal(), player.getScore(), player.getWaveNumber(), player.getPosition(), player.getLookVector());
 	hud->render();
@@ -418,7 +418,7 @@ int main(int argc, char** argv)
 	glutInitWindowSize(1024, 720);
 	glutInitWindowPosition(50, 50);
 	glutCreateWindow("ZombieLand Survivor");
-	//glutFullScreen();
+	glutFullScreen();
 	world.init();
 
 	glutDisplayFunc(display);
