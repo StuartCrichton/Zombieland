@@ -421,7 +421,6 @@ void Timer(int t) {
 /* Main function: GLUT runs as a console application starting at main() */
 int main(int argc, char** argv)
 {
-	//PlaySound(TEXT("../ChillingMusic.wav"), NULL, SND_FILENAME | SND_ASYNC);
 	
 	sf::Music music;
 	music.openFromFile("../Horror-theme-song.wav");
