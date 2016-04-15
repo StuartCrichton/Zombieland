@@ -143,8 +143,11 @@ void render()
 	//glRotatef(player.getThetha(), 0, 1, 0);
 	glPushMatrix();
 	glTranslatef(player.getPosition().getX(), 
-		player.getPosition().getY()-0.5, player.getPosition().getZ());
-	glRotatef(-90, 0, 1, 0);//original gun points to left
+		player.getPosition().getY()-0.3, player.getPosition().getZ()-0.2);
+	//glRotatef(180, 0, 1, 0);//original gun points to left
+	//glTranslatef(30, 1, -70);
+	glRotatef(-player.getThetha()*180/3.14, 0, 1, 0);
+	glRotatef(player.getPhi() * 180 / 3.14, 1, 0, 0);
 	glScalef(0.001, 0.001, 0.001);
 	world.gun.Draw(3);
 	glPopMatrix();

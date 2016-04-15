@@ -8,12 +8,12 @@ void Character::turnRight() {
 }
 
 void Character::rotateX(int angle) {//rotates the camera by a set angle in the x-z plane
-	thetha += (angle*0.001f);
+	this->thetha += (angle*0.001f);
 	look_v.setV(sin(thetha), look_v.getY(), -cos(thetha));
 }
 
 void Character::turnLeft() {
-	thetha -= 0.01f;
+	this->thetha -= 0.01f;
 	look_v.setV(sin(thetha), look_v.getY(), -cos(thetha));
 }
 
@@ -40,7 +40,7 @@ Vector Character::getLookVector()
 }
 
 float Character::getThetha() {
-	return thetha;
+	return this->thetha;
 }
 
 Vector Character::getNewPosition(int id)//return the new position of where the character should be if he moves
