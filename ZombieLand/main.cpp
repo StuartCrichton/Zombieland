@@ -17,6 +17,7 @@
 #include "Wave.h";
 #include "BloodSplatter.h"
 #include "AmmoBox.h"
+#include <SFML/Audio.hpp>
 
 using namespace std;
 // Global variables
@@ -30,18 +31,18 @@ vector<CollisionPlane*>* planes;
 HUD *hud = new HUD(player.getHealth(), player.getAmmoCartridge(), player.getAmmoTotal(),
 	player.getScore(), player.getWaveNumber(), player.getPosition(), player.getLookVector());
 
+sf::SoundBuffer bufferGun;
+sf::Sound soundGun(bufferGun);
+
+//sf::SoundBuffer bufferShot;
+//sf::Sound soundShot(bufferShot);
+
 int dimx = 60;
-int dimy = 5;
 int dimz = 80;
-GLfloat light_position[] = { dimx, 10, -dimz,0.0 };
-GLfloat light_position1[] = { 1,1,0,1.0 };
-GLfloat light_position3[] = { -dimx, 10, dimz, 1.0 };
-GLfloat light_position2[] = { dimx / 2 , 10, -(dimz / 2),0.0 };
-GLfloat light_position4[] = { dimx / 2, dimy, 0.0, 1.0 };
-GLfloat light_position5[] = { dimx / 2, dimy, -dimz, 1.0 };
-GLfloat light_position6[] = { dimx / 2, 50, -(dimz / 2), 1.0 };
-GLfloat light_position7[] = { dimx / 2, -50, -(dimz / 2), 1.0 };
-//GLfloat spot_direction[] = { dimx/2, dimy, -(dimz/2) };
+GLfloat light_position[] = { dimx + 10, 10, -dimz - 10,0.0 };
+GLfloat light_position1[] = { -dimx + 5, 10, dimz - 5, 1.0 };
+GLfloat light_position2[] = { dimx / 2 , 30, -(dimz / 2),1.0 };
+GLfloat light_position3[] = { dimx / 2, -50, -(dimz / 2), 1.0 };
 
 //Stuff pertraining to the wave
 Wave *wave = new Wave();
@@ -64,38 +65,40 @@ void initGL()
 	//glClearColor(0, 0, 0, 1); // White and opaque
 
 	glEnable(GL_LIGHTING); // turns on the lighting model in OpenGL
-	float ambientCol[] = { 1.0f,1.0f,1.0f,1.0f };
-	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambientCol);
 
-	GLfloat diffuse0[] = { 0.5, 0.5, 0.5, 1.0 };
-	GLfloat specular0[] = { 1.0, 1.0, 1.0, 1.0 };
-	GLfloat ambient0[] = { 0,0,0,1 };
+	GLfloat diffuse0[] = { 0.9, 0.9, 0.9, 1.0 };
+
+	GLfloat diffuse[] = { 1.0, 1.0, 1.0, 1.0 };
+	GLfloat specular[] = { 1.0, 1.0, 1.0, 1.0 };
+	GLfloat ambient[] = { 1.0,1.0,1.0,1 };
+
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse0);
-	glLightfv(GL_LIGHT0, GL_SPECULAR, specular0);
-	glLightfv(GL_LIGHT0, GL_AMBIENT, ambient0);
+	glLightfv(GL_LIGHT0, GL_SPECULAR, specular);
+	glLightfv(GL_LIGHT0, GL_AMBIENT, ambient);
 
-	glLightfv(GL_LIGHT3, GL_POSITION, light_position3);
+	glLightfv(GL_LIGHT1, GL_DIFFUSE, diffuse);
+	glLightfv(GL_LIGHT1, GL_AMBIENT, ambient);
+	glLightfv(GL_LIGHT1, GL_SPECULAR, specular);
 
-	GLfloat diffuse_prop2[] = { 1.0f,1.0f,1.0f,1.0f };
-	//GLfloat diffuse_prop2[] = { 0.5f,0.5f,0.5f,1.0f };
-	glLightfv(GL_LIGHT3, GL_DIFFUSE, diffuse_prop2);
+	glLightfv(GL_LIGHT2, GL_DIFFUSE, diffuse);
+	glLightfv(GL_LIGHT2, GL_AMBIENT, ambient);
+	glLightfv(GL_LIGHT2, GL_SPECULAR, specular);
 
-	GLfloat specular_prop2[] = { 0.5f,0.5f,0.5f,1.0f };
-	glLightfv(GL_LIGHT3, GL_SPECULAR, specular_prop2);
+	glLightfv(GL_LIGHT3, GL_DIFFUSE, diffuse);
+	glLightfv(GL_LIGHT3, GL_AMBIENT, ambient);
+	glLightfv(GL_LIGHT3, GL_SPECULAR, specular);
 
-	glLightfv(GL_LIGHT7, GL_POSITION, light_position7);
 
-	GLfloat diffuse_prop6[] = { 1.0f,1.0f,1.0f,1.0f };
-	glLightfv(GL_LIGHT7, GL_DIFFUSE, diffuse_prop6);
-	glLightfv(GL_LIGHT7, GL_AMBIENT, diffuse_prop6);
+	GLfloat ambientColor[] = { 1.0f, 1.0f, 1.0f, 1.0f }; //Color (0.2, 0.2, 0.2)
+	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambientColor);
 
-	GLfloat specular_prop6[] = { 0.5f,0.5f,0.5f,1.0f };
-	glLightfv(GL_LIGHT7, GL_SPECULAR, specular_prop6);
-
+	GLfloat mat_amb[] = { 1.0,1.0,1.0,1.0 };
+	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, mat_amb);
 
 	glEnable(GL_LIGHT0);//corner1
-	glEnable(GL_LIGHT3);//corner2
-	glEnable(GL_LIGHT7);//below
+	glEnable(GL_LIGHT1);//middle
+	glEnable(GL_LIGHT2);//corner2
+	glEnable(GL_LIGHT3);//below
 
 	glEnable(GL_DEPTH_TEST); // turns on hidden surface removal so that objects behind other objects do not get displayed
 
@@ -114,12 +117,9 @@ void render()
 	player.lookAt();
 
 	glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+	glLightfv(GL_LIGHT1, GL_POSITION, light_position1);
 	glLightfv(GL_LIGHT2, GL_POSITION, light_position2);
 	glLightfv(GL_LIGHT3, GL_POSITION, light_position3);
-	glLightfv(GL_LIGHT4, GL_POSITION, light_position4);
-	glLightfv(GL_LIGHT5, GL_POSITION, light_position5);
-	glLightfv(GL_LIGHT6, GL_POSITION, light_position6);
-	glLightfv(GL_LIGHT7, GL_POSITION, light_position7);
 
 	//Draw the building
 	GLfloat color[] = { 0.5f, 0.5f, 0.5f, 1.0f };
@@ -342,7 +342,8 @@ void mouseMove(int x, int y) {
 void mouseClick(int button, int state, int x, int y) {
 	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN && (player.getAmmoTotal() > 0 || player.getAmmoCartridge() > 0)) {
 		player.shoot();
-		PlaySound(TEXT("../Gun.wav"), NULL, SND_FILENAME | SND_ASYNC);
+		bufferGun.loadFromFile("../Gun.wav");
+		soundGun.play(); // Play the sound!
 		Ray ray(player.getPosition(), player.getUnitVector());
 		float minDistance = 1000;
 		unsigned minIndex = 1000;
@@ -361,6 +362,8 @@ void mouseClick(int button, int state, int x, int y) {
 			}
 		}
 		if (somethingDies) {
+		//	bufferShot.loadFromFile("../Zombie In Pain.wav");
+			//soundShot.play(); // Play the sound!
 			numOfKilledZombies++;
 			wave->v_zombies.erase(wave->v_zombies.begin() + minIndex);
 			player.scoreUp();
@@ -419,6 +422,17 @@ void Timer(int t) {
 int main(int argc, char** argv)
 {
 	//PlaySound(TEXT("../ChillingMusic.wav"), NULL, SND_FILENAME | SND_ASYNC);
+	
+	sf::Music music;
+	music.openFromFile("../Horror-theme-song.wav");
+	music.play();
+	music.setLoop(true);
+
+	sf::Music music2;
+	music2.openFromFile("../Zombie-sound.wav");
+	music2.play();
+	music2.setLoop(true); 
+	
 	glutInit(&argc, argv);
 
 	glutInitWindowSize(1024, 600);
