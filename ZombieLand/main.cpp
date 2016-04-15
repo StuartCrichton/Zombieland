@@ -418,7 +418,7 @@ int main(int argc, char** argv)
 	//PlaySound(TEXT("../ChillingMusic.wav"), NULL, SND_FILENAME | SND_ASYNC);
 	glutInit(&argc, argv);
 
-	glutInitWindowSize(1024, 720);
+	glutInitWindowSize(1024, 600);
 	glutInitWindowPosition(50, 50);
 	glutCreateWindow("ZombieLand Survivor");
 	//glutFullScreen();
