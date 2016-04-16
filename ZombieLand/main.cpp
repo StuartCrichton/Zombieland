@@ -18,6 +18,7 @@
 #include "AmmoBox.h"
 #include <SFML/Audio.hpp>
 #include "ParticleEffect.h"
+#include "KeyEvent.h"
 
 using namespace std;
 // Global variables
@@ -57,6 +58,9 @@ ParticleEffect *muzzleFlash;
 
 //Stuff pertaining to ammo box
 AmmoBox ammoBox;
+
+//Multiple key pressed stuff
+KeyEvent keyEvents = KeyEvent(player, world, wave);
 
 void initGL()
 {
@@ -105,7 +109,6 @@ void initGL()
 
 	ammoBox.update();
 }
-
 void render()
 {
 	// GL_DEPTH_BUFFER_BIT - resets the depth test values for hidden surface removal
@@ -141,18 +144,18 @@ void render()
 		<< player.getPosition().getY() << " "
 		<< player.getPosition().getZ() << endl;*/
 
-	//glRotatef(player.getThetha(), 0, 1, 0);
+		//glRotatef(player.getThetha(), 0, 1, 0);
 	glPushMatrix();
-	glTranslatef(player.getPosition().getX(), 
-		player.getPosition().getY()-0.3, player.getPosition().getZ()-0.2);
+	glTranslatef(player.getPosition().getX(),
+		player.getPosition().getY() - 0.3, player.getPosition().getZ() - 0.2);
 	//glRotatef(180, 0, 1, 0);//original gun points to left
 	//glTranslatef(30, 1, -70);
-	glRotatef(-player.getThetha()*180/3.14, 0, 1, 0);
+	glRotatef(-player.getThetha() * 180 / 3.14, 0, 1, 0);
 	glRotatef(player.getPhi() * 180 / 3.14, 1, 0, 0);
 	glScalef(0.001, 0.001, 0.001);
 	world.gun.Draw(3);
 	glPopMatrix();
-		//update and display the HUD
+	//update and display the HUD
 	hud->update(player.getHealth(), player.getAmmoCartridge(), player.getAmmoTotal(), player.getScore(), player.getWaveNumber(), player.getPosition(), player.getLookVector());
 	hud->render();
 
@@ -173,11 +176,8 @@ void render()
 }
 void display()
 {
-	//update();
+	keyEvents.keyOperations();
 	render();
-}
-void update()
-{
 
 }
 void reshape(int w, int h)
@@ -206,6 +206,16 @@ void idle() {
 	if (health == 0) {
 		exit(0);
 	}
+}
+
+void keyPressed(unsigned char key, int x, int y)
+{
+	keyEvents.keyStates[key] = true;
+}
+
+void keyUp(unsigned char key, int x, int y)
+{
+	keyEvents.keyStates[key] = false;
 }
 
 void processNormalKeys(unsigned char key, int x, int y) {
@@ -370,8 +380,8 @@ void mouseClick(int button, int state, int x, int y) {
 			}
 		}
 		if (somethingDies) {
-		//	bufferShot.loadFromFile("../Zombie In Pain.wav");
-			//soundShot.play(); // Play the sound!
+			//	bufferShot.loadFromFile("../Zombie In Pain.wav");
+				//soundShot.play(); // Play the sound!
 			numOfKilledZombies++;
 			wave->v_zombies.erase(wave->v_zombies.begin() + minIndex);
 			player.scoreUp();
@@ -429,7 +439,7 @@ void Timer(int t) {
 /* Main function: GLUT runs as a console application starting at main() */
 int main(int argc, char** argv)
 {
-	
+
 	sf::Music music;
 	music.openFromFile("../Horror-theme-song.wav");
 	music.play();
@@ -438,8 +448,8 @@ int main(int argc, char** argv)
 	sf::Music music2;
 	music2.openFromFile("../Zombie-sound.wav");
 	music2.play();
-	music2.setLoop(true); 
-	
+	music2.setLoop(true);
+
 	glutInit(&argc, argv);
 
 	glutInitWindowSize(1024, 600);
@@ -450,7 +460,8 @@ int main(int argc, char** argv)
 
 	glutDisplayFunc(display);
 	glutReshapeFunc(reshape);
-	glutKeyboardFunc(processNormalKeys);
+	glutKeyboardFunc(keyPressed);
+	glutKeyboardUpFunc(keyUp);
 	glutTimerFunc(0, WaveTimer, 0);
 	glutTimerFunc(0, healthTimer, 0);
 	glutMouseFunc(mouseClick);
