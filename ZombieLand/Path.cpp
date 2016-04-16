@@ -5,8 +5,8 @@
 using namespace std;
 Path::Path(Vector start, Vector target)
 {
-	this->currentPos = start;
-	this->targetPos = target;
+	this->currentPos = Vector(start.getX(), 0, -start.getZ());
+	this->targetPos = Vector(target.getX(), 0, -target.getZ());
 	initMap();
 	generatePath();
 }
