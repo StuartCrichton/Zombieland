@@ -590,16 +590,14 @@ void Zombie::render(Vector playerPos) {
 
 void Zombie::update() {
 	//this->path = Path(this->pos_v, Character::playerPos).getPath();
-	Vector difference = Character::playerPos - pos_v;
-	Vector unitV = difference / (pos_v.getDistance(Character::playerPos));
-	this->look_v = unitV;
-	this->thetha = asin(look_v.getX());// +M_PI / 2;
-	//thetha = acos(unitV.getX());
-	//thetha = thetha * 180 / M_PI;
-	//this->look_v.setV(sin(thetha), sin(phi), -cos(thetha));
-	this->moveForward(0.25);
-	Vector v = this->getNewPosition(this->FORWARD);
-	this->mask.update(v);
+	//cout << path.size();
+	//Vector difference = Character::playerPos - pos_v;
+	//Vector unitV = difference / (pos_v.getDistance(Character::playerPos));
+	//this->look_v = unitV;
+	//this->thetha = asin(look_v.getX());// +M_PI / 2;
+	//this->moveForward(0.25);
+	//Vector v = this->getNewPosition(this->FORWARD);
+	//this->mask.update(v);
 	//cout << " x: " << look_v.getX() << " z: " << look_v.getZ() << " Q:"<< thetha << endl;
 }
 
