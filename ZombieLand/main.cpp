@@ -15,9 +15,9 @@
 #include "HUD.h"
 #include "Ray.h"
 #include "Wave.h";
-#include "BloodSplatter.h"
 #include "AmmoBox.h"
 #include <SFML/Audio.hpp>
+#include "ParticleEffect.h"
 
 using namespace std;
 // Global variables
@@ -52,7 +52,8 @@ int numOfKilledZombies = 0;
 bool isWave = true;
 
 //Stuff pertaining to particles
-BloodSplatter *bloodSplatter;
+ParticleEffect *bloodSplatter;
+ParticleEffect *muzzleFlash;
 
 //Stuff pertaining to ammo box
 AmmoBox ammoBox;
@@ -162,8 +163,13 @@ void render()
 			bloodSplatter = nullptr;
 	}
 
-	glFlush();   // ******** DO NOT FORGET THIS **********
+	if (muzzleFlash != nullptr) {
+		a = muzzleFlash->update();
+		if (a == 1)
+			muzzleFlash = nullptr;
+	}
 
+	glFlush();   // ******** DO NOT FORGET THIS **********
 }
 void display()
 {
@@ -341,6 +347,8 @@ void mouseMove(int x, int y) {
 
 void mouseClick(int button, int state, int x, int y) {
 	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN && (player.getAmmoTotal() > 0 || player.getAmmoCartridge() > 0)) {
+		//generate muzzle flash
+		//muzzleFlash = new ParticleEffect(xpos, ypos, zpos, 0.01, 1.0, 1.0, 1.0, 500, 0.2);
 		player.shoot();
 		bufferGun.loadFromFile("../Gun.wav");
 		soundGun.play(); // Play the sound!
@@ -350,8 +358,8 @@ void mouseClick(int button, int state, int x, int y) {
 		bool somethingDies = false;
 		for (unsigned i = 0; i < wave->v_zombies.size(); i++) {
 			if (ray.intersects(wave->v_zombies[i]->mask)) {
-				bloodSplatter = new BloodSplatter(wave->v_zombies[i]->getPosition().getX(), wave->v_zombies[i]->getPosition().getY(), wave->v_zombies[i]->getPosition().getZ());
-
+				//generate blood splatter
+				bloodSplatter = new ParticleEffect(wave->v_zombies[i]->getPosition().getX(), wave->v_zombies[i]->getPosition().getY(), wave->v_zombies[i]->getPosition().getZ(), 0.05, 1.0, 0.0, 0.0, 1000, 0.5);
 				somethingDies = true;
 				float d = ray.getDistance();
 				if (d < minDistance) {
