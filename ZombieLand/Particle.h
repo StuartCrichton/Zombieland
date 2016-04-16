@@ -1,6 +1,6 @@
 #pragma once
-#ifndef BLOODPARTICLE_H
-#define BLOODPARTICLE_H
+#ifndef PARTICLE_H
+#define PARTICLE_H
 #ifdef _WIN32
 #include <Windows.h>
 #endif // _WIN32
@@ -9,11 +9,11 @@
 
 using namespace std;
 
-class BloodParticle
+class Particle
 {
 public:
-	BloodParticle(double Xpos, double Ypos, double Zpos, double Scalez);
-	~BloodParticle();
+	Particle(double Xpos, double Ypos, double Zpos, double Scalez, double Red, double Green, double Blue);
+	~Particle();
 	void update();
 	double getRed();
 	double getGreen();

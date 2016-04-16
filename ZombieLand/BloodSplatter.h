@@ -7,7 +7,7 @@
 #include <GL/gl.h>
 #include <GL/glut.h>
 #include <vector>
-#include "BloodParticle.h"
+#include "Particle.h"
 
 using namespace std;
 
@@ -19,7 +19,7 @@ public:
 	int update();
 	void draw();
 private:
-	vector<BloodParticle> particle;
+	vector<Particle> particle;
 	const int bloodParticleCount = 1000;
 };
 #endif // BLOODSPLATTER_H

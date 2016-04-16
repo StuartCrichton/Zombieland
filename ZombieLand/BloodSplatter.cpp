@@ -1,5 +1,5 @@
 #include "BloodSplatter.h"
-#include "BloodParticle.h"
+#include "Particle.h"
 #ifdef _WIN32
 #include <Windows.h>
 #endif // _WIN32
@@ -43,7 +43,7 @@ BloodSplatter::BloodSplatter(double Xpos, double Ypos, double Zpos)
 {
 	for (int i = 0; i < bloodParticleCount; i++)
 	{
-		BloodParticle bloodParticle = BloodParticle(Xpos, Ypos+1, Zpos, 0.05);
+		Particle bloodParticle = Particle(Xpos, Ypos+1, Zpos, 0.05, 1.0, 0.0, 0.0);
 		particle.push_back(bloodParticle);
 	}
 

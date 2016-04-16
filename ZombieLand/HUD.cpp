@@ -38,7 +38,6 @@ void HUD::update(int health, int ammoCartridge, int ammoTotal, int score, int wa
 
 void HUD::renderGun() {
 	glPushMatrix();
-	glTranslatef(pos_v.getX(), pos_v.getY(), pos_v.getZ());
 	world.gun.Draw(3);
 	glPopMatrix();
 	/*
