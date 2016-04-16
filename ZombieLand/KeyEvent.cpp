@@ -17,10 +17,12 @@ KeyEvent::~KeyEvent()
 
 void KeyEvent::keyPressed(unsigned char key, int x, int y)
 {
+	keyStates[key] = true;
 }
 
 void KeyEvent::keyUp(unsigned char key, int x, int y)
 {
+	keyStates[key] = false;
 }
 
 void KeyEvent::pressedForward()

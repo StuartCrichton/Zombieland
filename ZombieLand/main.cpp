@@ -208,16 +208,6 @@ void idle() {
 	}
 }
 
-void keyPressed(unsigned char key, int x, int y)
-{
-	keyEvents.keyStates[key] = true;
-}
-
-void keyUp(unsigned char key, int x, int y)
-{
-	keyEvents.keyStates[key] = false;
-}
-
 void processNormalKeys(unsigned char key, int x, int y) {
 	/*For keys w,a,s,d simple collision detection is used
 	* -The objects mask is updated based on the direction it wants to move
@@ -460,8 +450,8 @@ int main(int argc, char** argv)
 
 	glutDisplayFunc(display);
 	glutReshapeFunc(reshape);
-	glutKeyboardFunc(keyPressed);
-	glutKeyboardUpFunc(keyUp);
+	glutKeyboardFunc(keyEvents.keyPressed);
+	glutKeyboardUpFunc(keyEvents.keyUp);
 	glutTimerFunc(0, WaveTimer, 0);
 	glutTimerFunc(0, healthTimer, 0);
 	glutMouseFunc(mouseClick);
