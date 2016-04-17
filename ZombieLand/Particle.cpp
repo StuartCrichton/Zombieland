@@ -70,7 +70,7 @@ double Particle::getScalez()
 void Particle::draw()
 {
 	glPushMatrix();
-	GLfloat color[] = { 1.0f, 0.0f, 0.0f, 1.0f };
+	GLfloat color[] = { Red,Green, Blue, 1.0f };
 	glMaterialfv(GL_FRONT, GL_DIFFUSE, color);
 	glMaterialfv(GL_FRONT, GL_SPECULAR, color);
 	glTranslatef(Xpos, Ypos, Zpos);
@@ -93,9 +93,9 @@ Particle::Particle(double Xpos, double Ypos, double Zpos, double Scalez, double 
 	this->initYpos = Ypos;
 	this->initZpos = Zpos;
 
-	this->Xmov = (rand() % 20 - 10)*0.03;
-	this->Zmov = (rand() % 20 - 10)*0.03;
-	this->Ymov = (rand() % 20 - 10)*0.03;
+	this->Xmov = (rand() % 20 - 10)*0.03*Scalez;
+	this->Zmov = (rand() % 20 - 10)*0.03*Scalez;
+	this->Ymov = (rand() % 20 - 10)*0.03*Scalez;
 
 	this->Red = Red;
 	this->Green = Green;

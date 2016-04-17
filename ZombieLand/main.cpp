@@ -148,20 +148,29 @@ void render()
 	glPushMatrix();
 	glTranslatef(player.getPosition().getX(),
 		player.getPosition().getY(), player.getPosition().getZ());
-	//glRotatef(180, 0, 1, 0);//original gun points to left
-	//glTranslatef(30, 1, -70);
 	glRotatef(-player.getThetha() * 180 / 3.14, 0, 1, 0);
 	glTranslatef(0.2, 0, -0.2);
 	glRotatef(player.getPhi() * 180 / 3.14, 1, 0, 0);
 	glTranslatef(0, -0.3, 0);
+	glPushMatrix();
 	glScalef(0.001, 0.001, 0.001);
 	world.gun.Draw(3);
 	glPopMatrix();
+	float colour[4] = {0.9f,0.9f,0.2f,0.001f};
+	glMaterialfv(GL_FRONT, GL_DIFFUSE, colour);
+	glMaterialfv(GL_FRONT, GL_SPECULAR, colour);
+	glTranslatef(0,0.15,-3);
+	//glutSolidCone(0.1,0.5,16,16);
+	glPopMatrix();
+
+
+
 	//update and display the HUD
 	hud->update(player.getHealth(), player.getAmmoCartridge(), player.getAmmoTotal(), player.getScore(), player.getWaveNumber(), player.getPosition(), player.getLookVector());
 	hud->render();
 
-	int a;
+	int a = 0;
+	int b = 0;
 	if (bloodSplatter != nullptr) {
 		a = bloodSplatter->update();
 		if (a == 1)
@@ -169,8 +178,8 @@ void render()
 	}
 
 	if (muzzleFlash != nullptr) {
-		a = muzzleFlash->update();
-		if (a == 1)
+		b = muzzleFlash->update();
+		if (b == 1)
 			muzzleFlash = nullptr;
 	}
 
@@ -350,10 +359,26 @@ void mouseMove(int x, int y) {
 void mouseClick(int button, int state, int x, int y) {
 	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN && (player.getAmmoTotal() > 0 || player.getAmmoCartridge() > 0)) {
 		//generate muzzle flash
-		//muzzleFlash = new ParticleEffect(xpos, ypos, zpos, 0.01, 1.0, 1.0, 1.0, 500, 0.2);
+		glPushMatrix();
+		glTranslatef(player.getPosition().getX(),
+			player.getPosition().getY(), player.getPosition().getZ());
+		glRotatef(-player.getThetha() * 180 / 3.14, 0, 1, 0);
+		glTranslatef(0.2, 0, -0.2);
+		glRotatef(player.getPhi() * 180 / 3.14, 1, 0, 0);
+		glTranslatef(0, -0.3, 0);
+		glScalef(0.001, 0.001, 0.001);
+		glutSolidCone(0.1, 0.5, 16, 16);
+		glPopMatrix();
+
+		float x = player.getPosition().getX() + 0.1*(sin(player.getThetha()));
+		float y = player.getPosition().getY() + 0.1*(sin(player.getPhi()))-1;
+		float z = player.getPosition().getZ() - 0.1*(cos(player.getThetha()));
+		muzzleFlash = new ParticleEffect(x, y, z, 0.001, 0.9, 0.9, 0.2, 500, 0.01);
+		//muzzleFlash = new ParticleEffect(30, 1.7, -70, 0.1, 1.0, 1.0, 1.0, 500, 5);
 		player.shoot();
+
 		bufferGun.loadFromFile("../Gun.wav");
-		soundGun.play(); // Play the sound!
+		//soundGun.play(); // Play the sound!
 		Ray ray(player.getPosition(), player.getUnitVector());
 		float minDistance = 1000;
 		unsigned minIndex = 1000;
@@ -434,12 +459,12 @@ int main(int argc, char** argv)
 
 	sf::Music music;
 	music.openFromFile("../Horror-theme-song.wav");
-	music.play();
+	//music.play();
 	music.setLoop(true);
 
 	sf::Music music2;
 	music2.openFromFile("../Zombie-sound.wav");
-	music2.play();
+	//music2.play();
 	music2.setLoop(true);
 
 	glutInit(&argc, argv);

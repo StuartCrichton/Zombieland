@@ -591,28 +591,28 @@ void Zombie::update() {
 	PathA path = PathA();
 	path.InitializePathfinder();
 	path.pathStatus[1] = path.FindPath(1, x, z, round(playerPos.getX()), -round(playerPos.getZ()));
-	cout << endl << x << ", " << z << endl;
-	cout << round(playerPos.getX()) << ", " << -round(playerPos.getZ()) << endl;
+	//cout << endl << x << ", " << z << endl;
+	//cout << round(playerPos.getX()) << ", " << -round(playerPos.getZ()) << endl;
 	if (path.pathStatus[1] == path.found) {
 
-		path.ReadPath(1, x, z, 0.05);
+		path.ReadPath(1, x, z, 0.01);
 		bool up = false, down = false, left = false, right = false;
 		if (x > path.xPath[1]) {
-			x = x - 0.05; left = true;
+			x = x - 0.01; left = true;
 		}
 		if (x < path.xPath[1]) {
-			x = x + 0.05; right = true;
+			x = x + 0.01; right = true;
 		}
 		if (z > path.yPath[1]) {
-			z = z - 0.05; up = true;
+			z = z - 0.01; up = true;
 		}
 		if (z < path.yPath[1]) {
-			z = z + 0.05; down = true;
+			z = z + 0.01; down = true;
 		}
 		if (path.pathLocation[1]== path.pathLength[1])
 		{
-			if (abs(x - path.xPath[1]) < 0.05) x = path.xPath[1];
-			if (abs(z - path.yPath[1]) < 0.05) z = path.yPath[1];
+			if (abs(x - path.xPath[1]) < 0.01) x = path.xPath[1];
+			if (abs(z - path.yPath[1]) < 0.01) z = path.yPath[1];
 		}
 		if (up) {
 			this->thetha = 90;
@@ -629,17 +629,10 @@ void Zombie::update() {
 		thetha = (thetha)*M_PI / 180;
 		this->pos_v.setV(x, 1, -z);
 		this->look_v.setV(sin(thetha), sin(phi), -cos(thetha));
+		this->mask.update(pos_v);
 	}
 
 	path.EndPathfinder();
-	//Vector difference = Character::playerPos - pos_v;
-	//Vector unitV = difference / (pos_v.getDistance(Character::playerPos));
-	//this->look_v = unitV;
-	//this->thetha = asin(look_v.getX());// +M_PI / 2;
-	//this->moveForward(0.25);
-	//Vector v = this->getNewPosition(this->FORWARD);
-	//this->mask.update(v);
-	//cout << " x: " << look_v.getX() << " z: " << look_v.getZ() << " Q:"<< thetha << endl;
 }
 
 Zombie::Zombie()
