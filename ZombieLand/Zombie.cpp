@@ -10,8 +10,6 @@
 #include <iostream>
 using namespace std;
 
-Vector Character::playerPos = Vector(0, 0, 0);
-
 void Zombie::drawZombie() {
 	glPushMatrix();
 
@@ -579,9 +577,9 @@ void Zombie::drawZombie() {
 	glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess1);
 }
 
-void Zombie::render(Vector playerPos) {
-	Character::playerPos = playerPos;
-	//update();
+void Zombie::render(Vector p) {
+	this->playerPos = p;
+	update();
 	glPushMatrix();
 	glTranslated(pos_v.getX(), pos_v.getY(), pos_v.getZ());
 	drawZombie();
@@ -589,8 +587,51 @@ void Zombie::render(Vector playerPos) {
 }
 
 void Zombie::update() {
-	//this->path = Path(this->pos_v, Character::playerPos).getPath();
-	//cout << path.size();
+	int x = round(pos_v.getX()), z = -round(pos_v.getZ());
+	PathA path = PathA();
+	path.InitializePathfinder();
+	path.pathStatus[1] = path.FindPath(1, x, z, round(playerPos.getX()), -round(playerPos.getZ()));
+	cout << endl << x << ", " << z << endl;
+	cout << round(playerPos.getX()) << ", " << -round(playerPos.getZ()) << endl;
+	if (path.pathStatus[1] == path.found) {
+
+		path.ReadPath(1, x, z, 0.05);
+		bool up = false, down = false, left = false, right = false;
+		if (x > path.xPath[1]) {
+			x = x - 0.05; left = true;
+		}
+		if (x < path.xPath[1]) {
+			x = x + 0.05; right = true;
+		}
+		if (z > path.yPath[1]) {
+			z = z - 0.05; up = true;
+		}
+		if (z < path.yPath[1]) {
+			z = z + 0.05; down = true;
+		}
+		if (path.pathLocation[1]== path.pathLength[1])
+		{
+			if (abs(x - path.xPath[1]) < 0.05) x = path.xPath[1];
+			if (abs(z - path.yPath[1]) < 0.05) z = path.yPath[1];
+		}
+		if (up) {
+			this->thetha = 90;
+			if (right) thetha = 45;
+			if (left) thetha = 135;
+		}
+		else if (down) {
+			thetha = 270;
+			if (right) thetha = 315;
+			if (left) thetha = 225;
+		}
+		else if (right) thetha = 0;
+		else if (left) thetha = 180;
+		thetha = (thetha)*M_PI / 180;
+		this->pos_v.setV(x, 1, -z);
+		this->look_v.setV(sin(thetha), sin(phi), -cos(thetha));
+	}
+
+	path.EndPathfinder();
 	//Vector difference = Character::playerPos - pos_v;
 	//Vector unitV = difference / (pos_v.getDistance(Character::playerPos));
 	//this->look_v = unitV;

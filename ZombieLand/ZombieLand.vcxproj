@@ -161,7 +161,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ModelObj.cpp" />
     <ClCompile Include="ParticleEffect.cpp" />
-    <ClCompile Include="Path.cpp" />
+    <ClCompile Include="PathA.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Ray.cpp" />
     <ClCompile Include="Vector.cpp" />
@@ -181,7 +181,7 @@
     <ClInclude Include="HUD.h" />
     <ClInclude Include="ModelObj.h" />
     <ClInclude Include="ParticleEffect.h" />
-    <ClInclude Include="Path.h" />
+    <ClInclude Include="PathA.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Ray.h" />
     <ClInclude Include="Vector.h" />
