@@ -60,7 +60,7 @@ ParticleEffect *muzzleFlash;
 AmmoBox ammoBox;
 
 //Multiple key pressed stuff
-KeyEvent keyEvents = KeyEvent(player, world, wave);
+//KeyEvent keyEvents = KeyEvent(player, world, wave);
 
 void initGL()
 {
@@ -176,7 +176,7 @@ void render()
 }
 void display()
 {
-	keyEvents.keyOperations();
+	//keyEvents.keyOperations();
 	render();
 
 }
