@@ -5,9 +5,9 @@ using namespace std;
 
 KeyEvent::KeyEvent(Player player, World world, Wave *wave)
 {
-	this->player = player;
+	/*this->player = player;
 	this->world = world;
-	this->wave = wave;
+	this->wave = wave;*/
 }
 
 

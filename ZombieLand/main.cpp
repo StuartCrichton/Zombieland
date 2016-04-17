@@ -450,8 +450,9 @@ int main(int argc, char** argv)
 
 	glutDisplayFunc(display);
 	glutReshapeFunc(reshape);
-	glutKeyboardFunc(keyEvents.keyPressed);
-	glutKeyboardUpFunc(keyEvents.keyUp);
+	glutKeyboardFunc(processNormalKeys);
+	//glutKeyboardFunc(keyEvents.keyPressed);
+	//glutKeyboardUpFunc(keyEvents.keyUp);
 	glutTimerFunc(0, WaveTimer, 0);
 	glutTimerFunc(0, healthTimer, 0);
 	glutMouseFunc(mouseClick);
