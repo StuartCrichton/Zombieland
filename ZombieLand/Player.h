@@ -28,6 +28,7 @@ public:
 	void setWaveNumber(int waveNumber);
 	int getScore();
 	float getPhi();
+	void AmmoPickup();
 	virtual ~Player();
 
 protected:

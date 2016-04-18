@@ -20,12 +20,10 @@
 #include "ParticleEffect.h"
 #include "KeyEvent.h"
 #include "SDL.h"
-#include "SDL_thread.h"
+#include "MuzzleFlash.h"
 
 using namespace std;
 // Global variables
-
-
 Player player;
 World world;
 Vector v;
@@ -56,12 +54,7 @@ bool isWave = true;
 
 //Stuff pertaining to particles
 ParticleEffect *bloodSplatter;
-float startFlashTime = 0;
-float currentFlashTime;
-bool showFlash = false;
-
-//Stuff pertaining to threading
-//vector<SDL_Thread> *threads;
+MuzzleFlash *muzzleFlash;
 
 //Stuff pertaining to ammo box
 AmmoBox ammoBox;
@@ -117,25 +110,7 @@ void initGL()
 	ammoBox.update();
 }
 
-void drawMuzzleFlash() {
-	glPushMatrix();
-	glTranslatef(player.getPosition().getX(),
-		player.getPosition().getY(), player.getPosition().getZ());
-	glRotatef(-player.getThetha() * 180 / 3.14, 0, 1, 0);
-	glTranslatef(0.2, 0, -0.2);
-	glRotatef(player.getPhi() * 180 / 3.14, 1, 0, 0);
-	glTranslatef(0, -0.3, 0);
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	float colour[4] = { 0.9f,0.9f,0.2f,0.001f };
-	glMaterialfv(GL_FRONT, GL_DIFFUSE, colour);
-	glMaterialfv(GL_FRONT, GL_SPECULAR, colour);
-	glTranslatef(0, 0.15, -3);
-	glutSolidCone(0.1,0.5,16,16);
-	glPopMatrix();
 
-	glDisable(GL_BLEND);
-}
 
 void render()
 {
@@ -195,13 +170,11 @@ void render()
 			bloodSplatter = nullptr;
 	}
 
-	if (showFlash) {
-		currentFlashTime = glutGet(GLUT_ELAPSED_TIME);
-		float differenceFlashTime = currentFlashTime - startFlashTime;
-		if (differenceFlashTime < 500)
-			drawMuzzleFlash();
-		else
-			showFlash = false;
+	int b = 0;
+	if (muzzleFlash != nullptr) {
+		b = muzzleFlash->update();
+		if (b == 1)
+			muzzleFlash = nullptr;
 	}
 
 	glFlush();   // ******** DO NOT FORGET THIS **********
@@ -368,8 +341,11 @@ void processNormalKeys(unsigned char key, int x1, int y1) {
 	float aX = ammoPos.getX();
 	float aY = ammoPos.getY();
 	float aZ = ammoPos.getZ();
-	if (x > aX && x < aX + 0.64 && y > aY && y < aY + 3.5 && z > aZ - 0.34 && z < aZ)
-		ammoBox.update();//add code to reload
+	if (x > aX && x < aX + 0.64 && y > aY && y < aY + 3.5 && z > aZ - 0.34 && z < aZ) {
+		ammoBox.update();
+		player.AmmoPickup();
+	}
+		
 	
 
 	player.lookAt();
@@ -383,8 +359,7 @@ void mouseMove(int x, int y) {
 
 void mouseClick(int button, int state, int x, int y) {
 	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN && (player.getAmmoTotal() > 0 || player.getAmmoCartridge() > 0)) {
-		startFlashTime = glutGet(GLUT_ELAPSED_TIME);
-		showFlash = true;
+		muzzleFlash = new MuzzleFlash();
 		player.shoot();
 
 		bufferGun.loadFromFile("../Gun.wav");
@@ -396,7 +371,7 @@ void mouseClick(int button, int state, int x, int y) {
 		for (unsigned i = 0; i < wave->v_zombies.size(); i++) {
 			if (ray.intersects(wave->v_zombies[i]->mask)) {
 				//generate blood splatter
-				bloodSplatter = new ParticleEffect(wave->v_zombies[i]->getPosition().getX(), wave->v_zombies[i]->getPosition().getY()+1, wave->v_zombies[i]->getPosition().getZ(), 0.05, 1.0, 0.0, 0.0, 1000, 0.5);
+				bloodSplatter = new ParticleEffect(wave->v_zombies[i]->getPosition().getX(), wave->v_zombies[i]->getPosition().getY()+1, wave->v_zombies[i]->getPosition().getZ(), 0.05, 1.0, 0.0, 0.0, 500, 0.5);
 				somethingDies = true;
 				float d = ray.getDistance();
 				if (d < minDistance) {
@@ -466,7 +441,6 @@ void Timer(int t) {
 /* Main function: GLUT runs as a console application starting at main() */
 int main(int argc, char** argv)
 {
-
 	sf::Music music;
 	music.openFromFile("../Horror-theme-song.wav");
 	//music.play();
@@ -506,4 +480,3 @@ int main(int argc, char** argv)
 
 	return 0;
 }
-

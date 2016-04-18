@@ -75,6 +75,9 @@
     <ClCompile Include="PathA.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="MuzzleFlash.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Character.h">
@@ -129,6 +132,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="PathA.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MuzzleFlash.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
