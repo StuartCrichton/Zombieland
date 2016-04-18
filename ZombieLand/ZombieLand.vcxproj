@@ -152,6 +152,7 @@
     <ClCompile Include="AmmoBox.cpp" />
     <ClCompile Include="AssimpModelLoader.cpp" />
     <ClCompile Include="KeyEvent.cpp" />
+    <ClCompile Include="MuzzleFlash.cpp" />
     <ClCompile Include="Particle.cpp" />
     <ClCompile Include="Character.cpp" />
     <ClCompile Include="CollisionMask.cpp" />

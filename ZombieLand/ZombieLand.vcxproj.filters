@@ -75,6 +75,9 @@
     <ClCompile Include="PathA.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="MuzzleFlash.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Character.h">
