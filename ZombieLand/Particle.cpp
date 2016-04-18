@@ -93,9 +93,9 @@ Particle::Particle(double Xpos, double Ypos, double Zpos, double Scalez, double 
 	this->initYpos = Ypos;
 	this->initZpos = Zpos;
 
-	this->Xmov = (rand() % 20 - 10)*0.03*Scalez;
-	this->Zmov = (rand() % 20 - 10)*0.03*Scalez;
-	this->Ymov = (rand() % 20 - 10)*0.03*Scalez;
+	this->Xmov = (rand() % 20 - 10)*0.03;
+	this->Zmov = (rand() % 20 - 10)*0.03;
+	this->Ymov = (rand() % 20 - 10)*0.03;
 
 	this->Red = Red;
 	this->Green = Green;
