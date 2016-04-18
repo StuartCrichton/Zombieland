@@ -19,6 +19,8 @@
 #include <SFML/Audio.hpp>
 #include "ParticleEffect.h"
 #include "KeyEvent.h"
+#include "SDL.h"
+#include "SDL_thread.h"
 
 using namespace std;
 // Global variables
@@ -57,6 +59,9 @@ ParticleEffect *bloodSplatter;
 float startFlashTime = 0;
 float currentFlashTime;
 bool showFlash = false;
+
+//Stuff pertaining to threading
+//vector<SDL_Thread> *threads;
 
 //Stuff pertaining to ammo box
 AmmoBox ammoBox;
@@ -378,24 +383,6 @@ void mouseMove(int x, int y) {
 
 void mouseClick(int button, int state, int x, int y) {
 	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN && (player.getAmmoTotal() > 0 || player.getAmmoCartridge() > 0)) {
-		/*
-		//generate muzzle flash
-		glPushMatrix();
-		glTranslatef(player.getPosition().getX(),
-			player.getPosition().getY(), player.getPosition().getZ());
-		glRotatef(-player.getThetha() * 180 / 3.14, 0, 1, 0);
-		glTranslatef(0.2, 0, -0.2);
-		glRotatef(player.getPhi() * 180 / 3.14, 1, 0, 0);
-		glTranslatef(0, -0.3, 0);
-		glScalef(0.001, 0.001, 0.001);
-		glutSolidCone(0.1, 0.5, 16, 16);
-		glPopMatrix();
-
-		float x = player.getPosition().getX() + 0.1*(sin(player.getThetha()));
-		float y = player.getPosition().getY() + 0.1*(sin(player.getPhi()))-1;
-		float z = player.getPosition().getZ() - 0.1*(cos(player.getThetha()));
-		//muzzleFlash = new ParticleEffect(x, y, z, 0.001, 0.9, 0.9, 0.2, 500, 0.01);
-		*/
 		startFlashTime = glutGet(GLUT_ELAPSED_TIME);
 		showFlash = true;
 		player.shoot();
@@ -507,6 +494,8 @@ int main(int argc, char** argv)
 	glutTimerFunc(0, healthTimer, 0);
 	glutMouseFunc(mouseClick);
 	glutPassiveMotionFunc(mouseMove);
+	glutMotionFunc(mouseMove);
+
 
 	glutIdleFunc(idle);
 	glutTimerFunc(0, Timer, 0);
