@@ -227,7 +227,7 @@ void mouseMove(int x, int y) {
 void mouseClick(int button, int state, int x, int y) {
 	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN && (player->getAmmoTotal() > 0 || player->getAmmoCartridge() > 0)) {
 		if (player->getcanShoot() == true) {
-			muzzleFlash = new MuzzleFlash(player->getPosition().getX(), player->getPosition().getY(), player->getPosition().getZ(), player->getThetha(), player->getPhi());
+			muzzleFlash = new MuzzleFlash(player);
 			player->shoot();
 			Ray ray(player->getPosition(), player->getUnitVector());
 			float minDistance = 1000;
