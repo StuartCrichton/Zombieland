@@ -30,7 +30,6 @@ public:
 	int getScore();
 	float getPhi();
 	void AmmoPickup();
-
 	bool getReloading();
 	bool getcanShoot();
 	float getPrevTime();

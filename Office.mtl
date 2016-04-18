@@ -41,17 +41,16 @@ Ka 0.000000 0.000000 0.000000
 Kd 1.000000 1.000000 1.000000
 Ks 0.330000 0.330000 0.330000
 
-newmtl Brick_Tumbled
+newmtl Color_M03
 Ka 0.000000 0.000000 0.000000
-Kd 0.529412 0.517647 0.517647
+Kd 0.666667 0.666667 0.666667
 Ks 0.330000 0.330000 0.330000
-map_Kd ../Office/Brick_Tumbled.jpg
 
-newmtl Metal_Steel_Textured_White
+newmtl Fencing_Wood_Old
 Ka 0.000000 0.000000 0.000000
-Kd 0.749020 0.749020 0.749020
+Kd 0.517647 0.501961 0.494118
 Ks 0.330000 0.330000 0.330000
-map_Kd ../Office/Metal_Steel_Textured_White.jpg
+map_Kd ../Office/Fencing_Wood_Old.jpg
 
 newmtl Wood_Veneer_01
 Ka 0.000000 0.000000 0.000000
