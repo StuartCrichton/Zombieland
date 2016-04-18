@@ -48,10 +48,10 @@ int PathA::FindPath(int pathfinderID, int startingX, int startingY,
 		newOpenListItemID = 0;
 
 	//1. Convert location data (in pixels) to coordinates in the walkability array.
-	int startX = startingX / tileSize;
-	int startY = startingY / tileSize;
-	targetX = targetX / tileSize;
-	targetY = targetY / tileSize;
+	int startX = startingX;
+	int startY = startingY;
+	targetX = targetX;
+	targetY = targetY;
 
 	//2.Quick Path Checks: Under the some circumstances no path needs to
 	//	be generated ...

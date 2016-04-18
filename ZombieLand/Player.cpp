@@ -106,7 +106,7 @@ void Player::shoot() {
 		if (ammoCartridge > 0) {
 			ammoCartridge--;
 			bufferGun.loadFromFile("../Gun.wav");
-			soundGun.play(); // Play the sound!
+			//soundGun.play(); // Play the sound!
 			if (ammoCartridge == 0)
 				if (ammoTotal > 0)
 					reload();

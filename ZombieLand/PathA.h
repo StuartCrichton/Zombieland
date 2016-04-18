@@ -16,7 +16,7 @@ public:
 	~PathA();
 
 
-	const int mapWidth = 80, mapHeight = 60, tileSize = 10, numberPeople = 1;
+	const int mapWidth = 80, mapHeight = 60, tileSize = 1, numberPeople = 1;
 	int onClosedList = 10;
 	const int notfinished = 0, notStarted = 0;// path-related constants
 	const int found = 1, nonexistent = 2;

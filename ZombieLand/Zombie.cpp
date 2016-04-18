@@ -579,7 +579,7 @@ void Zombie::drawZombie() {
 
 void Zombie::render(Vector p) {
 	this->playerPos = p;
-	update();
+	//update();
 	glPushMatrix();
 	glTranslated(pos_v.getX(), pos_v.getY(), pos_v.getZ());
 	drawZombie();
@@ -587,51 +587,61 @@ void Zombie::render(Vector p) {
 }
 
 void Zombie::update() {
-	int x = round(pos_v.getX()), z = -round(pos_v.getZ());
+	float x = (pos_v.getX()), z = -(pos_v.getZ());
 	PathA path = PathA();
+	if (z > 15.5 && z < 16) {
+		cout << z << endl;
+	}
 	path.InitializePathfinder();
-	path.pathStatus[1] = path.FindPath(1, x, z, round(playerPos.getX()), -round(playerPos.getZ()));
-	//cout << endl << x << ", " << z << endl;
-	//cout << round(playerPos.getX()) << ", " << -round(playerPos.getZ()) << endl;
+	path.pathStatus[1] = path.FindPath(1, round(x), round(z), round(playerPos.getX()), -round(playerPos.getZ()));
+	cout << endl << x << ", " << z << endl;
+	
 	if (path.pathStatus[1] == path.found) {
-
-		path.ReadPath(1, x, z, 0.01);
+		float speed = 0.5;
+		path.ReadPath(1, round(x), round(z), speed);
 		bool up = false, down = false, left = false, right = false;
+		cout << path.xPath[1] << " " << path.yPath[1] << endl;
+		cout << round(playerPos.getX()) << ", " << -round(playerPos.getZ()) << endl;
 		if (x > path.xPath[1]) {
-			x = x - 0.01; left = true;
+			x = x - speed; left = true;
 		}
-		if (x < path.xPath[1]) {
-			x = x + 0.01; right = true;
+		else if (x < path.xPath[1]) {
+			x = x + speed; right = true;
 		}
 		if (z > path.yPath[1]) {
-			z = z - 0.01; up = true;
+			z = z - speed; down = true;
 		}
-		if (z < path.yPath[1]) {
-			z = z + 0.01; down = true;
+		else if (z < path.yPath[1]) {
+			z = z + speed; up = true;
 		}
-		if (path.pathLocation[1]== path.pathLength[1])
+		/*if (path.pathLocation[1]== path.pathLength[1])
 		{
-			if (abs(x - path.xPath[1]) < 0.01) x = path.xPath[1];
-			if (abs(z - path.yPath[1]) < 0.01) z = path.yPath[1];
-		}
+			if (abs(x - path.xPath[1]) < speed) x = path.xPath[1];
+			if (abs(z - path.yPath[1]) < speed) z = path.yPath[1];
+		}*/
 		if (up) {
-			this->thetha = 90;
-			if (right) thetha = 45;
-			if (left) thetha = 135;
-		}
-		else if (down) {
-			thetha = 270;
-			if (right) thetha = 315;
+			this->thetha = 180;
+			if (right) thetha = 135;
 			if (left) thetha = 225;
 		}
-		else if (right) thetha = 0;
-		else if (left) thetha = 180;
+		else if (down) {
+			thetha = 0;
+			if (right) thetha = 45;
+			if (left) thetha = 315;
+		}
+		else if (right) thetha = 90;
+		else if (left) thetha = 270;
 		thetha = (thetha)*M_PI / 180;
-		this->pos_v.setV(x, 1, -z);
-		this->look_v.setV(sin(thetha), sin(phi), -cos(thetha));
-		this->mask.update(pos_v);
+		mask.update(Vector(x, 1, -z));
+		if (mask.intersects(CollisionMask(playerPos,0.4))) {
+			mask.update(pos_v);
+		}
+		else {
+			this->pos_v.setV(x, 1, -z);
+			this->look_v.setV(sin(thetha), sin(phi), -cos(thetha));
+		}
+		
 	}
-
 	path.EndPathfinder();
 }
 
