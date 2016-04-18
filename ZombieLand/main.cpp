@@ -190,6 +190,7 @@ void display()
 			player->setReloading(false);
 		}
 	}
+	keyEvents.keyOperations();
 	render();
 }
 void reshape(int w, int h)
@@ -310,12 +311,10 @@ void Timer(int t) {
 
 void keyPressed(unsigned char key, int x, int y) {
 	keyEvents.keyStates[key] = true;
-	keyEvents.keyOperations();
 }
 
 void keyUp(unsigned char key, int x, int y) {
 	keyEvents.keyStates[key] = false;
-	keyEvents.keyOperations();
 }
 
 void deletePointers() {
