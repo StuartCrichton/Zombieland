@@ -30,15 +30,20 @@ public:
 	int getScore();
 	float getPhi();
 	void AmmoPickup();
-	bool getCanShoot();
-	void setCanShoot(bool canShoot);
+
+	bool getReloading();
+	bool getcanShoot();
+	float getPrevTime();
+	void setReloading(bool reloading);
+	void setcanShoot(bool canShoot);
+	void setPrevTime(float previousTime);
 	virtual ~Player();
 
 protected:
 
 private:
 	bool warped = false;
-	bool canShoot = true;
+
 	int health = 100;
 	int xOrigin = 0;
 	int yOrigin = 0;
@@ -48,5 +53,9 @@ private:
 	int waveNumber = 1;
 	int score = 0;
 	bool crouched = false;
+
+	float previousTime = 0;
+	bool reloading = false;
+	bool canShoot = true;
 };
 

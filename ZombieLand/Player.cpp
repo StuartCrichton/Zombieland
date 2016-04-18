@@ -102,29 +102,30 @@ void Player::crouch()
 
 void Player::shoot() {
 	if (canShoot) {
-		bufferGun.loadFromFile("../Gun.wav");
-		soundGun.play(); // Play the sound!
-
+		reloading = false;
 		if (ammoCartridge > 0) {
 			ammoCartridge--;
-		}
-		else if (ammoTotal > 0) {
-			reload();
+			bufferGun.loadFromFile("../Gun.wav");
+			soundGun.play(); // Play the sound!
+			if (ammoCartridge == 0)
+				if (ammoTotal > 0)
+					reload();
 		}
 	}
 }
 
 void Player::reload() {
 	canShoot = false;
-	bufferReload.loadFromFile("../shotgun-reload-old_school.wav");
+	reloading = true;
+	previousTime = glutGet(GLUT_ELAPSED_TIME);
+	bufferReload.loadFromFile("../reload.wav");
+	soundReload.setVolume(100);
 	soundReload.play(); // Play the sound!
 	int dif = ammoCartridgeTotal - ammoCartridge;
 	ammoTotal -= dif;
 	ammoCartridge += dif;
-	clock_t start_time = clock();
-	clock_t end_time = 1500 + start_time;
-		while (clock() != end_time);
-	canShoot = true;
+	//previousTime = 0;
+
 }
 
 void Player::regainHealth() {
@@ -179,12 +180,23 @@ void Player::AmmoPickup() {
 	ammoTotal = 99;
 }
 
-bool Player::getCanShoot() {
+bool Player::getReloading() {
+	return this->reloading;
+}
+bool Player::getcanShoot() {
 	return this->canShoot;
 }
-
-void Player::setCanShoot(bool canShoot) {
+float Player::getPrevTime() {
+	return this->previousTime;
+}
+void Player::setReloading(bool reloading) {
+	this->reloading = reloading;
+}
+void Player::setcanShoot(bool canShoot) {
 	this->canShoot = canShoot;
+}
+void Player::setPrevTime(float previousTime) {
+	this->previousTime = previousTime;
 }
 
 Player::Player()

@@ -25,7 +25,7 @@
 using namespace std;
 // Global variables
 
-
+//bool canShoot = true;
 Player *player = new Player();
 World world;
 Vector v;
@@ -176,7 +176,19 @@ void render()
 }
 void display()
 {
-	cout << player->getCanShoot() << endl;
+	if (player->getReloading() == true) {
+		float newTime = glutGet(GLUT_ELAPSED_TIME);
+		float difference = newTime - player->getPrevTime();
+		//player->previousTime = newTime;
+		//difference /= 1000;
+		cout << player->getcanShoot() << "   " << difference << endl;
+		if (difference >= 3500) {
+			//cout << difference << endl;
+			player->setcanShoot(true);
+			player->setPrevTime(newTime);
+			player->setReloading(false);
+		}
+	}
 	render();
 }
 void reshape(int w, int h)
@@ -214,31 +226,33 @@ void mouseMove(int x, int y) {
 
 void mouseClick(int button, int state, int x, int y) {
 	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN && (player->getAmmoTotal() > 0 || player->getAmmoCartridge() > 0)) {
-		muzzleFlash = new MuzzleFlash(player->getPosition().getX(),player->getPosition().getY(), player->getPosition().getZ(), player->getThetha(), player->getPhi());
-		player->shoot();
-		Ray ray(player->getPosition(), player->getUnitVector());
-		float minDistance = 1000;
-		unsigned minIndex = 1000;
-		bool somethingDies = false;
-		for (unsigned i = 0; i < wave->v_zombies.size(); i++) {
-			if (ray.intersects(wave->v_zombies[i]->mask)) {
-				//generate blood splatter
-				bloodSplatter = new ParticleEffect(wave->v_zombies[i]->getPosition().getX(), wave->v_zombies[i]->getPosition().getY(), wave->v_zombies[i]->getPosition().getZ(), 0.05, 1.0, 0.0, 0.0, 1000, 0.5);
-				somethingDies = true;
-				float d = ray.getDistance();
-				if (d < minDistance) {
-					minDistance = d;
-					minIndex = i;
-				}
+		if (player->getcanShoot() == true) {
+			muzzleFlash = new MuzzleFlash(player->getPosition().getX(), player->getPosition().getY(), player->getPosition().getZ(), player->getThetha(), player->getPhi());
+			player->shoot();
+			Ray ray(player->getPosition(), player->getUnitVector());
+			float minDistance = 1000;
+			unsigned minIndex = 1000;
+			bool somethingDies = false;
+			for (unsigned i = 0; i < wave->v_zombies.size(); i++) {
+				if (ray.intersects(wave->v_zombies[i]->mask)) {
+					//generate blood splatter
+					bloodSplatter = new ParticleEffect(wave->v_zombies[i]->getPosition().getX(), wave->v_zombies[i]->getPosition().getY(), wave->v_zombies[i]->getPosition().getZ(), 0.05, 1.0, 0.0, 0.0, 1000, 0.5);
+					somethingDies = true;
+					float d = ray.getDistance();
+					if (d < minDistance) {
+						minDistance = d;
+						minIndex = i;
+					}
 
+				}
 			}
-		}
-		if (somethingDies) {
-			//	bufferShot.loadFromFile("../Zombie In Pain.wav");
-			//soundShot.play(); // Play the sound!
-			numOfKilledZombies++;
-			wave->v_zombies.erase(wave->v_zombies.begin() + minIndex);
-			player->scoreUp();
+			if (somethingDies) {
+				//	bufferShot.loadFromFile("../Zombie In Pain.wav");
+				//soundShot.play(); // Play the sound!
+				numOfKilledZombies++;
+				wave->v_zombies.erase(wave->v_zombies.begin() + minIndex);
+				player->scoreUp();
+			}
 		}
 	}
 }
@@ -290,6 +304,11 @@ void Timer(int t) {
 	glutTimerFunc(20, Timer, 0);
 }
 
+ //void shootTimer(int value) {
+//	player->setShoot();
+//}
+
+
 void keyPressed(unsigned char key, int x, int y) {
 	keyEvents.keyStates[key] = true;
 	keyEvents.keyOperations();
@@ -319,12 +338,12 @@ int main(int argc, char** argv)
 
 	sf::Music music;
 	music.openFromFile("../Horror-theme-song.wav");
-	music.play();
+	//music.play();
 	music.setLoop(true);
 
 	sf::Music music2;
 	music2.openFromFile("../Zombie-sound.wav");
-	music2.play();
+	//music2.play();
 	music2.setLoop(true);
 
 	glutInit(&argc, argv);
