@@ -18,6 +18,7 @@
 #include "AmmoBox.h"
 #include <SFML/Audio.hpp>
 #include "ParticleEffect.h"
+#include "MuzzleFlash.h"
 #include "KeyEvent.h"
 
 using namespace std;
@@ -198,6 +199,7 @@ void reshape(int w, int h)
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 }
+
 void idle() {
 	player->lookAt(); // called when there is now other event
 	int health = player->getHealth();
