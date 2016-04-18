@@ -151,6 +151,11 @@ float Player::getPhi() {
 	return this->phi;
 }
 
+void Player::AmmoPickup() {
+	ammoCartridge = ammoCartridgeTotal;
+	ammoTotal = 99;
+}
+
 Player::Player()
 {
 	this->mask = CollisionMask(pos_v, 0.45);

@@ -1,6 +1,7 @@
 #pragma once
 #include "Character.h"
-#include "Path.h"
+#include "PathA.h"
+#include <vector>
 
 class Zombie : public Character
 {

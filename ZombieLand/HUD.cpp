@@ -37,9 +37,6 @@ void HUD::update(int health, int ammoCartridge, int ammoTotal, int score, int wa
 }
 
 void HUD::renderGun() {
-	glPushMatrix();
-	world.gun.Draw(3);
-	glPopMatrix();
 	/*
 	glPushMatrix();
 	glDisable(GL_LIGHTING);

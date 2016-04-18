@@ -1,4 +1,4 @@
-#include "BloodParticle.h"
+#include "Particle.h"
 #ifdef _WIN32
 #include <Windows.h>
 #endif // _WIN32
@@ -7,10 +7,11 @@
 #include <GL/gl.h>
 #include <GL/glut.h>
 #include "Vector.h"
+#include <time.h>
 
 using namespace std;
 
-void BloodParticle::update()
+void Particle::update()
 {
 	this->Ypos = this->Ypos + this->Ymov;
 	this->Xpos = this->Xpos + this->Xmov;
@@ -18,22 +19,22 @@ void BloodParticle::update()
 	this->Direction = this->Direction + ((((((int)(0.5 - 0.1 + 0.1) * rand() % 11) + 1) - 1 + 1) * rand() % 11) + 1);
 }
 
-double BloodParticle::getRed()
+double Particle::getRed()
 {
 	return this->Red;
 }
 
-double BloodParticle::getGreen()
+double Particle::getGreen()
 {
 	return this->Green;
 }
 
-double BloodParticle::getBlue()
+double Particle::getBlue()
 {
 	return this->Blue;
 }
 
-float BloodParticle::currentRadius()
+float Particle::currentRadius()
 {
 	Vector v1 = Vector(Xpos, Ypos, Zpos);
 	Vector v2 = Vector(initXpos, initYpos, initZpos);
@@ -41,35 +42,35 @@ float BloodParticle::currentRadius()
 	return distance;
 }
 
-double BloodParticle::getXpos()
+double Particle::getXpos()
 {
 	return this->Xpos;
 }
 
-double BloodParticle::getYpos()
+double Particle::getYpos()
 {
 	return this->Ypos;
 }
 
-double BloodParticle::getZpos()
+double Particle::getZpos()
 {
 	return this->Zpos;
 }
 
-double BloodParticle::getDirection()
+double Particle::getDirection()
 {
 	return this->Direction;
 }
 
-double BloodParticle::getScalez()
+double Particle::getScalez()
 {
 	return this->Scalez;
 }
 
-void BloodParticle::draw()
+void Particle::draw()
 {
 	glPushMatrix();
-	GLfloat color[] = { 1.0f, 0.0f, 0.0f, 1.0f };
+	GLfloat color[] = { Red,Green, Blue, 1.0f };
 	glMaterialfv(GL_FRONT, GL_DIFFUSE, color);
 	glMaterialfv(GL_FRONT, GL_SPECULAR, color);
 	glTranslatef(Xpos, Ypos, Zpos);
@@ -82,7 +83,7 @@ void BloodParticle::draw()
 	glPopMatrix();
 }
 
-BloodParticle::BloodParticle(double Xpos, double Ypos, double Zpos, double Scalez)
+Particle::Particle(double Xpos, double Ypos, double Zpos, double Scalez, double Red, double Green, double Blue)
 {
 	this->Xpos = Xpos;
 	this->Ypos = Ypos;
@@ -96,9 +97,9 @@ BloodParticle::BloodParticle(double Xpos, double Ypos, double Zpos, double Scale
 	this->Zmov = (rand() % 20 - 10)*0.03;
 	this->Ymov = (rand() % 20 - 10)*0.03;
 
-	this->Red = 1.0;
-	this->Green = 0.0;
-	this->Blue = 0.0;
+	this->Red = Red;
+	this->Green = Green;
+	this->Blue = Blue;
 
 	this->Scalez = Scalez;
 	this->Direction = 0;
@@ -106,6 +107,6 @@ BloodParticle::BloodParticle(double Xpos, double Ypos, double Zpos, double Scale
 	this->Deceleration = 0.0025;
 }
 
-BloodParticle::~BloodParticle()
+Particle::~Particle()
 {
 }

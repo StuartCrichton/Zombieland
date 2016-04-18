@@ -11,6 +11,7 @@ public:
 	~AmmoBox();
 	void update();
 	void draw();
+	Vector getLocation();
 private:
 	const double AMMO_BOX_SPAWN_LOCATIONS[6][3] = {
 		{ 45.308, 0.0, -11.4375 },
