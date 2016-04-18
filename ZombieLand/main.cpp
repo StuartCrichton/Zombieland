@@ -109,6 +109,27 @@ void initGL()
 
 	ammoBox.update();
 }
+
+void MuzzleFlash() {
+	glPushMatrix();
+	glTranslatef(player.getPosition().getX(),
+		player.getPosition().getY(), player.getPosition().getZ());
+	glRotatef(-player.getThetha() * 180 / 3.14, 0, 1, 0);
+	glTranslatef(0.2, 0, -0.2);
+	glRotatef(player.getPhi() * 180 / 3.14, 1, 0, 0);
+	glTranslatef(0, -0.3, 0);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	float colour[4] = { 0.9f,0.9f,0.2f,0.001f };
+	glMaterialfv(GL_FRONT, GL_DIFFUSE, colour);
+	glMaterialfv(GL_FRONT, GL_SPECULAR, colour);
+	glTranslatef(0, 0.15, -3);
+	glutSolidCone(0.1,0.5,16,16);
+	glPopMatrix();
+
+	glDisable(GL_BLEND);
+}
+
 void render()
 {
 	// GL_DEPTH_BUFFER_BIT - resets the depth test values for hidden surface removal
@@ -152,18 +173,9 @@ void render()
 	glTranslatef(0.2, 0, -0.2);
 	glRotatef(player.getPhi() * 180 / 3.14, 1, 0, 0);
 	glTranslatef(0, -0.3, 0);
-	glPushMatrix();
 	glScalef(0.001, 0.001, 0.001);
 	world.gun.Draw(3);
 	glPopMatrix();
-	float colour[4] = {0.9f,0.9f,0.2f,0.001f};
-	glMaterialfv(GL_FRONT, GL_DIFFUSE, colour);
-	glMaterialfv(GL_FRONT, GL_SPECULAR, colour);
-	glTranslatef(0,0.15,-3);
-	//glutSolidCone(0.1,0.5,16,16);
-	glPopMatrix();
-
-
 
 	//update and display the HUD
 	hud->update(player.getHealth(), player.getAmmoCartridge(), player.getAmmoTotal(), player.getScore(), player.getWaveNumber(), player.getPosition(), player.getLookVector());
