@@ -338,11 +338,13 @@ int main(int argc, char** argv)
 
 	sf::Music music;
 	music.openFromFile("../Horror-theme-song.wav");
+	music.setVolume(10);
 	music.play();
 	music.setLoop(true);
 
 	sf::Music music2;
 	music2.openFromFile("../Zombie-sound.wav");
+	music2.setVolume(10);
 	music2.play();
 	music2.setLoop(true);
 
