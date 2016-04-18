@@ -201,6 +201,7 @@ void reshape(int w, int h)
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 }
+
 void idle() {
 	player->lookAt(); // called when there is now other event
 	int health = player->getHealth();
