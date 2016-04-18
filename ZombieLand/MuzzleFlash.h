@@ -4,7 +4,7 @@
 class MuzzleFlash
 {
 public:
-	MuzzleFlash();
+	MuzzleFlash(float x, float y, float z, float thetha, float phi);
 	~MuzzleFlash();
 	int update();
 private:
@@ -14,5 +14,10 @@ private:
 	float muzzleFlashRadius = 0;
 	float currentTime;
 	float previousTime;
+	float xPos;
+	float yPos;
+	float zPos;
+	float thetha;
+	float phi;
 };
 

@@ -19,6 +19,7 @@
 #include <SFML/Audio.hpp>
 #include "ParticleEffect.h"
 #include "KeyEvent.h"
+#include "MuzzleFlash.h"
 
 using namespace std;
 // Global variables
@@ -54,7 +55,7 @@ bool isWave = true;
 
 //Stuff pertaining to particles
 ParticleEffect *bloodSplatter;
-ParticleEffect *muzzleFlash;
+MuzzleFlash *muzzleFlash;
 
 //Stuff pertaining to ammo box
 AmmoBox ammoBox;
@@ -168,9 +169,10 @@ void render()
 			bloodSplatter = nullptr;
 	}
 
+	int b = 0;
 	if (muzzleFlash != nullptr) {
-		a = muzzleFlash->update();
-		if (a == 1)
+		b = muzzleFlash->update();
+		if (b == 1)
 			muzzleFlash = nullptr;
 	}
 
@@ -214,8 +216,7 @@ void mouseMove(int x, int y) {
 
 void mouseClick(int button, int state, int x, int y) {
 	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN && (player->getAmmoTotal() > 0 || player->getAmmoCartridge() > 0)) {
-		//generate muzzle flash
-		//muzzleFlash = new ParticleEffect(xpos, ypos, zpos, 0.01, 1.0, 1.0, 1.0, 500, 0.2);
+		muzzleFlash = new MuzzleFlash(player->getPosition().getX(),player->getPosition().getY(), player->getPosition().getZ(), player->getThetha(), player->getPhi());
 		player->shoot();
 		bufferGun.loadFromFile("../Gun.wav");
 		soundGun.play(); // Play the sound!
