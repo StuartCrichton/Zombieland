@@ -338,12 +338,12 @@ int main(int argc, char** argv)
 
 	sf::Music music;
 	music.openFromFile("../Horror-theme-song.wav");
-	music.play();
+	//music.play();
 	music.setLoop(true);
 
 	sf::Music music2;
 	music2.openFromFile("../Zombie-sound.wav");
-	music2.play();
+	//music2.play();
 	music2.setLoop(true);
 
 	glutInit(&argc, argv);
@@ -362,7 +362,7 @@ int main(int argc, char** argv)
 	glutTimerFunc(0, WaveTimer, 0);
 	glutTimerFunc(0, healthTimer, 0);
 	glutMouseFunc(mouseClick);
-	glutPassiveMotionFunc(mouseMove);
+	glutMotionFunc(mouseMove);
 
 	glutTimerFunc(0, Timer, 0);
 	initGL();
