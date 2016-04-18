@@ -18,6 +18,7 @@
 #include "AmmoBox.h"
 #include <SFML/Audio.hpp>
 #include "ParticleEffect.h"
+#include "MuzzleFlash.h"
 #include "KeyEvent.h"
 
 using namespace std;
