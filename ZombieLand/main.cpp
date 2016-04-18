@@ -216,7 +216,7 @@ void mouseMove(int x, int y) {
 
 void mouseClick(int button, int state, int x, int y) {
 	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN && (player->getAmmoTotal() > 0 || player->getAmmoCartridge() > 0)) {
-		muzzleFlash = new MuzzleFlash(player->getPosition().getX(),player->getPosition().getY(), player->getPosition().getZ(), player->getThetha(), player->getPhi());
+		muzzleFlash = new MuzzleFlash(player);
 		player->shoot();
 		bufferGun.loadFromFile("../Gun.wav");
 		soundGun.play(); // Play the sound!
@@ -348,6 +348,7 @@ int main(int argc, char** argv)
 	glutTimerFunc(0, healthTimer, 0);
 	glutMouseFunc(mouseClick);
 	glutPassiveMotionFunc(mouseMove);
+	glutMotionFunc(mouseMove);
 
 	glutTimerFunc(0, Timer, 0);
 	initGL();
