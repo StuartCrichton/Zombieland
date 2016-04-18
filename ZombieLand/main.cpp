@@ -54,7 +54,9 @@ bool isWave = true;
 
 //Stuff pertaining to particles
 ParticleEffect *bloodSplatter;
-ParticleEffect *muzzleFlash;
+float startFlashTime = 0;
+float currentFlashTime;
+bool showFlash = false;
 
 //Stuff pertaining to ammo box
 AmmoBox ammoBox;
@@ -110,7 +112,7 @@ void initGL()
 	ammoBox.update();
 }
 
-void MuzzleFlash() {
+void drawMuzzleFlash() {
 	glPushMatrix();
 	glTranslatef(player.getPosition().getX(),
 		player.getPosition().getY(), player.getPosition().getZ());
@@ -182,17 +184,19 @@ void render()
 	hud->render();
 
 	int a = 0;
-	int b = 0;
 	if (bloodSplatter != nullptr) {
 		a = bloodSplatter->update();
 		if (a == 1)
 			bloodSplatter = nullptr;
 	}
 
-	if (muzzleFlash != nullptr) {
-		b = muzzleFlash->update();
-		if (b == 1)
-			muzzleFlash = nullptr;
+	if (showFlash) {
+		currentFlashTime = glutGet(GLUT_ELAPSED_TIME);
+		float differenceFlashTime = currentFlashTime - startFlashTime;
+		if (differenceFlashTime < 500)
+			drawMuzzleFlash();
+		else
+			showFlash = false;
 	}
 
 	glFlush();   // ******** DO NOT FORGET THIS **********
@@ -374,6 +378,7 @@ void mouseMove(int x, int y) {
 
 void mouseClick(int button, int state, int x, int y) {
 	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN && (player.getAmmoTotal() > 0 || player.getAmmoCartridge() > 0)) {
+		/*
 		//generate muzzle flash
 		glPushMatrix();
 		glTranslatef(player.getPosition().getX(),
@@ -389,7 +394,10 @@ void mouseClick(int button, int state, int x, int y) {
 		float x = player.getPosition().getX() + 0.1*(sin(player.getThetha()));
 		float y = player.getPosition().getY() + 0.1*(sin(player.getPhi()))-1;
 		float z = player.getPosition().getZ() - 0.1*(cos(player.getThetha()));
-		muzzleFlash = new ParticleEffect(x, y, z, 0.001, 0.9, 0.9, 0.2, 500, 0.01);
+		//muzzleFlash = new ParticleEffect(x, y, z, 0.001, 0.9, 0.9, 0.2, 500, 0.01);
+		*/
+		startFlashTime = glutGet(GLUT_ELAPSED_TIME);
+		showFlash = true;
 		player.shoot();
 
 		bufferGun.loadFromFile("../Gun.wav");
@@ -401,7 +409,7 @@ void mouseClick(int button, int state, int x, int y) {
 		for (unsigned i = 0; i < wave->v_zombies.size(); i++) {
 			if (ray.intersects(wave->v_zombies[i]->mask)) {
 				//generate blood splatter
-				bloodSplatter = new ParticleEffect(wave->v_zombies[i]->getPosition().getX(), wave->v_zombies[i]->getPosition().getY(), wave->v_zombies[i]->getPosition().getZ(), 0.05, 1.0, 0.0, 0.0, 1000, 0.5);
+				bloodSplatter = new ParticleEffect(wave->v_zombies[i]->getPosition().getX(), wave->v_zombies[i]->getPosition().getY()+1, wave->v_zombies[i]->getPosition().getZ(), 0.05, 1.0, 0.0, 0.0, 1000, 0.5);
 				somethingDies = true;
 				float d = ray.getDistance();
 				if (d < minDistance) {

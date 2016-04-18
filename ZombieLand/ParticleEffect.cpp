@@ -46,7 +46,7 @@ ParticleEffect::ParticleEffect(double Xpos, double Ypos, double Zpos, double Siz
 
 	for (int i = 0; i < particleCount; i++)
 	{
-		Particle particle = Particle(Xpos, Ypos + 1, Zpos, Size, red, green, blue);
+		Particle particle = Particle(Xpos, Ypos, Zpos, Size, red, green, blue);
 		particles.push_back(particle);
 	}
 
