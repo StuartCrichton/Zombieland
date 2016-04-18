@@ -5,8 +5,14 @@
 #include <Windows.h>
 #endif // _WIN32
 #include <iostream>
+#include <SFML/Audio.hpp>
 
 using namespace std;
+
+sf::SoundBuffer bufferReload;
+sf::Sound soundReload(bufferReload);
+sf::SoundBuffer bufferGun;
+sf::Sound soundGun(bufferGun);
 
 void Player::init() {//set the start values of the player
 	thetha = M_PI;
@@ -95,13 +101,30 @@ void Player::crouch()
 }
 
 void Player::shoot() {
-	if (ammoCartridge > 0) {
-		ammoCartridge--;
+	if (canShoot) {
+		bufferGun.loadFromFile("../Gun.wav");
+		soundGun.play(); // Play the sound!
+
+		if (ammoCartridge > 0) {
+			ammoCartridge--;
+		}
+		else if (ammoTotal > 0) {
+			reload();
+		}
 	}
-	else if (ammoTotal > 0) {
-		ammoCartridge = ammoCartridgeTotal;
-		ammoTotal -= ammoCartridgeTotal;
-	}
+}
+
+void Player::reload() {
+	canShoot = false;
+	bufferReload.loadFromFile("../shotgun-reload-old_school.wav");
+	soundReload.play(); // Play the sound!
+	int dif = ammoCartridgeTotal - ammoCartridge;
+	ammoTotal -= dif;
+	ammoCartridge += dif;
+	clock_t start_time = clock();
+	clock_t end_time = 1500 + start_time;
+		while (clock() != end_time);
+	canShoot = true;
 }
 
 void Player::regainHealth() {
@@ -154,6 +177,14 @@ float Player::getPhi() {
 void Player::AmmoPickup() {
 	ammoCartridge = ammoCartridgeTotal;
 	ammoTotal = 99;
+}
+
+bool Player::getCanShoot() {
+	return this->canShoot;
+}
+
+void Player::setCanShoot(bool canShoot) {
+	this->canShoot = canShoot;
 }
 
 Player::Player()

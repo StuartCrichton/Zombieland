@@ -18,6 +18,7 @@ public:
 	void crouch();
 	void lookAt();
 	void shoot();
+	void reload();
 	void takeDamage();
 	void regainHealth();
 	void scoreUp();
@@ -29,12 +30,15 @@ public:
 	int getScore();
 	float getPhi();
 	void AmmoPickup();
+	bool getCanShoot();
+	void setCanShoot(bool canShoot);
 	virtual ~Player();
 
 protected:
 
 private:
 	bool warped = false;
+	bool canShoot = true;
 	int health = 100;
 	int xOrigin = 0;
 	int yOrigin = 0;

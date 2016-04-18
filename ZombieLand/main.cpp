@@ -34,9 +34,6 @@ vector<CollisionPlane*>* planes;
 HUD *hud = new HUD(player->getHealth(), player->getAmmoCartridge(), player->getAmmoTotal(),
 	player->getScore(), player->getWaveNumber(), player->getPosition(), player->getLookVector());
 
-sf::SoundBuffer bufferGun;
-sf::Sound soundGun(bufferGun);
-
 //sf::SoundBuffer bufferShot;
 //sf::Sound soundShot(bufferShot);
 
@@ -179,6 +176,7 @@ void render()
 }
 void display()
 {
+	cout << player->getCanShoot() << endl;
 	render();
 }
 void reshape(int w, int h)
@@ -218,8 +216,6 @@ void mouseClick(int button, int state, int x, int y) {
 	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN && (player->getAmmoTotal() > 0 || player->getAmmoCartridge() > 0)) {
 		muzzleFlash = new MuzzleFlash(player);
 		player->shoot();
-		bufferGun.loadFromFile("../Gun.wav");
-		soundGun.play(); // Play the sound!
 		Ray ray(player->getPosition(), player->getUnitVector());
 		float minDistance = 1000;
 		unsigned minIndex = 1000;
