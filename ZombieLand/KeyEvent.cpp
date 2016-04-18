@@ -120,8 +120,9 @@ void KeyEvent::pressedRight()
 void KeyEvent::keyOperations()
 {
 	if (keyStates['r']) {
-		player->init();
-		player->lookAt();
+		//player->init();
+		//player->lookAt();
+		player->reload();
 	}
 
 	if (keyStates['w']) {
@@ -182,4 +183,5 @@ void KeyEvent::keyOperations()
 
 	player->lookAt();
 }
+
 

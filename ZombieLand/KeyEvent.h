@@ -14,7 +14,6 @@ public:
 	KeyEvent(Player *player, World world, Wave *wave);
 	~KeyEvent();
 	void keyOperations();
-
 	bool *keyStates = new bool[256];
 private:
 	Vector v;
@@ -26,5 +25,5 @@ private:
 	void pressedForward();
 	void pressedBackwards();
 	void pressedLeft();
-	void pressedRight();
+	void pressedRight();	
 };
