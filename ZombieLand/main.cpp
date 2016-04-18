@@ -150,8 +150,8 @@ void render()
 	GLfloat color[] = { 0.5f, 0.5f, 0.5f, 1.0f };
 	glMaterialfv(GL_FRONT, GL_DIFFUSE, color);
 	world.building.Draw(1);
-	/*vector<CollisionPlane*>* planes = world.getPlanes();
-	for (CollisionPlane* p : *planes) {
+	vector<CollisionPlane*>* planes = world.getPlanes();
+	/*for (CollisionPlane* p : *planes) {
 		p->debug();
 	}*/
 
@@ -231,13 +231,16 @@ void idle() {
 	}
 }
 
-void processNormalKeys(unsigned char key, int x, int y) {
+void processNormalKeys(unsigned char key, int x1, int y1) {
 	/*For keys w,a,s,d simple collision detection is used
 	* -The objects mask is updated based on the direction it wants to move
 	* -canMove is set to true and only changed if the new mask collides with another object
 	* -If the player can move, the apprpriate move method is called
 	* -Else the player's mask is reset to before moving
 	*/
+	float x = player.getPosition().getX();
+	float y = player.getPosition().getY();
+	float z = player.getPosition().getZ();
 	switch (key) {
 	case 'r': player.init(); player.lookAt(); break; // shrink
 	case 'w': v = player.getNewPosition(player.FORWARD);
@@ -247,7 +250,7 @@ void processNormalKeys(unsigned char key, int x, int y) {
 		{
 			if (player.mask.intersects(wave->v_zombies[i]->mask)) {
 				canMove = false;
-				player.takeDamage();
+				//player.takeDamage();
 			}
 		}
 		planes = world.getPlanes();
@@ -267,7 +270,7 @@ void processNormalKeys(unsigned char key, int x, int y) {
 		{
 			if (player.mask.intersects(wave->v_zombies[i]->mask)) {
 				canMove = false;
-				player.takeDamage();
+				//player.takeDamage();
 			}
 		}
 		planes = world.getPlanes();
@@ -287,7 +290,7 @@ void processNormalKeys(unsigned char key, int x, int y) {
 		{
 			if (player.mask.intersects(wave->v_zombies[i]->mask)) {
 				canMove = false;
-				player.takeDamage();
+				//player.takeDamage();
 			}
 		}
 		planes = world.getPlanes();
@@ -307,7 +310,7 @@ void processNormalKeys(unsigned char key, int x, int y) {
 		{
 			if (player.mask.intersects(wave->v_zombies[i]->mask)) {
 				canMove = false;
-				player.takeDamage();
+				//player.takeDamage();
 			}
 		}
 		planes = world.getPlanes();
@@ -325,43 +328,44 @@ void processNormalKeys(unsigned char key, int x, int y) {
 		break;
 	case 27:  exit(0); break;
 	}
-	if (player.getPosition().getZ() >= -49 && player.getPosition().getZ() <= -46.5 &&
-		player.getPosition().getX() >= 35.5 && player.getPosition().getX() <= 45.5 &&
-		player.getPosition().getY() <= 5.4)
+	if (z >= -49 && z <= -46.5 && x >= 35.5 && x <= 45.5 &&	y <= 5.4)
 	{
 		float ratio = (player.getPosition().getX() - 35.5) / 10;
 		player.setY(ratio*3.5);
 	}
 
-	else if (player.getPosition().getZ() >= -13.5 && player.getPosition().getZ() <= -11 &&
-		player.getPosition().getX() >= 15 && player.getPosition().getX() <= 25 &&
-		player.getPosition().getY() <= 5.4)
+	else if (z >= -13.5 && z<= -11 && x >= 15 && x <= 25 &&	y <= 5.4)
 	{
 		float ratio = (25 - player.getPosition().getX()) / 10;
 		player.setY(ratio*3.5);
 	}
 
-	else if (player.getPosition().getZ() >= -46.5 && player.getPosition().getZ() <= -44
-		&& player.getPosition().getX() >= 35.5 && player.getPosition().getX() <= 45.5 &&
-		player.getPosition().getY() >= (5) && player.getPosition().getY() <= (3.5 + 1.7 + 3.5))
+	else if (z >= -46.5 && z<= -44	&& x >= 35.5 && x <= 45.5 &&
+		y >= (5) && y <= (3.5 + 1.7 + 3.5))
 	{
 		float ratio = (45.5 - player.getPosition().getX()) / 10;
 		player.setY(ratio*3.5 + 3.5);
 	}
 
 	else {
-		if (player.getPosition().getY() >= (4.5) && player.getPosition().getY() <= (6))
+		if (y >= (4.5) && y <= (6))
 			player.setY(5.2 - 1.7);
-		else if (player.getPosition().getY() >= (8) && player.getPosition().getY() <= (9.5))
+		else if (y >= (8) && y <= (9.5))
 			player.setY(8.7 - 1.7);
-		else if (player.getPosition().getY() >= (1) && player.getPosition().getY() <= (2))
+		else if (y >= (1) && y <= (2))
 			player.setY(0);
 	}
-
+	Vector ammoPos = ammoBox.getLocation();
+	float aX = ammoPos.getX();
+	float aY = ammoPos.getY();
+	float aZ = ammoPos.getZ();
+	if (x > aX && x < aX + 0.64 && y > aY && y < aY + 3.5 && z > aZ - 0.34 && z < aZ)
+		ammoBox.update();//add code to reload
+	
 
 	player.lookAt();
-	cout << player.getPosition().getX() << " " << player.getPosition().getY() << " "
-		<< player.getPosition().getZ() << endl << endl;
+	//cout << player.getPosition().getX() << " " << player.getPosition().getY() << " "
+	//	<< player.getPosition().getZ() << endl << endl;
 }
 
 void mouseMove(int x, int y) {
@@ -386,7 +390,6 @@ void mouseClick(int button, int state, int x, int y) {
 		float y = player.getPosition().getY() + 0.1*(sin(player.getPhi()))-1;
 		float z = player.getPosition().getZ() - 0.1*(cos(player.getThetha()));
 		muzzleFlash = new ParticleEffect(x, y, z, 0.001, 0.9, 0.9, 0.2, 500, 0.01);
-		//muzzleFlash = new ParticleEffect(30, 1.7, -70, 0.1, 1.0, 1.0, 1.0, 500, 5);
 		player.shoot();
 
 		bufferGun.loadFromFile("../Gun.wav");
