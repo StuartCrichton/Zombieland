@@ -148,10 +148,8 @@ void render()
 	glPushMatrix();
 	glTranslatef(player->getPosition().getX(),
 		player->getPosition().getY(), player->getPosition().getZ());
-	//glRotatef(180, 0, 1, 0);//original gun points to left
-	//glTranslatef(30, 1, -70);
 	glRotatef(-player->getThetha() * 180 / 3.14, 0, 1, 0);
-	glTranslatef(0, 0, -0.2);
+	glTranslatef(0.2, 0, -0.2);
 	glRotatef(player->getPhi() * 180 / 3.14, 1, 0, 0);
 	glTranslatef(0, -0.3, 0);
 	glScalef(0.001, 0.001, 0.001);
@@ -304,7 +302,8 @@ void keyUp(unsigned char key, int x, int y) {
 }
 
 void deletePointers() {
-	wave->v_zombies.~vector();
+	for (unsigned i = wave->v_zombies.size()-1; i >= 0; i--)
+		delete wave->v_zombies[i];
 	delete player;
 	player = NULL;
 	delete hud;
@@ -347,7 +346,6 @@ int main(int argc, char** argv)
 	glutMouseFunc(mouseClick);
 	glutPassiveMotionFunc(mouseMove);
 
-	glutIdleFunc(idle);
 	glutTimerFunc(0, Timer, 0);
 	initGL();
 
