@@ -163,6 +163,7 @@
     <ClCompile Include="ModelObj.cpp" />
     <ClCompile Include="ParticleEffect.cpp" />
     <ClCompile Include="PathA.cpp" />
+    <ClCompile Include="PathFinding.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Ray.cpp" />
     <ClCompile Include="Vector.cpp" />
@@ -184,8 +185,10 @@
     <ClInclude Include="ModelObj.h" />
     <ClInclude Include="ParticleEffect.h" />
     <ClInclude Include="PathA.h" />
+    <ClInclude Include="PathFinding.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Ray.h" />
+    <ClInclude Include="SearchCell.h" />
     <ClInclude Include="Vector.h" />
     <ClInclude Include="Wave.h" />
     <ClInclude Include="World.h" />

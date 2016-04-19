@@ -1,5 +1,6 @@
 #pragma once
 #include "Character.h"
+#include "PathFinding.h"
 #include "PathA.h"
 #include <vector>
 
@@ -8,7 +9,7 @@ class Zombie : public Character
 public:
 	Zombie();
 	Zombie(float x, float y, float z);
-	std::vector<Vector> path;
+	//vector<Vector> path;
 	void render(Vector playerPos);
 	void update();
 	void drawZombie();
@@ -18,5 +19,6 @@ protected:
 
 private:
 	Vector playerPos;
+	//PathFinding path;
 };
 

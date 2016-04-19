@@ -587,51 +587,101 @@ void Zombie::render(Vector p) {
 }
 
 void Zombie::update() {
-	int x = round(pos_v.getX()), z = -round(pos_v.getZ());
+	float x = (pos_v.getX()), z = -(pos_v.getZ());
+	int roundX = (x + 0.5) >= trunc(x) + 1 ? ceil(x) : floor(x);
+	int roundZ = (z + 0.5) >= trunc(z) + 1 ? ceil(z) : floor(z);
+	/*this->path.FindPath(Vector(roundX,1, roundZ), playerPos);
+	if (path.foundGoal) {
+		Vector next = path.nextPathPos(Vector(x,1,z));
+		bool up = false, down = false, left = false, right = false;
+		if (x > next.getX()) {
+			left = true;
+			x -= 0.5;
+		}
+		else if (x < next.getX()) {
+			right = true;
+			x += 0.5;
+		}
+		if (z > next.getZ()) {
+			down = true;
+			z -= 0.5;
+		}
+		else if (z < next.getZ()) {
+			up = true;
+			z += 0.5;
+		}
+		if (up) {
+			this->thetha = 0;
+			if (right) thetha = 315;
+			if (left) thetha = 45;
+		}
+		else if (down) {
+			thetha = 180;
+			if (right) thetha = 225;
+			if (left) thetha = 135;
+		}
+		else if (right) thetha = 270;
+		else if (left) thetha = 90;
+		thetha = (thetha)*M_PI / 180;
+		mask.update(Vector(x, 1, -z));
+		if (mask.intersects(CollisionMask(playerPos, 0.4))) {
+			mask.update(pos_v);
+		}
+		else {
+			this->pos_v.setV(x, 1, -z);
+			this->look_v.setV(sin(thetha), sin(phi), -cos(thetha));
+		}
+	}*/
 	PathA path = PathA();
 	path.InitializePathfinder();
-	path.pathStatus[1] = path.FindPath(1, x, z, round(playerPos.getX()), -round(playerPos.getZ()));
-	//cout << endl << x << ", " << z << endl;
-	//cout << round(playerPos.getX()) << ", " << -round(playerPos.getZ()) << endl;
+	path.pathStatus[1] = path.FindPath(1, roundX, roundZ, round(playerPos.getX()), -round(playerPos.getZ()));
+	cout << endl << roundX << " " << roundZ << endl;
 	if (path.pathStatus[1] == path.found) {
-
-		path.ReadPath(1, x, z, 0.01);
+		float speed = 0.5;
+		path.ReadPath(1, roundX, roundZ, speed);
 		bool up = false, down = false, left = false, right = false;
+		cout << path.xPath[1] << " " << path.yPath[1] << endl;
+		cout << round(playerPos.getX()) << ", " << -round(playerPos.getZ()) << endl;
 		if (x > path.xPath[1]) {
-			x = x - 0.01; left = true;
+			x = x - speed; left = true;
 		}
-		if (x < path.xPath[1]) {
-			x = x + 0.01; right = true;
+		else if (x < path.xPath[1]) {
+			x = x + speed; right = true;
 		}
 		if (z > path.yPath[1]) {
-			z = z - 0.01; up = true;
+			z = z - speed; down = true;
 		}
-		if (z < path.yPath[1]) {
-			z = z + 0.01; down = true;
+		else if (z < path.yPath[1]) {
+			z = z + speed; up = true;
 		}
 		if (path.pathLocation[1]== path.pathLength[1])
 		{
-			if (abs(x - path.xPath[1]) < 0.01) x = path.xPath[1];
-			if (abs(z - path.yPath[1]) < 0.01) z = path.yPath[1];
+			if (abs(x - path.xPath[1]) < speed) x = path.xPath[1];
+			if (abs(z - path.yPath[1]) < speed) z = path.yPath[1];
 		}
 		if (up) {
-			this->thetha = 90;
-			if (right) thetha = 45;
-			if (left) thetha = 135;
+			this->thetha = 0;
+			if (right) thetha = 315;
+			if (left) thetha = 45;
 		}
 		else if (down) {
-			thetha = 270;
-			if (right) thetha = 315;
-			if (left) thetha = 225;
+			thetha = 180;
+			if (right) thetha = 225;
+			if (left) thetha = 135;
 		}
-		else if (right) thetha = 0;
-		else if (left) thetha = 180;
+		else if (right) thetha = 270;
+		else if (left) thetha = 90;
 		thetha = (thetha)*M_PI / 180;
-		this->pos_v.setV(x, 1, -z);
-		this->look_v.setV(sin(thetha), sin(phi), -cos(thetha));
-		this->mask.update(pos_v);
+		mask.update(Vector(x, 1, -z));
+		if (mask.intersects(CollisionMask(playerPos,0.4))) {
+			mask.update(pos_v);
+		}
+		else {
+			this->pos_v.setV(x, 1, -z);
+			this->look_v.setV(sin(thetha), sin(phi), -cos(thetha));
+		}
+		
 	}
-
 	path.EndPathfinder();
 }
 
