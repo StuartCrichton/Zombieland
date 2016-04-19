@@ -579,7 +579,7 @@ void Zombie::drawZombie() {
 
 void Zombie::render(Vector p) {
 	this->playerPos = p;
-	//update();
+	update();
 	glPushMatrix();
 	glTranslated(pos_v.getX(), pos_v.getY(), pos_v.getZ());
 	drawZombie();
@@ -588,7 +588,51 @@ void Zombie::render(Vector p) {
 
 void Zombie::update() {
 	float x = (pos_v.getX()), z = -(pos_v.getZ());
-	PathA path = PathA();
+	int roundX = (x + 0.5) >= trunc(x) + 1 ? ceil(x) : floor(x);
+	int roundZ = (z + 0.5) >= trunc(z) + 1 ? ceil(z) : floor(z);
+	this->path.FindPath(Vector(roundX,1, roundZ), playerPos);
+	if (path.foundGoal) {
+		Vector next = path.nextPathPos(Vector(x,1,z));
+		bool up = false, down = false, left = false, right = false;
+		if (x > next.getX()) {
+			left = true;
+			x -= 0.5;
+		}
+		else if (x < next.getX()) {
+			right = true;
+			x += 0.5;
+		}
+		if (z > next.getZ()) {
+			down = true;
+			z -= 0.5;
+		}
+		else if (z < next.getZ()) {
+			up = true;
+			z += 0.5;
+		}
+		if (up) {
+			this->thetha = 0;
+			if (right) thetha = 315;
+			if (left) thetha = 45;
+		}
+		else if (down) {
+			thetha = 180;
+			if (right) thetha = 225;
+			if (left) thetha = 135;
+		}
+		else if (right) thetha = 270;
+		else if (left) thetha = 90;
+		thetha = (thetha)*M_PI / 180;
+		mask.update(Vector(x, 1, -z));
+		if (mask.intersects(CollisionMask(playerPos, 0.4))) {
+			mask.update(pos_v);
+		}
+		else {
+			this->pos_v.setV(x, 1, -z);
+			this->look_v.setV(sin(thetha), sin(phi), -cos(thetha));
+		}
+	}
+	/*PathA path = PathA();
 	if (z > 15.5 && z < 16) {
 		cout << z << endl;
 	}
@@ -618,7 +662,7 @@ void Zombie::update() {
 		{
 			if (abs(x - path.xPath[1]) < speed) x = path.xPath[1];
 			if (abs(z - path.yPath[1]) < speed) z = path.yPath[1];
-		}*/
+		}
 		if (up) {
 			this->thetha = 180;
 			if (right) thetha = 135;
@@ -642,7 +686,7 @@ void Zombie::update() {
 		}
 		
 	}
-	path.EndPathfinder();
+	path.EndPathfinder();*/
 }
 
 Zombie::Zombie()

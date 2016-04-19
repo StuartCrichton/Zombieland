@@ -78,6 +78,9 @@
     <ClCompile Include="MuzzleFlash.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="PathFinding.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Character.h">
@@ -135,6 +138,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MuzzleFlash.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SearchCell.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PathFinding.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
