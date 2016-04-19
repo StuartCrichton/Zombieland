@@ -1,9 +1,7 @@
 #include "HUD.h"
-
 #ifdef _WIN32
 #include <Windows.h>
 #endif // _WIN32
-
 #include <GL/glut.h>
 #include <cstdlib>
 #include <iostream>
@@ -36,63 +34,10 @@ void HUD::update(int health, int ammoCartridge, int ammoTotal, int score, int wa
 	this->look_v = look_v;
 }
 
-void HUD::renderGun() {
-	/*
-	glPushMatrix();
-	glDisable(GL_LIGHTING);
-	glDisable(GL_DEPTH_TEST);
-	glMatrixMode(GL_PROJECTION);
-	glPushMatrix();
-	glLoadIdentity();
-	glOrtho(0.0f, glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT), 0.0f, 0.0f, 1.0f);
-	glMatrixMode(GL_MODELVIEW);
-	glPushMatrix();
-	glLoadIdentity();
-
-	//Draw the gun
-	glColor3f(0.125f, 0.075f, 0.0f);
-	glBegin(GL_POLYGON);
-	glVertex2f(glutGet(GLUT_WINDOW_WIDTH), 2 * (glutGet(GLUT_WINDOW_HEIGHT) / 3.0f));
-	glVertex2f((glutGet(GLUT_WINDOW_WIDTH) / 2.0f) + 60.0f, (glutGet(GLUT_WINDOW_HEIGHT) / 2.0f) + 10.0f);
-	glVertex2f((glutGet(GLUT_WINDOW_WIDTH) / 2.0f) + 60.0f, (glutGet(GLUT_WINDOW_HEIGHT) / 2.0f) + 50.0f);
-	glVertex2f(glutGet(GLUT_WINDOW_WIDTH) - 200.0f, glutGet(GLUT_WINDOW_HEIGHT));
-	glVertex2f(glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
-	glEnd();
-
-	glBegin(GL_POLYGON);
-	glVertex2f(glutGet(GLUT_WINDOW_WIDTH), 2 * (glutGet(GLUT_WINDOW_HEIGHT) / 3.0f));
-	glVertex2f((glutGet(GLUT_WINDOW_WIDTH) / 2.0f) + 60.0f, (glutGet(GLUT_WINDOW_HEIGHT) / 2.0f) + 10.0f);
-	glVertex2f((glutGet(GLUT_WINDOW_WIDTH) / 2.0f) + 90.0f, (glutGet(GLUT_WINDOW_HEIGHT) / 2.0f) + 10.0f);
-	glEnd();
-
-	glColor3f(0.0f, 0.0f, 0.0f);
-	glBegin(GL_LINES);
-	glVertex2f(glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT) - 150.0f);
-	glVertex2f((glutGet(GLUT_WINDOW_WIDTH) / 2.0f) + 60.0f, (glutGet(GLUT_WINDOW_HEIGHT) / 2.0f) + 10.0f);
-	glEnd();
-
-	//Draw the front iron sites
-	glColor3f(0.0f, 1.0f, 0.0f);
-	glBegin(GL_POLYGON);
-	glVertex2f(glutGet(GLUT_WINDOW_WIDTH) / 2.0f + 80.0f, (glutGet(GLUT_WINDOW_HEIGHT) / 2.0f) + 7.0f);
-	glVertex2f(glutGet(GLUT_WINDOW_WIDTH) / 2.0f + 80.0f, (glutGet(GLUT_WINDOW_HEIGHT) / 2.0f) + 12.0f);
-	glVertex2f(glutGet(GLUT_WINDOW_WIDTH) / 2.0f + 85.0f, (glutGet(GLUT_WINDOW_HEIGHT) / 2.0f) + 12.0f);
-	glVertex2f(glutGet(GLUT_WINDOW_WIDTH) / 2.0f + 85.0f, (glutGet(GLUT_WINDOW_HEIGHT) / 2.0f) + 7.0f);
-	glEnd();
-
-	//Reset Colors
-	glColor3f(0.0f, 1.0f, 0.3f);
-	glPopMatrix();
-
-	//Reset 3D
-	glMatrixMode(GL_PROJECTION);
-	glPopMatrix();
-	glMatrixMode(GL_MODELVIEW);
-	glPopMatrix();
-	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_LIGHTING);
-	glPopMatrix();
-	*/
+void HUD::updateETA(int time)
+{
+	this->minutes = time / 60;
+	this->seconds = time % 60;
 }
 
 void HUD::renderCrosshair() {
@@ -245,7 +190,6 @@ void HUD::renderCurrentAmmo() {
 	glPopMatrix();
 }
 
-
 void HUD::renderScoreText() {
 	glPushMatrix();
 	glDisable(GL_LIGHTING);
@@ -318,7 +262,7 @@ void HUD::renderScore() {
 	glPopMatrix();
 }
 
-void HUD::renderWave() {
+void HUD::renderWaveText() {
 	glPushMatrix();
 	glDisable(GL_LIGHTING);
 	glDisable(GL_DEPTH_TEST);
@@ -354,7 +298,7 @@ void HUD::renderWave() {
 	glPopMatrix();
 }
 
-void HUD::renderWaveText() {
+void HUD::renderWave() {
 	glPushMatrix();
 	glDisable(GL_LIGHTING);
 	glDisable(GL_DEPTH_TEST);
@@ -366,7 +310,7 @@ void HUD::renderWaveText() {
 	glPushMatrix();
 	glLoadIdentity();
 
-	//Draw the lumber count
+	//Draw the wave number
 	glColor3f(0.2f, 1.0f, 0.0f);
 	glTranslated(glutGet(GLUT_WINDOW_WIDTH) - 50, 40, 0);
 	glRotatef(180, 1.0f, 0.0f, 0.0f);
@@ -390,8 +334,127 @@ void HUD::renderWaveText() {
 	glPopMatrix();
 }
 
+void HUD::renderETAText()
+{
+	glPushMatrix();
+	glDisable(GL_LIGHTING);
+	glDisable(GL_DEPTH_TEST);
+	glMatrixMode(GL_PROJECTION);
+	glPushMatrix();
+	glLoadIdentity();
+	glOrtho(0.0f, glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT), 0.0f, 0.0f, 1.0f);
+	glMatrixMode(GL_MODELVIEW);
+	glPushMatrix();
+	glLoadIdentity();
+
+	//Draw the Timer text
+	glColor3f(0.0f, 1.0f, 1.0f);
+	glTranslated(glutGet(GLUT_WINDOW_WIDTH) - 180, 100, 0);
+	glRotatef(180, 1.0f, 0.0f, 0.0f);
+	glScalef(0.3f, 0.3f, 1.0f);
+	string extractionText = "ETA:";
+	for (unsigned i = 0; i < extractionText.size(); i++) {
+		glutStrokeCharacter(GLUT_STROKE_ROMAN, extractionText[i]);
+	}
+
+	//Reset Colors
+	glColor3f(0.0f, 1.0f, 0.3f);
+	glPopMatrix();
+
+	//Reset 3D
+	glMatrixMode(GL_PROJECTION);
+	glPopMatrix();
+	glMatrixMode(GL_MODELVIEW);
+	glPopMatrix();
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_LIGHTING);
+	glPopMatrix();
+}
+
+void HUD::renderETA()
+{
+	glPushMatrix();
+	glDisable(GL_LIGHTING);
+	glDisable(GL_DEPTH_TEST);
+	glMatrixMode(GL_PROJECTION);
+	glPushMatrix();
+	glLoadIdentity();
+	glOrtho(0.0f, glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT), 0.0f, 0.0f, 1.0f);
+	glMatrixMode(GL_MODELVIEW);
+	glPushMatrix();
+	glLoadIdentity();
+
+	//Draw the count down timer
+	glColor3f(0.2f, 1.0f, 0.0f);
+	glTranslated(glutGet(GLUT_WINDOW_WIDTH) - 100, 100, 0);
+	glRotatef(180, 1.0f, 0.0f, 0.0f);
+	glScalef(0.3f, 0.3f, 1.0f);
+	string timer = to_string(this->minutes) + ":" + to_string(this->seconds);
+	for (unsigned i = 0; i < timer.size(); i++) {
+		glutStrokeCharacter(GLUT_STROKE_ROMAN, timer[i]);
+	}
+
+	//Reset Colors
+	glColor3f(0.0f, 1.0f, 0.3f);
+	glPopMatrix();
+
+	//Reset 3D
+	glMatrixMode(GL_PROJECTION);
+	glPopMatrix();
+	glMatrixMode(GL_MODELVIEW);
+	glPopMatrix();
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_LIGHTING);
+	glPopMatrix();
+}
+
+void HUD::renderEndGameScreen()
+{
+	glPushMatrix();
+	glDisable(GL_LIGHTING);
+	glDisable(GL_DEPTH_TEST);
+	glMatrixMode(GL_PROJECTION);
+	glPushMatrix();
+	glLoadIdentity();
+	glOrtho(0.0f, glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT), 0.0f, 0.0f, 1.0f);
+	glMatrixMode(GL_MODELVIEW);
+	glPushMatrix();
+	glLoadIdentity();
+
+	glColor3f(0.0f, 0.0f, 0.0f);
+	glBegin(GL_LINES);
+	glVertex2d(0.0, 0.0);
+	glVertex2d(glutGet(GLUT_WINDOW_WIDTH), 0.0);
+	glVertex2d(glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
+	glVertex2d(0.0, glutGet(GLUT_WINDOW_HEIGHT));
+	glVertex2d(0.0, 0.0);
+	glEnd();
+
+	//Draw the game over text
+	glColor3f(1.0f, 0.0f, 0.0f);
+	glTranslated((glutGet(GLUT_WINDOW_WIDTH) / 2.0) - 100.0, glutGet(GLUT_WINDOW_HEIGHT) / 2.0, 0);
+	glRotatef(180, 1.0f, 0.0f, 0.0f);
+	glScalef(0.3f, 0.3f, 1.0f);
+	string gameover = "Game Over";
+	for (unsigned i = 0; i < gameover.size(); i++) {
+		glutStrokeCharacter(GLUT_STROKE_ROMAN, gameover[i]);
+	}
+
+	//Reset Colors
+	glColor3f(0.0f, 1.0f, 0.3f);
+	glPopMatrix();
+
+	//Reset 3D
+	glMatrixMode(GL_PROJECTION);
+	glPopMatrix();
+	glMatrixMode(GL_MODELVIEW);
+	glPopMatrix();
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_LIGHTING);
+	glPopMatrix();
+}
+
 void HUD::render() {
-	renderGun();
 	renderCrosshair();
 	renderHealth();
 	renderCurrentAmmo();
@@ -400,4 +463,6 @@ void HUD::render() {
 	renderScore();
 	renderWaveText();
 	renderWave();
+	renderETAText();
+	renderETA();
 }
