@@ -590,7 +590,7 @@ void Zombie::update() {
 	float x = (pos_v.getX()), z = -(pos_v.getZ());
 	int roundX = (x + 0.5) >= trunc(x) + 1 ? ceil(x) : floor(x);
 	int roundZ = (z + 0.5) >= trunc(z) + 1 ? ceil(z) : floor(z);
-	this->path.FindPath(Vector(roundX,1, roundZ), playerPos);
+	/*this->path.FindPath(Vector(roundX,1, roundZ), playerPos);
 	if (path.foundGoal) {
 		Vector next = path.nextPathPos(Vector(x,1,z));
 		bool up = false, down = false, left = false, right = false;
@@ -631,18 +631,14 @@ void Zombie::update() {
 			this->pos_v.setV(x, 1, -z);
 			this->look_v.setV(sin(thetha), sin(phi), -cos(thetha));
 		}
-	}
-	/*PathA path = PathA();
-	if (z > 15.5 && z < 16) {
-		cout << z << endl;
-	}
+	}*/
+	PathA path = PathA();
 	path.InitializePathfinder();
-	path.pathStatus[1] = path.FindPath(1, round(x), round(z), round(playerPos.getX()), -round(playerPos.getZ()));
-	cout << endl << x << ", " << z << endl;
-	
+	path.pathStatus[1] = path.FindPath(1, roundX, roundZ, round(playerPos.getX()), -round(playerPos.getZ()));
+	cout << endl << roundX << " " << roundZ << endl;
 	if (path.pathStatus[1] == path.found) {
 		float speed = 0.5;
-		path.ReadPath(1, round(x), round(z), speed);
+		path.ReadPath(1, roundX, roundZ, speed);
 		bool up = false, down = false, left = false, right = false;
 		cout << path.xPath[1] << " " << path.yPath[1] << endl;
 		cout << round(playerPos.getX()) << ", " << -round(playerPos.getZ()) << endl;
@@ -658,23 +654,23 @@ void Zombie::update() {
 		else if (z < path.yPath[1]) {
 			z = z + speed; up = true;
 		}
-		/*if (path.pathLocation[1]== path.pathLength[1])
+		if (path.pathLocation[1]== path.pathLength[1])
 		{
 			if (abs(x - path.xPath[1]) < speed) x = path.xPath[1];
 			if (abs(z - path.yPath[1]) < speed) z = path.yPath[1];
 		}
 		if (up) {
-			this->thetha = 180;
-			if (right) thetha = 135;
-			if (left) thetha = 225;
+			this->thetha = 0;
+			if (right) thetha = 315;
+			if (left) thetha = 45;
 		}
 		else if (down) {
-			thetha = 0;
-			if (right) thetha = 45;
-			if (left) thetha = 315;
+			thetha = 180;
+			if (right) thetha = 225;
+			if (left) thetha = 135;
 		}
-		else if (right) thetha = 90;
-		else if (left) thetha = 270;
+		else if (right) thetha = 270;
+		else if (left) thetha = 90;
 		thetha = (thetha)*M_PI / 180;
 		mask.update(Vector(x, 1, -z));
 		if (mask.intersects(CollisionMask(playerPos,0.4))) {
@@ -686,7 +682,7 @@ void Zombie::update() {
 		}
 		
 	}
-	path.EndPathfinder();*/
+	path.EndPathfinder();
 }
 
 Zombie::Zombie()

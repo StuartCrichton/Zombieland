@@ -27,10 +27,7 @@ void PathA::InitializePathfinder()
 //-----------------------------------------------------------------------------
 void PathA::EndPathfinder()
 {
-	for (int x = 0; x < numberPeople + 1; x++)
-	{
-		free(pathBank[x]);
-	}
+		free(pathBank[1]);
 }
 
 
@@ -328,7 +325,7 @@ int PathA::FindPath(int pathfinderID, int startingX, int startingY,
 		pathX = targetX; pathY = targetY;
 		do
 		{
-			//Look up the parent of the current cell.	
+			//Look up the parent of the current cell.
 			tempx = parentX[pathX][pathY];
 			pathY = parentY[pathX][pathY];
 			pathX = tempx;
@@ -474,7 +471,7 @@ int PathA::ReadPathX(int pathfinderID, int pathLocation)
 		//of the path square (optional). This assumes that you are using
 		//sprites that are centered -- i.e., with the midHandle command.
 		//Otherwise you will want to adjust this.
-		x = tileSize*x + .5*tileSize;
+		//x = tileSize*x + .5*tileSize;
 
 	}
 	return x;
@@ -498,7 +495,7 @@ int PathA::ReadPathY(int pathfinderID, int pathLocation)
 		//of the path square (optional). This assumes that you are using
 		//sprites that are centered -- i.e., with the midHandle command.
 		//Otherwise you will want to adjust this.
-		y = tileSize*y + .5*tileSize;
+		//y = tileSize*y + .5*tileSize;
 
 	}
 	return y;
