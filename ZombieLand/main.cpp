@@ -351,12 +351,14 @@ int main(int argc, char** argv)
 
 	sf::Music music;
 	music.openFromFile("../Horror-theme-song.wav");
-	//music.play();
+	music.play();
+	music.setVolume(25);
 	music.setLoop(true);
 
 	sf::Music music2;
 	music2.openFromFile("../Zombie-sound.wav");
-	//music2.play();
+	music2.setVolume(20);
+	music2.play();
 	music2.setLoop(true);
 
 	glutInit(&argc, argv);
