@@ -448,7 +448,7 @@ void Zombie::drawZombie() {
 
 	// Top Far Right
 	glPushMatrix();
-	glColor3f(1.0, 0.0, 0.0);
+	//glColor3f(1.0, 0.0, 0.0);
 	glTranslatef(0.06, -0.0575, -0.215);
 	glRotatef(180, 0.0, 1.0, 0.0);
 	glRotatef(90, -1.0, 0.0, 0.0);
@@ -462,7 +462,7 @@ void Zombie::drawZombie() {
 
 	// Top Middle Left
 	glPushMatrix();
-	glColor3f(1.0, 0.0, 0.0);
+	//glColor3f(1.0, 0.0, 0.0);
 	glTranslatef(-0.03, -0.0575, -0.215);
 	glRotatef(180, 0.0, 1.0, 0.0);
 	glRotatef(90, -1.0, 0.0, 0.0);
@@ -476,7 +476,7 @@ void Zombie::drawZombie() {
 
 	// Top Middle Right
 	glPushMatrix();
-	glColor3f(1.0, 0.0, 0.0);
+	//glColor3f(1.0, 0.0, 0.0);
 	glTranslatef(0.03, -0.0575, -0.215);
 	glRotatef(180, 0.0, 1.0, 0.0);
 	glRotatef(90, -1.0, 0.0, 0.0);
@@ -490,7 +490,7 @@ void Zombie::drawZombie() {
 
 	//Top Middle
 	glPushMatrix();
-	glColor3f(1.0, 0.0, 0.0);
+	//glColor3f(1.0, 0.0, 0.0);
 	glTranslatef(0.0, -0.0575, -0.215);
 	glRotatef(180, 0.0, 1.0, 0.0);
 	glRotatef(90, -1.0, 0.0, 0.0);
@@ -504,7 +504,7 @@ void Zombie::drawZombie() {
 
 	// Bottom Far Left
 	glPushMatrix();
-	glColor3f(1.0, 0.0, 0.0);
+	//glColor3f(1.0, 0.0, 0.0);
 	glTranslatef(-0.06, -0.1025, -0.215);
 	glRotatef(180, 0.0, 1.0, 0.0);
 	glRotatef(90, -1.0, 0.0, 0.0);
@@ -518,7 +518,7 @@ void Zombie::drawZombie() {
 
 	// Bottom Far Right
 	glPushMatrix();
-	glColor3f(1.0, 0.0, 0.0);
+	//glColor3f(1.0, 0.0, 0.0);
 	glTranslatef(0.06, -0.1025, -0.215);
 	glRotatef(180, 0.0, 1.0, 0.0);
 	glRotatef(90, -1.0, 0.0, 0.0);
@@ -532,7 +532,7 @@ void Zombie::drawZombie() {
 
 	// Bottom Middle Left
 	glPushMatrix();
-	glColor3f(1.0, 0.0, 0.0);
+	//glColor3f(1.0, 0.0, 0.0);
 	glTranslatef(-0.03, -0.1025, -0.215);
 	glRotatef(180, 0.0, 1.0, 0.0);
 	glRotatef(90, -1.0, 0.0, 0.0);
@@ -546,7 +546,7 @@ void Zombie::drawZombie() {
 
 	// Bottom Middle Right
 	glPushMatrix();
-	glColor3f(1.0, 0.0, 0.0);
+	//glColor3f(1.0, 0.0, 0.0);
 	glTranslatef(0.03, -0.1025, -0.215);
 	glRotatef(180, 0.0, 1.0, 0.0);
 	glRotatef(90, -1.0, 0.0, 0.0);
@@ -560,7 +560,7 @@ void Zombie::drawZombie() {
 
 	//Bottom Middle
 	glPushMatrix();
-	glColor3f(1.0, 0.0, 0.0);
+	//glColor3f(1.0, 0.0, 0.0);
 	glTranslatef(0.0, -0.1025, -0.215);
 	glRotatef(180, 0.0, 1.0, 0.0);
 	glRotatef(90, -1.0, 0.0, 0.0);
