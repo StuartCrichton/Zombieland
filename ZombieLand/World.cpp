@@ -25,7 +25,7 @@ void World::init() {
 	this->building.loadObjFile("../Office.obj");//create the building
 	this->ammoBox.loadObjFile("../AmmoBox.obj");//create the ammo box
 	this->gun.loadObjFile("../Gun3.obj");
-	//setPlanes();
+	setPlanes();
 }
 
 void World::setPlanes() {
