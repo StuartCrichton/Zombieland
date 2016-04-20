@@ -585,10 +585,6 @@ void Zombie::render(Vector p) {
 	glTranslated(pos_v.getX(), pos_v.getY(), pos_v.getZ());
 	drawZombie();
 	glPopMatrix();
-	if (thetha == 0)
-		cout << "disaster" << endl;
-	else
-		cout << "what" << endl;
 }
 
 void Zombie::update() {
@@ -599,7 +595,7 @@ void Zombie::update() {
 	if(counter == 0)
 		this->path = pathF.findPath(roundX, roundZ, playerPos.getX(), -playerPos.getZ());
 	counter++;
-	if (counter == 10) counter = 0;//check for new path every ten steps, less processing
+	if (counter == 20) counter = 0;//check for new path every ten steps, less processing
 	if (path.correctPath.size() > 0) {
 
 		int newX = path.correctPath.top().getX();
