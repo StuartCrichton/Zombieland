@@ -182,7 +182,6 @@
     <ClInclude Include="CollisionPlane.h" />
     <ClInclude Include="Gun.h" />
     <ClInclude Include="HUD.h" />
-    <ClInclude Include="ModelObj.h" />
     <ClInclude Include="ParticleEffect.h" />
     <ClInclude Include="Path.h" />
     <ClInclude Include="PathFinder.h" />

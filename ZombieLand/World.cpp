@@ -4,7 +4,6 @@
 #endif // _WIN32
 #include <GL/glut.h>
 #include <cstdlib>
-#include "ModelObj.h"
 #include "CollisionPlane.h"
 #include "AssimpModelLoader.h"
 
@@ -12,20 +11,22 @@
 #include <windows.h>
 #include <GL/glut.h>
 #include <cstdlib>
-#include "ModelObj.h"
 #include "CollisionPlane.h"
 #include "AssimpModelLoader.h"
+#include "PathFinder.h"
 
 World::World()
 {
 
 }
 
+
 void World::init() {
 	this->building.loadObjFile("../Office.obj");//create the building
 	this->ammoBox.loadObjFile("../AmmoBox.obj");//create the ammo box
 	this->gun.loadObjFile("../Gun3.obj");
 	setPlanes();
+	setObstacles();
 }
 
 void World::setPlanes() {
@@ -143,6 +144,11 @@ void World::setPlanes() {
 		Vector(25, 0, -13.25), Vector(11, 0, -13.25), Vector(11, 3.5, -13.25)));
 	planes.push_back(new CollisionPlane(Vector(0, 0, -1), Vector(20, 3.5, -23),
 		Vector(20, 0, -23), Vector(11, 0, -23), Vector(11, 3.5, -23)));
+}
+
+void World::setObstacles() {
+	//set char[i][j] as w for a wall
+
 }
 
 vector<CollisionPlane*>* World::getPlanes() {

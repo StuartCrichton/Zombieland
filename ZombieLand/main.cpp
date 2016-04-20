@@ -45,9 +45,9 @@ GLfloat light_position2[] = { dimx / 2 , 30, -(dimz / 2),1.0 };
 GLfloat light_position3[] = { dimx / 2, -50, -(dimz / 2), 1.0 };
 
 //Stuff pertraining to the wave
-Wave *wave = new Wave();
-float currentTimerDuration = wave->WAVE_DURATION;
-int timerInterval = wave->getZombieSpawnInterval();
+Wave *wave; 
+float currentTimerDuration;
+int timerInterval;
 int numOfKilledZombies = 0;
 bool isWave = true;
 
@@ -368,6 +368,9 @@ int main(int argc, char** argv)
 	glutCreateWindow("ZombieLand Survivor");
 	//glutFullScreen();
 	world.init();
+	wave = new Wave(world);
+	currentTimerDuration = wave->WAVE_DURATION;
+	timerInterval = wave->getZombieSpawnInterval();
 
 	glutDisplayFunc(display);
 	glutReshapeFunc(reshape);

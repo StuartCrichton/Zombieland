@@ -10,11 +10,13 @@ bool operator<(const TileNode & a, const TileNode & b) {
 	return f < thatf;
 }
 
-PathFinder::PathFinder()
+PathFinder::PathFinder(World w)
 {
+	this->world = w;
 	for (int i = 0; i < 60; i++)
 		for (int j = 0; j < 80; j++) {
-			obstacles[i][j] = 'o';
+			if(world.obstacles[i][j] != 'w')
+				world.obstacles[i][j] = 'o';
 		}
 }
 
@@ -49,7 +51,7 @@ Path PathFinder::findPath(int xStart, int yStart, int xGoal, int yGoal) {
 				int yNeighbour = j + current.y;
 				if (i == 0 && j == 0)continue;
 
-				if (obstacles[xNeighbour][yNeighbour] == 'o') {
+				if (world.obstacles[xNeighbour][yNeighbour] == 'o') {
 
 					int gNew = current.g + 1;
 					TileNode neighbour;

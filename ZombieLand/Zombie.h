@@ -3,12 +3,13 @@
 #include "Path.h"
 #include "PathFinder.h"
 #include <vector>
+#include "World.h"
 
 class Zombie : public Character
 {
 public:
 	Zombie();
-	Zombie(float x, float y, float z);
+	Zombie(float x, float y, float z, World w);
 	//vector<Vector> path;
 	void render(Vector playerPos);
 	void update();
@@ -19,6 +20,7 @@ protected:
 
 private:
 	Vector playerPos;
+	World world;//for wall collision
 	//PathFinding path;
 };
 
