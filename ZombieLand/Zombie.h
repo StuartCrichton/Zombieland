@@ -2,6 +2,8 @@
 #include "Character.h"
 #include "PathFinding.h"
 #include "PathA.h"
+#include "Path.h"
+#include "PathFinder.h"
 #include <vector>
 
 class Zombie : public Character

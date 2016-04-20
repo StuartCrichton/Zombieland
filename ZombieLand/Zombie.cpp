@@ -449,7 +449,7 @@ void Zombie::drawZombie() {
 
 	// Top Far Right
 	glPushMatrix();
-	glColor3f(1.0, 0.0, 0.0);
+	//glColor3f(1.0, 0.0, 0.0);
 	glTranslatef(0.06, -0.0575, -0.215);
 	glRotatef(180, 0.0, 1.0, 0.0);
 	glRotatef(90, -1.0, 0.0, 0.0);
@@ -463,7 +463,7 @@ void Zombie::drawZombie() {
 
 	// Top Middle Left
 	glPushMatrix();
-	glColor3f(1.0, 0.0, 0.0);
+	//glColor3f(1.0, 0.0, 0.0);
 	glTranslatef(-0.03, -0.0575, -0.215);
 	glRotatef(180, 0.0, 1.0, 0.0);
 	glRotatef(90, -1.0, 0.0, 0.0);
@@ -477,7 +477,7 @@ void Zombie::drawZombie() {
 
 	// Top Middle Right
 	glPushMatrix();
-	glColor3f(1.0, 0.0, 0.0);
+	//glColor3f(1.0, 0.0, 0.0);
 	glTranslatef(0.03, -0.0575, -0.215);
 	glRotatef(180, 0.0, 1.0, 0.0);
 	glRotatef(90, -1.0, 0.0, 0.0);
@@ -491,7 +491,7 @@ void Zombie::drawZombie() {
 
 	//Top Middle
 	glPushMatrix();
-	glColor3f(1.0, 0.0, 0.0);
+	//glColor3f(1.0, 0.0, 0.0);
 	glTranslatef(0.0, -0.0575, -0.215);
 	glRotatef(180, 0.0, 1.0, 0.0);
 	glRotatef(90, -1.0, 0.0, 0.0);
@@ -505,7 +505,7 @@ void Zombie::drawZombie() {
 
 	// Bottom Far Left
 	glPushMatrix();
-	glColor3f(1.0, 0.0, 0.0);
+	//glColor3f(1.0, 0.0, 0.0);
 	glTranslatef(-0.06, -0.1025, -0.215);
 	glRotatef(180, 0.0, 1.0, 0.0);
 	glRotatef(90, -1.0, 0.0, 0.0);
@@ -519,7 +519,7 @@ void Zombie::drawZombie() {
 
 	// Bottom Far Right
 	glPushMatrix();
-	glColor3f(1.0, 0.0, 0.0);
+	//glColor3f(1.0, 0.0, 0.0);
 	glTranslatef(0.06, -0.1025, -0.215);
 	glRotatef(180, 0.0, 1.0, 0.0);
 	glRotatef(90, -1.0, 0.0, 0.0);
@@ -533,7 +533,7 @@ void Zombie::drawZombie() {
 
 	// Bottom Middle Left
 	glPushMatrix();
-	glColor3f(1.0, 0.0, 0.0);
+	//glColor3f(1.0, 0.0, 0.0);
 	glTranslatef(-0.03, -0.1025, -0.215);
 	glRotatef(180, 0.0, 1.0, 0.0);
 	glRotatef(90, -1.0, 0.0, 0.0);
@@ -547,7 +547,7 @@ void Zombie::drawZombie() {
 
 	// Bottom Middle Right
 	glPushMatrix();
-	glColor3f(1.0, 0.0, 0.0);
+	//glColor3f(1.0, 0.0, 0.0);
 	glTranslatef(0.03, -0.1025, -0.215);
 	glRotatef(180, 0.0, 1.0, 0.0);
 	glRotatef(90, -1.0, 0.0, 0.0);
@@ -561,7 +561,7 @@ void Zombie::drawZombie() {
 
 	//Bottom Middle
 	glPushMatrix();
-	glColor3f(1.0, 0.0, 0.0);
+	//glColor3f(1.0, 0.0, 0.0);
 	glTranslatef(0.0, -0.1025, -0.215);
 	glRotatef(180, 0.0, 1.0, 0.0);
 	glRotatef(90, -1.0, 0.0, 0.0);
@@ -580,7 +580,7 @@ void Zombie::drawZombie() {
 
 void Zombie::render(Vector p) {
 	this->playerPos = p;
-	update();
+	//update();
 	glPushMatrix();
 	glTranslated(pos_v.getX(), pos_v.getY(), pos_v.getZ());
 	drawZombie();
@@ -591,6 +591,19 @@ void Zombie::update() {
 	float x = (pos_v.getX()), z = -(pos_v.getZ());
 	int roundX = (x + 0.5) >= trunc(x) + 1 ? ceil(x) : floor(x);
 	int roundZ = (z + 0.5) >= trunc(z) + 1 ? ceil(z) : floor(z);
+	PathFinder pathF;
+	Path path = pathF.findPath(roundX, roundZ, playerPos.getX(), -playerPos.getZ());
+	int newX = path.correctPath.top().x;
+	int newZ = path.correctPath.top().y;
+	Vector v = Vector(newX, 1, -newZ);
+	mask.update(v);
+	if (mask.intersects(CollisionMask(playerPos, 0.4))) {
+		mask.update(pos_v);
+	}
+	else {
+		this->pos_v = v;
+		this->look_v.setV(sin(thetha), sin(phi), -cos(thetha));
+	}
 	/*this->path.FindPath(Vector(roundX,1, roundZ), playerPos);
 	if (path.foundGoal) {
 		Vector next = path.nextPathPos(Vector(x,1,z));
@@ -632,7 +645,7 @@ void Zombie::update() {
 			this->pos_v.setV(x, 1, -z);
 			this->look_v.setV(sin(thetha), sin(phi), -cos(thetha));
 		}
-	}*/
+	}
 	PathA path = PathA();
 	path.InitializePathfinder();
 	path.pathStatus[1] = path.FindPath(1, roundX, roundZ, round(playerPos.getX()), -round(playerPos.getZ()));
@@ -683,7 +696,7 @@ void Zombie::update() {
 		}
 		
 	}
-	path.EndPathfinder();
+	path.EndPathfinder();*/
 }
 
 Zombie::Zombie()

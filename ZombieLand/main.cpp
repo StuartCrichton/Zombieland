@@ -218,7 +218,11 @@ void idle() {
 	player->lookAt(); // called when there is now other event
 	int health = player->getHealth();
 	if (health == 0) {
+		hud->renderEndGameScreen();
+		/*
+		Pause all spawn timers and pathing etc.
 		exit(0);
+		*/
 	}
 }
 
@@ -304,6 +308,17 @@ void Timer(int t) {
 	glutTimerFunc(20, Timer, 0);
 }
 
+void ETATimer(int time) 
+{
+	/*
+	DOC: Timer for counting down until extraction. Use the method called below, passing the time IN SECONDS to the class and it will update the timer for you.
+	*/
+
+	hud->updateETA(600);
+
+	//glutTimerFunc(1000, ETATimer, 0);
+}
+
  //void shootTimer(int value) {
 //	player->setShoot();
 //}
@@ -337,10 +352,12 @@ int main(int argc, char** argv)
 	sf::Music music;
 	music.openFromFile("../Horror-theme-song.wav");
 	//music.play();
+	music.setVolume(25);
 	music.setLoop(true);
 
 	sf::Music music2;
 	music2.openFromFile("../Zombie-sound.wav");
+	music2.setVolume(20);
 	//music2.play();
 	music2.setLoop(true);
 
@@ -357,12 +374,13 @@ int main(int argc, char** argv)
 	keyEvents = KeyEvent(player, world, wave);
 	glutKeyboardFunc(keyPressed);
 	glutKeyboardUpFunc(keyUp);
-	glutTimerFunc(0, WaveTimer, 0);
-	glutTimerFunc(0, healthTimer, 0);
 	glutMouseFunc(mouseClick);
 	glutPassiveMotionFunc(mouseMove);
 	glutMotionFunc(mouseMove);
 
+	glutTimerFunc(0, WaveTimer, 0);
+	glutTimerFunc(0, healthTimer, 0);
+	glutTimerFunc(0, ETATimer, 0);
 	glutTimerFunc(0, Timer, 0);
 	initGL();
 
