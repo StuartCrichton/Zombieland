@@ -8,7 +8,6 @@
 class Zombie : public Character
 {
 public:
-	Zombie();
 	Zombie(float x, float y, float z, World w);
 	//vector<Vector> path;
 	void render(Vector playerPos);
@@ -21,6 +20,7 @@ protected:
 private:
 	Vector playerPos;
 	World world;//for wall collision
-	//PathFinding path;
+	Path path;
+	int counter = 0;
 };
 

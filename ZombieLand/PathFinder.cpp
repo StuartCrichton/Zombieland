@@ -4,20 +4,17 @@
 using namespace std;
 
 bool operator<(const TileNode & a, const TileNode & b) {
-	int f = b.h + b.g;
-	int thatf = a.h + a.g;
+	float f = b.h + b.g;
+	float thatf = a.h + a.g;
 
 	return f < thatf;
 }
 
+PathFinder::PathFinder() {}
+
 PathFinder::PathFinder(World w)
 {
 	this->world = w;
-	for (int i = 0; i < 60; i++)
-		for (int j = 0; j < 80; j++) {
-			if(world.obstacles[i][j] != 'w')
-				world.obstacles[i][j] = 'o';
-		}
 }
 
 void PathFinder::clearGrid() {
@@ -27,6 +24,8 @@ void PathFinder::clearGrid() {
 }
 
 Path PathFinder::findPath(int xStart, int yStart, int xGoal, int yGoal) {
+	if (world.obstacles[xGoal][yGoal] == 'w')
+		return Path();
 	clearGrid();
 	//std::cout << "Starting search" << endl;
 	nodes[xStart][yStart].g = 0;
@@ -52,8 +51,10 @@ Path PathFinder::findPath(int xStart, int yStart, int xGoal, int yGoal) {
 				if (i == 0 && j == 0)continue;
 
 				if (world.obstacles[xNeighbour][yNeighbour] == 'o') {
-
-					int gNew = current.g + 1;
+					float addG = 1;
+					if (i != 0 && j != 0)
+						addG = 1.414;
+					float gNew = current.g + addG;
 					TileNode neighbour;
 					try {
 						neighbour = nodes[xNeighbour][yNeighbour];

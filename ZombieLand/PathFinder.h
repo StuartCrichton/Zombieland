@@ -12,6 +12,7 @@ class PathFinder
 public:
 	void clearGrid();
 	Path findPath(int xStart, int yStart, int xGoal, int yGoal);
+	PathFinder();
 	PathFinder(World w);
 	~PathFinder();
 private:

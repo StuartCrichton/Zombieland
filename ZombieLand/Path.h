@@ -20,7 +20,5 @@ public:
 	Path();
 	~Path();
 	void addStep(int x, int y);
-	
-		
 };
 

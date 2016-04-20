@@ -6,10 +6,10 @@ class TileNode
 public:
 	int x;
 	int y;
-	TileNode *parent;
-	int h;
-	int g;
-	int f;
+	TileNode *parent = nullptr;
+	float h;
+	float g;
+	float f;
 	char status = 'U';
 
 	TileNode(int x, int y);

@@ -24,5 +24,6 @@ protected:
 private:
 	void setObstacles();
 	void setPlanes();
+	CollisionPlane* setPlane(float xNormal, float start, float end, float bottom, float top, float constant);
 };
 
