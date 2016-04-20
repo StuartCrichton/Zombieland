@@ -101,12 +101,16 @@ void Player::crouch()
 }
 
 void Player::shoot() {
-	if (canShoot) {
+	if (noRel && noShoot) {
+		//canShoot = true;
 		reloading = false;
+		shooting = true;
+		noShoot = false;
+		previousTimeShoot = glutGet(GLUT_ELAPSED_TIME);
 		if (ammoCartridge > 0) {
 			ammoCartridge--;
 			bufferGun.loadFromFile("../Gun.wav");
-			//soundGun.play(); // Play the sound!
+			soundGun.play(); // Play the sound!
 			if (ammoCartridge == 0)
 				if (ammoTotal > 0)
 					reload();
@@ -115,9 +119,10 @@ void Player::shoot() {
 }
 
 void Player::reload() {
-	canShoot = false;
+	noRel = false;
+	//canShoot = false;
 	reloading = true;
-	previousTime = glutGet(GLUT_ELAPSED_TIME);
+	previousTimeRel = glutGet(GLUT_ELAPSED_TIME);
 	bufferReload.loadFromFile("../reload.wav");
 	soundReload.setVolume(100);
 	soundReload.play(); // Play the sound!
@@ -183,20 +188,45 @@ void Player::AmmoPickup() {
 bool Player::getReloading() {
 	return this->reloading;
 }
-bool Player::getcanShoot() {
-	return this->canShoot;
+
+bool Player::getShooting() {
+	return this->shooting;
 }
-float Player::getPrevTime() {
-	return this->previousTime;
+bool Player::getNoRel() {
+	return this->noRel;
+}
+bool Player::getNoShoot() {
+	return this->noShoot;
+}
+/*bool Player::getcanShoot() {
+	return this->canShoot;
+}*/
+float Player::getPrevTimeRel() {
+	return this->previousTimeRel;
+}
+float Player::getPrevTimeShoot() {
+	return this->previousTimeShoot;
 }
 void Player::setReloading(bool reloading) {
 	this->reloading = reloading;
 }
-void Player::setcanShoot(bool canShoot) {
-	this->canShoot = canShoot;
+void Player::setShooting(bool shooting) {
+	this->shooting = shooting;
 }
-void Player::setPrevTime(float previousTime) {
-	this->previousTime = previousTime;
+/*void Player::setcanShoot(bool canShoot) {
+	this->canShoot = canShoot;
+}*/
+void Player::setNoShoot(bool noShoot) {
+	this->noShoot = noShoot;
+}
+void Player::setNoRel(bool noRel) {
+	this->noRel = noRel;
+}
+void Player::setPrevTimeRel(float previousTimeRel) {
+	this->previousTimeRel = previousTimeRel;
+}
+void Player::setPrevTimeShoot(float previousTimeShoot) {
+	this->previousTimeShoot = previousTimeShoot;
 }
 
 Player::Player()

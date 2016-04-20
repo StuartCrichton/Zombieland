@@ -34,8 +34,10 @@ vector<CollisionPlane*>* planes;
 HUD *hud = new HUD(player->getHealth(), player->getAmmoCartridge(), player->getAmmoTotal(),
 	player->getScore(), player->getWaveNumber(), player->getPosition(), player->getLookVector());
 
-//sf::SoundBuffer bufferShot;
-//sf::Sound soundShot(bufferShot);
+//sf::SoundBuffer bufferDie;
+//sf::Sound soundDie(bufferDie);
+//sf::SoundBuffer bufferBone;
+//sf::Sound soundBone(bufferBone);
 
 int dimx = 60;
 int dimz = 80;
@@ -177,16 +179,29 @@ void render()
 }
 void display()
 {
-	if (player->getReloading() == true) {
-		float newTime = glutGet(GLUT_ELAPSED_TIME);
-		float difference = newTime - player->getPrevTime();
+	if (player->getShooting() == true) {
+		float newTimeShoot = glutGet(GLUT_ELAPSED_TIME);
+		float difference = newTimeShoot - player->getPrevTimeShoot();
 		//player->previousTime = newTime;
 		//difference /= 1000;
-		cout << player->getcanShoot() << "   " << difference << endl;
+		//cout << player->getcanShoot() << "   " << difference << endl;
+		if (difference >= 300) {
+			//cout << difference << endl;
+			player->setNoShoot(true);
+			player->setPrevTimeShoot(newTimeShoot);
+			player->setShooting(false);
+		}
+	}
+	if (player->getReloading() == true) {
+		float newTimeRel = glutGet(GLUT_ELAPSED_TIME);
+		float difference = newTimeRel - player->getPrevTimeRel();
+		//player->previousTime = newTime;
+		//difference /= 1000;
+		//cout << player->getcanShoot() << "   " << difference << endl;
 		if (difference >= 3500) {
 			//cout << difference << endl;
-			player->setcanShoot(true);
-			player->setPrevTime(newTime);
+			player->setNoRel(true);
+			player->setPrevTimeRel(newTimeRel);
 			player->setReloading(false);
 		}
 	}
@@ -228,8 +243,9 @@ void mouseMove(int x, int y) {
 
 void mouseClick(int button, int state, int x, int y) {
 	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN && (player->getAmmoTotal() > 0 || player->getAmmoCartridge() > 0)) {
-		if (player->getcanShoot() == true) {
-			muzzleFlash = new MuzzleFlash(player);
+		//if (player->getcanShoot() == true) {
+		if (player->getNoRel() == true && player-> getNoShoot() == true) {
+		muzzleFlash = new MuzzleFlash(player);
 			player->shoot();
 			Ray ray(player->getPosition(), player->getUnitVector());
 			float minDistance = 1000;
@@ -237,6 +253,8 @@ void mouseClick(int button, int state, int x, int y) {
 			bool somethingDies = false;
 			for (unsigned i = 0; i < wave->v_zombies.size(); i++) {
 				if (ray.intersects(wave->v_zombies[i]->mask)) {
+					//bufferBone.loadFromFile("../Bone Crushing.wav");
+					//soundBone.play();
 					bloodSplatter = new ParticleEffect(wave->v_zombies[i]->getPosition().getX(), wave->v_zombies[i]->getPosition().getY(), wave->v_zombies[i]->getPosition().getZ(), 0.05, 1.0, 0.0, 0.0, 1000, 0.5);
 					somethingDies = true;
 					float d = ray.getDistance();
@@ -247,8 +265,8 @@ void mouseClick(int button, int state, int x, int y) {
 				}
 			}
 			if (somethingDies) {
-				//	bufferShot.loadFromFile("../Zombie In Pain.wav");
-				//soundShot.play(); // Play the sound!
+					//bufferDie.loadFromFile("../Zombie Long Death.wav");
+				//soundDie.play(); // Play the sound!
 				numOfKilledZombies++;
 				wave->v_zombies.erase(wave->v_zombies.begin() + minIndex);
 				player->scoreUp();
@@ -335,14 +353,14 @@ int main(int argc, char** argv)
 {
 
 	sf::Music music;
-	music.openFromFile("../Horror-theme-song.wav");
+	music.openFromFile("../Horror-ambience-sound.wav");
 	music.play();
 	music.setVolume(25);
 	music.setLoop(true);
 
 	sf::Music music2;
 	music2.openFromFile("../Zombie-sound.wav");
-	music2.setVolume(20);
+	music2.setVolume(25);
 	music2.play();
 	music2.setLoop(true);
 

@@ -31,11 +31,19 @@ public:
 	float getPhi();
 	void AmmoPickup();
 	bool getReloading();
+	bool getShooting();
 	bool getcanShoot();
-	float getPrevTime();
+	bool getNoRel();
+	bool getNoShoot();
+	float getPrevTimeRel();
+	float getPrevTimeShoot();
 	void setReloading(bool reloading);
-	void setcanShoot(bool canShoot);
-	void setPrevTime(float previousTime);
+	void setShooting(bool shooting);
+	//void setcanShoot(bool canShoot);
+	void setNoRel(bool noRel);
+	void setNoShoot(bool noShoot);
+	void setPrevTimeRel(float previousTimeRel);
+	void setPrevTimeShoot(float previousTimeShoot);
 	virtual ~Player();
 
 protected:
@@ -53,8 +61,12 @@ private:
 	int score = 0;
 	bool crouched = false;
 
-	float previousTime = 0;
+	float previousTimeRel = 0;
+	float previousTimeShoot = 0;
 	bool reloading = false;
-	bool canShoot = true;
+	bool shooting = false;
+	//bool canShoot = true;
+	bool noRel = true;
+	bool noShoot = true;
 };
 
