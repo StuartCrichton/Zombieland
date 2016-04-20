@@ -7,7 +7,7 @@ bool operator<(const TileNode & a, const TileNode & b) {
 	int f = b.h + b.g;
 	int thatf = a.h + a.g;
 
-	return thatf < f;
+	return f < thatf;
 }
 
 PathFinder::PathFinder()
@@ -26,7 +26,7 @@ void PathFinder::clearGrid() {
 
 Path PathFinder::findPath(int xStart, int yStart, int xGoal, int yGoal) {
 	clearGrid();
-	std::cout << "Starting search" << endl;
+	//std::cout << "Starting search" << endl;
 	nodes[xStart][yStart].g = 0;
 	closed.clear();
 	while (!open.empty())
@@ -41,7 +41,7 @@ Path PathFinder::findPath(int xStart, int yStart, int xGoal, int yGoal) {
 		TileNode tmp = open.top();
 		closed.push_back(tmp);
 		open.pop();
-		current.status = 'C';
+		nodes[current.x][current.y].status = 'C';
 		for (int i = -1; i <= 1; i++) {
 			for (int j = -1; j <= 1; j++) {
 
@@ -55,42 +55,44 @@ Path PathFinder::findPath(int xStart, int yStart, int xGoal, int yGoal) {
 					TileNode neighbour;
 					try {
 						neighbour = nodes[xNeighbour][yNeighbour];
+					
+
+					if (gNew < nodes[xNeighbour][yNeighbour].g) {
+						if (nodes[xNeighbour][yNeighbour].status == 'O') {
+							removeOpen(nodes[xNeighbour][yNeighbour]);
+							nodes[xNeighbour][yNeighbour].status = 'U';
+						}
+						if (nodes[xNeighbour][yNeighbour].status == 'C') {
+							removeClosed(nodes[xNeighbour][yNeighbour]);
+							nodes[xNeighbour][yNeighbour].status = 'U';
+						}
+					}
+
+					if (nodes[xNeighbour][yNeighbour].status == 'U') {
+						nodes[xNeighbour][yNeighbour].g = gNew;
+						nodes[xNeighbour][yNeighbour].h = hCalculate(xNeighbour, yNeighbour, xGoal, yGoal);
+						nodes[xNeighbour][yNeighbour].setParent(&nodes[current.x][current.y]);
+						open.push(nodes[xNeighbour][yNeighbour]);
+						nodes[xNeighbour][yNeighbour].status = 'O';
+					}
 					}
 					catch (exception e) { continue; }
-
-					if (gNew < neighbour.g) {
-						if (neighbour.status == 'O') {
-							removeOpen(neighbour);
-							neighbour.status = 'U';
-						}
-						if (neighbour.status == 'C') {
-							removeClosed(neighbour);
-							neighbour.status = 'U';
-						}
-					}
-
-					if (neighbour.status == 'U') {
-						neighbour.g = gNew;
-						neighbour.h = hCalculate(xNeighbour, yNeighbour, xGoal, yGoal);
-						neighbour.setParent(&current);
-						open.push(neighbour);
-						neighbour.status = 'O';
-					}
 				}
 			}
 		}
 	}
-	std::cout << "Found Path" << endl << endl;
-	if (nodes[xGoal][yGoal].parent == NULL) {
+	
+	if (!nodes[xGoal][yGoal].parent) {
 		return Path();
 	}
 
 	Path path;
-	TileNode nodeToPath = nodes[xGoal][yGoal];
-	while (nodeToPath.x != nodes[xStart][yStart].x && nodeToPath.y != nodes[xStart][yStart].y) {
-		path.addStep(nodeToPath.x, nodeToPath.y);
-		nodeToPath = *nodeToPath.parent;
+	TileNode *nodeToPath = &nodes[xGoal][yGoal];
+	while (nodeToPath->x != xStart || nodeToPath->y != yStart) {
+		path.addStep(nodeToPath->x, nodeToPath->y);
+		nodeToPath = nodeToPath->parent;
 	}
+	//std::cout << "Found Path" << endl << endl;
 	return path;
 }
 
