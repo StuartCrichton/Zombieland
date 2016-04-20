@@ -184,6 +184,7 @@ void Zombie::drawZombie() {
 
 	/// Draw Left Forearm
 	glPushMatrix();
+
 	//glColor3f(0.0, 0.12, 0.0);
 	GLfloat color9[] = { 0.0f, 0.12f, 0.0f, 1.0f };
 	glMaterialfv(GL_FRONT, GL_DIFFUSE, color9);
