@@ -13,10 +13,11 @@ using namespace std;
 
 void Particle::update()
 {
-	this->Ypos = this->Ypos + this->Ymov;
+	this->Ypos = this->Ypos + this->Ymov - this->Deceleration;
 	this->Xpos = this->Xpos + this->Xmov;
 	this->Zpos = this->Zpos + this->Zmov;
 	this->Direction = this->Direction + ((((((int)(0.5 - 0.1 + 0.1) * rand() % 11) + 1) - 1 + 1) * rand() % 11) + 1);
+	this->Deceleration += 0.02;
 }
 
 double Particle::getRed()
@@ -93,9 +94,9 @@ Particle::Particle(double Xpos, double Ypos, double Zpos, double Scalez, double 
 	this->initYpos = Ypos;
 	this->initZpos = Zpos;
 
-	this->Xmov = (rand() % 20 - 10)*0.03;
-	this->Zmov = (rand() % 20 - 10)*0.03;
-	this->Ymov = (rand() % 20 - 10)*0.03;
+	this->Xmov = (rand() % 20 - 10)*0.01;
+	this->Zmov = (rand() % 20 - 10)*0.01;
+	this->Ymov = (rand() % 20 - 10)*0.01;
 
 	this->Red = Red;
 	this->Green = Green;
@@ -104,7 +105,7 @@ Particle::Particle(double Xpos, double Ypos, double Zpos, double Scalez, double 
 	this->Scalez = Scalez;
 	this->Direction = 0;
 	this->Acceleration = ((((((8 - 5 + 2) * rand() % 11) + 5) - 1 + 1) * rand() % 11) + 1) * 0.02;
-	this->Deceleration = 0.0025;
+	this->Deceleration = 0.02;
 }
 
 Particle::~Particle()

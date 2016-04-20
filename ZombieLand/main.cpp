@@ -241,7 +241,7 @@ void mouseClick(int button, int state, int x, int y) {
 			bool somethingDies = false;
 			for (unsigned i = 0; i < wave->v_zombies.size(); i++) {
 				if (ray.intersects(wave->v_zombies[i]->mask)) {
-					bloodSplatter = new ParticleEffect(wave->v_zombies[i]->getPosition().getX(), wave->v_zombies[i]->getPosition().getY(), wave->v_zombies[i]->getPosition().getZ(), 0.05, 1.0, 0.0, 0.0, 1000, 0.5);
+					bloodSplatter = new ParticleEffect(wave->v_zombies[i]->getPosition().getX(), wave->v_zombies[i]->getPosition().getY()+1, wave->v_zombies[i]->getPosition().getZ(), 0.05, 1.0, 0.0, 0.0, 1000, 0.5);
 					somethingDies = true;
 					float d = ray.getDistance();
 					if (d < minDistance) {
