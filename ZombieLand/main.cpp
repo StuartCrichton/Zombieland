@@ -34,10 +34,8 @@ vector<CollisionPlane*>* planes;
 HUD *hud = new HUD(player->getHealth(), player->getAmmoCartridge(), player->getAmmoTotal(),
 	player->getScore(), player->getWaveNumber(), player->getPosition(), player->getLookVector());
 
-//sf::SoundBuffer bufferScream;
-//sf::Sound soundScream(bufferScream);
-sf::SoundBuffer bufferDie;
-sf::Sound soundDie(bufferDie);
+//sf::SoundBuffer bufferShot;
+//sf::Sound soundShot(bufferShot);
 
 int dimx = 60;
 int dimz = 80;
@@ -179,7 +177,6 @@ void render()
 }
 void display()
 {
-	//hud->updateETA(600);
 	if (player->getShooting() == true) {
 		float newTimeShoot = glutGet(GLUT_ELAPSED_TIME);
 		float difference = newTimeShoot - player->getPrevTimeShoot();
@@ -258,9 +255,7 @@ void mouseClick(int button, int state, int x, int y) {
 			bool somethingDies = false;
 			for (unsigned i = 0; i < wave->v_zombies.size(); i++) {
 				if (ray.intersects(wave->v_zombies[i]->mask)) {
-					//bufferBone.loadFromFile("../Bone Crushing.wav");
-					//soundBone.play();
-					bloodSplatter = new ParticleEffect(wave->v_zombies[i]->getPosition().getX(), wave->v_zombies[i]->getPosition().getY(), wave->v_zombies[i]->getPosition().getZ(), 0.05, 1.0, 0.0, 0.0, 1000, 0.5);
+					bloodSplatter = new ParticleEffect(wave->v_zombies[i]->getPosition().getX(), wave->v_zombies[i]->getPosition().getY()+1, wave->v_zombies[i]->getPosition().getZ(), 0.05, 1.0, 0.0, 0.0, 1000, 0.5);
 					somethingDies = true;
 					float d = ray.getDistance();
 					if (d < minDistance) {
@@ -328,18 +323,19 @@ void Timer(int t) {
 }
 
 /*void soundTimer(int t) {
-	bufferScream.loadFromFile("../Psycho Scream.wav");
-	soundScream.play();
-	glutTimerFunc(60000, soundTimer, 0);
+bufferScream.loadFromFile("../Psycho Scream.wav");
+soundScream.play();
+glutTimerFunc(60000, soundTimer, 0);
 }*/
 
 void ETATimer(int time)
 {
-		hud->updateETA();
-		if (hud->getMinutes() == 0 && hud->getSeconds() == 0)
-			return;
-		glutTimerFunc(1000, ETATimer, 0);
+	hud->updateETA();
+	if (hud->getMinutes() == 0 && hud->getSeconds() == 0)
+		return;
+	glutTimerFunc(1000, ETATimer, 0);
 }
+
 
  //void shootTimer(int value) {
 //	player->setShoot();
@@ -373,14 +369,14 @@ int main(int argc, char** argv)
 
 	sf::Music music;
 	music.openFromFile("../Haunted.wav");
-	music.play();
+	//music.play();
 	music.setVolume(25);
 	music.setLoop(true);
 
 	sf::Music music2;
 	music2.openFromFile("../Zombie-sound.wav");
 	music2.setVolume(20);
-	music2.play();
+	//music2.play();
 	music2.setLoop(true);
 
 	glutInit(&argc, argv);
@@ -408,6 +404,7 @@ int main(int argc, char** argv)
 	glutTimerFunc(1000, ETATimer, 0);
 	glutTimerFunc(0, Timer, 0);
 	//glutTimerFunc(1000, soundTimer, 0);
+	
 	initGL();
 
 	glutMainLoop();
