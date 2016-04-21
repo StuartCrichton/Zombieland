@@ -34,10 +34,10 @@ vector<CollisionPlane*>* planes;
 HUD *hud = new HUD(player->getHealth(), player->getAmmoCartridge(), player->getAmmoTotal(),
 	player->getScore(), player->getWaveNumber(), player->getPosition(), player->getLookVector());
 
-//sf::SoundBuffer bufferDie;
-//sf::Sound soundDie(bufferDie);
-//sf::SoundBuffer bufferBone;
-//sf::Sound soundBone(bufferBone);
+//sf::SoundBuffer bufferScream;
+//sf::Sound soundScream(bufferScream);
+sf::SoundBuffer bufferDie;
+sf::Sound soundDie(bufferDie);
 
 int dimx = 60;
 int dimz = 80;
@@ -47,9 +47,9 @@ GLfloat light_position2[] = { dimx / 2 , 30, -(dimz / 2),1.0 };
 GLfloat light_position3[] = { dimx / 2, -50, -(dimz / 2), 1.0 };
 
 //Stuff pertraining to the wave
-Wave *wave = new Wave();
-float currentTimerDuration = wave->WAVE_DURATION;
-int timerInterval = wave->getZombieSpawnInterval();
+Wave *wave; 
+float currentTimerDuration;
+int timerInterval;
 int numOfKilledZombies = 0;
 bool isWave = true;
 
@@ -179,6 +179,7 @@ void render()
 }
 void display()
 {
+	//hud->updateETA(600);
 	if (player->getShooting() == true) {
 		float newTimeShoot = glutGet(GLUT_ELAPSED_TIME);
 		float difference = newTimeShoot - player->getPrevTimeShoot();
@@ -233,7 +234,11 @@ void idle() {
 	player->lookAt(); // called when there is now other event
 	int health = player->getHealth();
 	if (health == 0) {
+		hud->renderEndGameScreen();
+		/*
+		Pause all spawn timers and pathing etc.
 		exit(0);
+		*/
 	}
 }
 
@@ -244,7 +249,7 @@ void mouseMove(int x, int y) {
 void mouseClick(int button, int state, int x, int y) {
 	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN && (player->getAmmoTotal() > 0 || player->getAmmoCartridge() > 0)) {
 		//if (player->getcanShoot() == true) {
-		if (player->getNoRel() == true && player-> getNoShoot() == true) {
+		if (player->getNoRel() == true && player->getNoShoot() == true) {
 		muzzleFlash = new MuzzleFlash(player);
 			player->shoot();
 			Ray ray(player->getPosition(), player->getUnitVector());
@@ -265,7 +270,7 @@ void mouseClick(int button, int state, int x, int y) {
 				}
 			}
 			if (somethingDies) {
-					//bufferDie.loadFromFile("../Zombie Long Death.wav");
+				//bufferDie.loadFromFile("../Dying.wav");
 				//soundDie.play(); // Play the sound!
 				numOfKilledZombies++;
 				wave->v_zombies.erase(wave->v_zombies.begin() + minIndex);
@@ -322,6 +327,20 @@ void Timer(int t) {
 	glutTimerFunc(20, Timer, 0);
 }
 
+/*void soundTimer(int t) {
+	bufferScream.loadFromFile("../Psycho Scream.wav");
+	soundScream.play();
+	glutTimerFunc(60000, soundTimer, 0);
+}*/
+
+void ETATimer(int time)
+{
+		hud->updateETA();
+		if (hud->getMinutes() == 0 && hud->getSeconds() == 0)
+			return;
+		glutTimerFunc(1000, ETATimer, 0);
+}
+
  //void shootTimer(int value) {
 //	player->setShoot();
 //}
@@ -353,14 +372,14 @@ int main(int argc, char** argv)
 {
 
 	sf::Music music;
-	music.openFromFile("../Horror-ambience-sound.wav");
+	music.openFromFile("../Haunted.wav");
 	music.play();
 	music.setVolume(25);
 	music.setLoop(true);
 
 	sf::Music music2;
 	music2.openFromFile("../Zombie-sound.wav");
-	music2.setVolume(25);
+	music2.setVolume(20);
 	music2.play();
 	music2.setLoop(true);
 
@@ -371,19 +390,24 @@ int main(int argc, char** argv)
 	glutCreateWindow("ZombieLand Survivor");
 	//glutFullScreen();
 	world.init();
+	wave = new Wave(world);
+	currentTimerDuration = wave->WAVE_DURATION;
+	timerInterval = wave->getZombieSpawnInterval();
 
 	glutDisplayFunc(display);
 	glutReshapeFunc(reshape);
 	keyEvents = KeyEvent(player, world, wave);
 	glutKeyboardFunc(keyPressed);
 	glutKeyboardUpFunc(keyUp);
-	glutTimerFunc(0, WaveTimer, 0);
-	glutTimerFunc(0, healthTimer, 0);
 	glutMouseFunc(mouseClick);
 	glutPassiveMotionFunc(mouseMove);
 	glutMotionFunc(mouseMove);
 
+	glutTimerFunc(0, WaveTimer, 0);
+	glutTimerFunc(0, healthTimer, 0);
+	glutTimerFunc(1000, ETATimer, 0);
 	glutTimerFunc(0, Timer, 0);
+	//glutTimerFunc(1000, soundTimer, 0);
 	initGL();
 
 	glutMainLoop();

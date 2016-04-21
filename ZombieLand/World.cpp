@@ -4,7 +4,6 @@
 #endif // _WIN32
 #include <GL/glut.h>
 #include <cstdlib>
-#include "ModelObj.h"
 #include "CollisionPlane.h"
 #include "AssimpModelLoader.h"
 
@@ -12,20 +11,23 @@
 #include <windows.h>
 #include <GL/glut.h>
 #include <cstdlib>
-#include "ModelObj.h"
 #include "CollisionPlane.h"
 #include "AssimpModelLoader.h"
+#include "PathFinder.h"
+#include <iostream>
 
 World::World()
 {
 
 }
 
+
 void World::init() {
 	this->building.loadObjFile("../Office.obj");//create the building
 	this->ammoBox.loadObjFile("../AmmoBox.obj");//create the ammo box
 	this->gun.loadObjFile("../Gun3.obj");
-	//setPlanes();
+	setPlanes();
+	setObstacles();
 }
 
 void World::setPlanes() {
@@ -52,8 +54,9 @@ void World::setPlanes() {
 		Vector(10.5, 0, -49.5), Vector(17, 0, -49.5), Vector(17, 8.5, -49.5)));
 	planes.push_back(new CollisionPlane(Vector(0, 0, -1), Vector(19, 8.5, -49.5),
 		Vector(19, 0, -49.5), Vector(29, 0, -49.5), Vector(29, 8.5, -49.5)));
-	planes.push_back(new CollisionPlane(Vector(0, 0, -1), Vector(31, 8.5, -49.5),
-		Vector(31, 0, -49.5), Vector(49.5, 0, -49.5), Vector(49.5, 8.5, -49.5)));
+	//planes.push_back(new CollisionPlane(Vector(0, 0, -1), Vector(31, 8.5, -49.5),
+	//	Vector(31, 0, -49.5), Vector(49.5, 0, -49.5), Vector(49.5, 8.5, -49.5)));
+	planes.push_back(setPlane(0, 31, 49.5, 0, 8.5, -49.5));
 
 	planes.push_back(new CollisionPlane(Vector(1, 0, 0), Vector(49.5, 8.5, -10.5),
 		Vector(49.5, 0, -10.5), Vector(49.5, 0, -49.5), Vector(49.5, 8.5, -49.5)));
@@ -143,6 +146,53 @@ void World::setPlanes() {
 		Vector(25, 0, -13.25), Vector(11, 0, -13.25), Vector(11, 3.5, -13.25)));
 	planes.push_back(new CollisionPlane(Vector(0, 0, -1), Vector(20, 3.5, -23),
 		Vector(20, 0, -23), Vector(11, 0, -23), Vector(11, 3.5, -23)));
+}
+
+void World::setObstacles() {
+	for (int i = 0; i < 60; i++)
+		for (int j = 0; j < 80; j++)
+			obstacles[i][j] = 'o';//o is open, w is wall
+	//set char[i][j] as w for a wall
+	for (unsigned i = 0; i < planes.size(); i++) {
+		CollisionPlane *p = planes[i];
+		int xNormal = p->getNormal().getX();
+		if (xNormal != 0) {//z changes, x is constant
+			int x = floor(p->getV1().getX());
+			int start = floor(min(-p->getV1().getZ(), -p->getV3().getZ()));
+			int end = floor(max(-p->getV1().getZ(), -p->getV3().getZ()));
+			for (int i = start; i < end; i++) {
+				obstacles[x][i] = 'w';
+			}
+		}
+		else {//z constant, x changes
+			int z = floor(-p->getV1().getZ());
+			int start = floor(min(p->getV1().getX(), p->getV3().getX()));
+			int end = floor(max(p->getV1().getX(), p->getV3().getX()));
+			for (int i = start; i < end; i++)
+				obstacles[i][z] = 'w';
+		}
+	}
+	cout << endl;
+	/*for (int i = 0; i < 60; i++) {
+		for (int j = 0; j < 80; j++) {
+			if (obstacles[i][j] == 'w')
+				cout << obstacles[i][j];
+			else
+				cout << ".";
+		}
+		cout << endl;
+	}*/
+}
+
+CollisionPlane* World::setPlane(float xNormal, float start, float end, float bottom, float top, float constant) {
+	if (xNormal != 0) {//x normal, z changes
+		return new CollisionPlane(Vector(xNormal, 0, 0), Vector(constant, bottom, start),
+			Vector(constant, top, start), Vector(constant, bottom, end), Vector(constant, top, end));
+	}
+	else {//z normal, x changes
+		return new CollisionPlane(Vector(0, 0, 1), Vector(start, bottom, constant),
+			Vector(start, top, constant), Vector(end, bottom, constant), Vector(end, top, constant));
+	}
 }
 
 vector<CollisionPlane*>* World::getPlanes() {

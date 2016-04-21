@@ -32,7 +32,7 @@ public:
 	void AmmoPickup();
 	bool getReloading();
 	bool getShooting();
-	bool getcanShoot();
+	//bool getcanShoot();
 	bool getNoRel();
 	bool getNoShoot();
 	float getPrevTimeRel();

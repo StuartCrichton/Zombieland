@@ -160,12 +160,12 @@
     <ClCompile Include="Gun.cpp" />
     <ClCompile Include="HUD.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="ModelObj.cpp" />
     <ClCompile Include="ParticleEffect.cpp" />
-    <ClCompile Include="PathA.cpp" />
-    <ClCompile Include="PathFinding.cpp" />
+    <ClCompile Include="Path.cpp" />
+    <ClCompile Include="PathFinder.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Ray.cpp" />
+    <ClCompile Include="TileNode.cpp" />
     <ClCompile Include="Vector.cpp" />
     <ClCompile Include="Wave.cpp" />
     <ClCompile Include="World.cpp" />
@@ -182,13 +182,12 @@
     <ClInclude Include="CollisionPlane.h" />
     <ClInclude Include="Gun.h" />
     <ClInclude Include="HUD.h" />
-    <ClInclude Include="ModelObj.h" />
     <ClInclude Include="ParticleEffect.h" />
-    <ClInclude Include="PathA.h" />
-    <ClInclude Include="PathFinding.h" />
+    <ClInclude Include="Path.h" />
+    <ClInclude Include="PathFinder.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Ray.h" />
-    <ClInclude Include="SearchCell.h" />
+    <ClInclude Include="TileNode.h" />
     <ClInclude Include="Vector.h" />
     <ClInclude Include="Wave.h" />
     <ClInclude Include="World.h" />
@@ -212,11 +211,11 @@
     <Import Project="..\packages\libpng.1.6.19.1\build\native\libpng.targets" Condition="Exists('..\packages\libpng.1.6.19.1\build\native\libpng.targets')" />
     <Import Project="..\packages\libtiff.4.0.6.2\build\native\libtiff.targets" Condition="Exists('..\packages\libtiff.4.0.6.2\build\native\libtiff.targets')" />
     <Import Project="..\packages\SDL_image.1.2.12.3\build\native\SDL_image.targets" Condition="Exists('..\packages\SDL_image.1.2.12.3\build\native\SDL_image.targets')" />
-    <Import Project="..\packages\nupengl.core.redist.0.1.0.1\build\native\nupengl.core.redist.targets" Condition="Exists('..\packages\nupengl.core.redist.0.1.0.1\build\native\nupengl.core.redist.targets')" />
     <Import Project="..\packages\sfml-audio.redist.2.3.2.0\build\native\sfml-audio.redist.targets" Condition="Exists('..\packages\sfml-audio.redist.2.3.2.0\build\native\sfml-audio.redist.targets')" />
     <Import Project="..\packages\sfml-system.redist.2.3.2.0\build\native\sfml-system.redist.targets" Condition="Exists('..\packages\sfml-system.redist.2.3.2.0\build\native\sfml-system.redist.targets')" />
     <Import Project="..\packages\sfml-system.2.3.2.0\build\native\sfml-system.targets" Condition="Exists('..\packages\sfml-system.2.3.2.0\build\native\sfml-system.targets')" />
     <Import Project="..\packages\sfml-audio.2.3.2.0\build\native\sfml-audio.targets" Condition="Exists('..\packages\sfml-audio.2.3.2.0\build\native\sfml-audio.targets')" />
+    <Import Project="..\packages\nupengl.core.redist.0.1.0.1\build\native\nupengl.core.redist.targets" Condition="Exists('..\packages\nupengl.core.redist.0.1.0.1\build\native\nupengl.core.redist.targets')" />
     <Import Project="..\packages\nupengl.core.0.1.0.1\build\native\nupengl.core.targets" Condition="Exists('..\packages\nupengl.core.0.1.0.1\build\native\nupengl.core.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
@@ -239,11 +238,11 @@
     <Error Condition="!Exists('..\packages\libpng.1.6.19.1\build\native\libpng.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libpng.1.6.19.1\build\native\libpng.targets'))" />
     <Error Condition="!Exists('..\packages\libtiff.4.0.6.2\build\native\libtiff.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\libtiff.4.0.6.2\build\native\libtiff.targets'))" />
     <Error Condition="!Exists('..\packages\SDL_image.1.2.12.3\build\native\SDL_image.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\SDL_image.1.2.12.3\build\native\SDL_image.targets'))" />
-    <Error Condition="!Exists('..\packages\nupengl.core.redist.0.1.0.1\build\native\nupengl.core.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\nupengl.core.redist.0.1.0.1\build\native\nupengl.core.redist.targets'))" />
     <Error Condition="!Exists('..\packages\sfml-audio.redist.2.3.2.0\build\native\sfml-audio.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\sfml-audio.redist.2.3.2.0\build\native\sfml-audio.redist.targets'))" />
     <Error Condition="!Exists('..\packages\sfml-system.redist.2.3.2.0\build\native\sfml-system.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\sfml-system.redist.2.3.2.0\build\native\sfml-system.redist.targets'))" />
     <Error Condition="!Exists('..\packages\sfml-system.2.3.2.0\build\native\sfml-system.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\sfml-system.2.3.2.0\build\native\sfml-system.targets'))" />
     <Error Condition="!Exists('..\packages\sfml-audio.2.3.2.0\build\native\sfml-audio.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\sfml-audio.2.3.2.0\build\native\sfml-audio.targets'))" />
+    <Error Condition="!Exists('..\packages\nupengl.core.redist.0.1.0.1\build\native\nupengl.core.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\nupengl.core.redist.0.1.0.1\build\native\nupengl.core.redist.targets'))" />
     <Error Condition="!Exists('..\packages\nupengl.core.0.1.0.1\build\native\nupengl.core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\nupengl.core.0.1.0.1\build\native\nupengl.core.targets'))" />
   </Target>
 </Project>

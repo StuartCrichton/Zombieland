@@ -16,7 +16,7 @@ void Wave::addNewZombie()
 	srand(time_ui);
 	int randomSpawnLocation = rand() % 8;
 
-	Zombie *zombie = new Zombie(ZOMBIE_SPAWN_LOCATIONS[randomSpawnLocation][0], ZOMBIE_SPAWN_LOCATIONS[randomSpawnLocation][1], ZOMBIE_SPAWN_LOCATIONS[randomSpawnLocation][2]);
+	Zombie *zombie = new Zombie(ZOMBIE_SPAWN_LOCATIONS[randomSpawnLocation][0], ZOMBIE_SPAWN_LOCATIONS[randomSpawnLocation][1], ZOMBIE_SPAWN_LOCATIONS[randomSpawnLocation][2], this->world);
 	v_zombies.push_back(zombie);
 
 }
@@ -35,8 +35,9 @@ int Wave::getZombieSpawnInterval()
 }
 
 
-Wave::Wave()
+Wave::Wave(World w)
 {
+	this->world = w;
 }
 
 

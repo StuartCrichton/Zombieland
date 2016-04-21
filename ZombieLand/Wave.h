@@ -3,13 +3,14 @@
 #define WAVE_H
 #include "Zombie.h"
 #include <vector>
+#include "World.h"
 
 using namespace std;
 
 class Wave
 {
 public:
-	Wave();
+	Wave(World w);
 	~Wave();
 	vector<Zombie*> v_zombies;
 	void addNewZombie();
@@ -21,6 +22,7 @@ public:
 	const float WAVE_COOLDOWN = 5000.0;
 
 private:
+	World world;
 	const int WAVE_INCREMENTER = 5;
 	const double ZOMBIE_SPAWN_LOCATIONS[8][3] = {
 		{ 58.1947, 1, -78.1053 },
