@@ -580,7 +580,7 @@ void Zombie::drawZombie() {
 
 void Zombie::render(Vector p) {
 	this->playerPos = p;
-	update();
+	//update();
 	glPushMatrix();
 	glTranslated(pos_v.getX(), pos_v.getY(), pos_v.getZ());
 	drawZombie();

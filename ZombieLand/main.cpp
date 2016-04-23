@@ -143,7 +143,8 @@ void render()
 	<< player.getPosition().getY() << " "
 	<< player.getPosition().getZ() << endl;*/
 
-	//glRotatef(player.getThetha(), 0, 1, 0);
+	//Draw the Gun
+	glDisable(GL_DEPTH_TEST);
 	glPushMatrix();
 	glTranslatef(player->getPosition().getX(),
 		player->getPosition().getY(), player->getPosition().getZ());
@@ -154,6 +155,7 @@ void render()
 	glScalef(0.001, 0.001, 0.001);
 	world.gun.Draw(3);
 	glPopMatrix();
+	glEnable(GL_DEPTH_TEST);
 
 	//update and display the HUD
 	hud->update(player->getHealth(), player->getAmmoCartridge(), player->getAmmoTotal(), player->getScore(), player->getWaveNumber(), player->getPosition(), player->getLookVector());
