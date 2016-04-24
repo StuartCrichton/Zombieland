@@ -10,7 +10,7 @@ using namespace std;
 class Wave
 {
 public:
-	Wave(World w);
+	Wave(World* w);
 	~Wave();
 	vector<Zombie*> v_zombies;
 	void addNewZombie();
@@ -22,7 +22,7 @@ public:
 	const float WAVE_COOLDOWN = 5000.0;
 
 private:
-	World world;
+	World* world;
 	const int WAVE_INCREMENTER = 5;
 	const double ZOMBIE_SPAWN_LOCATIONS[8][3] = {
 		{ 58.1947, 1, -78.1053 },

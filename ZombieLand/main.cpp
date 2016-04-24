@@ -134,7 +134,18 @@ void render()
 	}*/
 
 	for (int i = 0; i < wave->v_zombies.size(); i++) {
-		wave->v_zombies[i]->render(player->getPosition());
+		Vector v = wave->v_zombies[i]->update(player->getPosition());
+		bool move = true;
+		for (unsigned j = 0; j < wave->v_zombies.size(); j++) {
+			if(i != j)
+				if (wave->v_zombies[j]->mask.intersects(CollisionMask(v, 1))) {
+					move = false;
+					break;
+				}
+		}
+		if (move)
+			wave->v_zombies[i]->set(v);
+		wave->v_zombies[i]->render();
 	}
 
 	ammoBox.draw();
@@ -388,7 +399,7 @@ int main(int argc, char** argv)
 	glutCreateWindow("ZombieLand Survivor");
 	//glutFullScreen();
 	world.init();
-	wave = new Wave(world);
+	wave = new Wave(&world);
 	currentTimerDuration = wave->WAVE_DURATION;
 	timerInterval = wave->getZombieSpawnInterval();
 

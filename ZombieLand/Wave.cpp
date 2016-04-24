@@ -35,7 +35,7 @@ int Wave::getZombieSpawnInterval()
 }
 
 
-Wave::Wave(World w)
+Wave::Wave(World* w)
 {
 	this->world = w;
 }

@@ -8,18 +8,18 @@
 class Zombie : public Character
 {
 public:
-	Zombie(float x, float y, float z, World w);
+	Zombie(float x, float y, float z, World* w);
 	//vector<Vector> path;
-	void render(Vector playerPos);
-	void update();
+	void render();
+	Vector update(Vector playerPos);
 	void drawZombie();
 	virtual ~Zombie();
-
+	void set(Vector v);
 protected:
 
 private:
 	Vector playerPos;
-	World world;//for wall collision
+	World* world;//for wall collision
 	Path path;
 	int counter = 0;
 };

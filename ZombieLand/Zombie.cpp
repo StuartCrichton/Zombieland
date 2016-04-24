@@ -578,16 +578,15 @@ void Zombie::drawZombie() {
 	glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess1);
 }
 
-void Zombie::render(Vector p) {
-	this->playerPos = p;
-	//update();
+void Zombie::render() {
 	glPushMatrix();
 	glTranslated(pos_v.getX(), pos_v.getY(), pos_v.getZ());
 	drawZombie();
 	glPopMatrix();
 }
 
-void Zombie::update() {
+Vector Zombie::update(Vector p) {
+	this->playerPos = p;
 	float x = (pos_v.getX()), z = -(pos_v.getZ());
 	int roundX = (x + 0.5) >= trunc(x) + 1 ? ceil(x) : floor(x);
 	int roundZ = (z + 0.5) >= trunc(z) + 1 ? ceil(z) : floor(z);
@@ -595,12 +594,10 @@ void Zombie::update() {
 	if(counter == 0)
 		this->path = pathF.findPath(roundX, roundZ, playerPos.getX(), -playerPos.getZ());
 	counter++;
-	if (counter == 20) counter = 0;//check for new path every ten steps, less processing
+	if (counter == 20) counter = 0;//check for new path every twenty steps, less processing
 	if (path.correctPath.size() > 0) {
-
 		int newX = path.correctPath.top().getX();
 		int newZ = path.correctPath.top().getY();
-		path.correctPath.pop();
 		bool up = false, down = false, left = false, right = false;
 		if (x > newX) {
 			left = true;
@@ -645,21 +642,28 @@ void Zombie::update() {
 			mask.update(pos_v);
 		}
 		else {
-			this->pos_v = v;
-			this->look_v.setV(sin(this->thetha), sin(phi), -cos(this->thetha));
+			return v;
 		}
 	}
+	return pos_v;
 }
 
 
-Zombie::Zombie(float x1, float y1, float z1, World w) {
+Zombie::Zombie(float x1, float y1, float z1, World* w) {
 	this->phi = 0;
 	this->thetha = 0;
 	this->pos_v = Vector(x1, y1, z1);
 	this->look_v.setV(sin(thetha), sin(phi), -cos(thetha));
 	Vector v = getNewPosition(FORWARD);//shift the mask one step forward to accomodate for arms out
-	this->mask = CollisionMask(v, 0.7);
+	this->mask = CollisionMask(v, 1);
 	this->world = w;
+}
+
+void Zombie::set(Vector v) {
+	this->pos_v = v;
+	this->look_v.setV(sin(this->thetha), sin(phi), -cos(this->thetha));
+	if(path.correctPath.size()>0)
+		path.correctPath.pop();
 }
 
 Zombie::~Zombie()

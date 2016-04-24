@@ -13,7 +13,7 @@ bool operator<(const TileNode & a, const TileNode & b) {
 
 PathFinder::PathFinder() {}
 
-PathFinder::PathFinder(World w)
+PathFinder::PathFinder(World* w)
 {
 	this->world = w;
 }
@@ -25,7 +25,7 @@ void PathFinder::clearGrid() {
 }
 
 Path PathFinder::findPath(int xStart, int yStart, int xGoal, int yGoal) {
-	if (world.obstacles[xGoal][yGoal] == 'w')
+	if (world->obstacles[xGoal][yGoal] == 'w')
 		return Path();
 	clearGrid();
 	//std::cout << "Starting search" << endl;
@@ -51,7 +51,7 @@ Path PathFinder::findPath(int xStart, int yStart, int xGoal, int yGoal) {
 				int yNeighbour = j + current.y;
 				if (i == 0 && j == 0)continue;
 
-				if (world.obstacles[xNeighbour][yNeighbour] == 'o') {
+				if (world->obstacles[xNeighbour][yNeighbour] == 'o') {
 					float addG = 1;
 					if (i != 0 && j != 0)
 						addG = 1.414;
