@@ -14,7 +14,6 @@ public:
 	void strafeLeft();
 	void strafeRight();
 	void lookAround(int x, int y);
-	void jump();
 	void crouch();
 	void lookAt();
 	void shoot();

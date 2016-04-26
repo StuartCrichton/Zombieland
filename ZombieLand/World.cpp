@@ -173,7 +173,7 @@ void World::setObstacles() {
 		}
 	}
 	cout << endl;
-	/*for (int i = 0; i < 60; i++) {
+	for (int i = 0; i < 60; i++) {
 		for (int j = 0; j < 80; j++) {
 			if (obstacles[i][j] == 'w')
 				cout << obstacles[i][j];
@@ -181,7 +181,7 @@ void World::setObstacles() {
 				cout << ".";
 		}
 		cout << endl;
-	}*/
+	}
 }
 
 CollisionPlane* World::setPlane(float xNormal, float start, float end, float bottom, float top, float constant) {

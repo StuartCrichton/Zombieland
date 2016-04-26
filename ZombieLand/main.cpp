@@ -107,6 +107,7 @@ void initGL()
 	glEnable(GL_DEPTH_TEST); // turns on hidden surface removal so that objects behind other objects do not get displayed
 
 	ammoBox.update();
+	cout << ammoBox.getLocation().getX() << " " << ammoBox.getLocation().getY() << " " << ammoBox.getLocation().getZ();
 }
 void render()
 {
@@ -134,7 +135,7 @@ void render()
 	}*/
 
 	for (int i = 0; i < wave->v_zombies.size(); i++) {
-		Vector v = wave->v_zombies[i]->update(player->getPosition());
+		/*Vector v = wave->v_zombies[i]->update(player->getPosition());
 		bool move = true;
 		for (unsigned j = 0; j < wave->v_zombies.size(); j++) {
 			if(i != j)
@@ -144,11 +145,12 @@ void render()
 				}
 		}
 		if (move)
-			wave->v_zombies[i]->set(v);
+			wave->v_zombies[i]->set(v);*/
 		wave->v_zombies[i]->render();
 	}
 
 	ammoBox.draw();
+	
 
 	/*cout << player.getPosition().getX() << " "
 	<< player.getPosition().getY() << " "
@@ -405,7 +407,7 @@ int main(int argc, char** argv)
 
 	glutDisplayFunc(display);
 	glutReshapeFunc(reshape);
-	keyEvents = KeyEvent(player, world, wave);
+	keyEvents = KeyEvent(player, world, wave, &ammoBox);
 	glutKeyboardFunc(keyPressed);
 	glutKeyboardUpFunc(keyUp);
 	glutMouseFunc(mouseClick);

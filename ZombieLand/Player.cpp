@@ -76,7 +76,6 @@ void Player::lookAround(int x, int y) {
 
 }
 
-void Player::jump() {}
 void Player::crouch()
 {
 	/*

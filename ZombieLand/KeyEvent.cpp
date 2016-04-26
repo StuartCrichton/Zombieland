@@ -4,11 +4,12 @@ using namespace std;
 
 KeyEvent::KeyEvent() {}
 
-KeyEvent::KeyEvent(Player *player, World world, Wave *wave)
+KeyEvent::KeyEvent(Player *player, World world, Wave *wave, AmmoBox *box)
 {
 	this->player = player;
 	this->world = world;
 	this->wave = wave;
+	this->box = box;
 
 	for (int i = 0; i < 256; i++) {
 		keyStates[i] = false;
@@ -46,6 +47,7 @@ void KeyEvent::pressedForward()
 	if (canMove)player->moveForward();
 	else
 		player->mask.update(player->getPosition());
+	cout << player->getPosition().getX() << " " << player->getPosition().getZ() << endl;
 }
 
 void KeyEvent::pressedBackwards()
@@ -179,6 +181,14 @@ void KeyEvent::keyOperations()
 			player->setY(8.7 - 1.7);
 		else if (player->getPosition().getY() >= (1) && player->getPosition().getY() <= (2))
 			player->setY(0);
+	}
+
+	//ammoBox collision check
+	if (player->getPosition().getX() >= box->getLocation().getX() && player->getPosition().getX() <= box->getLocation().getX() + 2.5 &&
+		player->getPosition().getZ() <= box->getLocation().getZ() && player->getPosition().getZ() >= box->getLocation().getZ() - 2 &&
+		player->getPosition().getY() >= box->getLocation().getY() && player->getPosition().getY() <= box->getLocation().getY() + 3.5) {
+		box->update();
+		player->AmmoPickup();
 	}
 
 	player->lookAt();
