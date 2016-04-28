@@ -230,9 +230,9 @@ void Player::setPrevTimeShoot(float previousTimeShoot) {
 
 Player::Player()
 {
-	this->mask = CollisionMask(pos_v, 0.45);
 	init();
-
+	this->mask = CollisionMask(pos_v, 0.45);
+	this->floor = getFloor(1.7);
 }
 
 Player::~Player()

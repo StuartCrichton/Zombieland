@@ -588,11 +588,11 @@ void Zombie::render() {
 Vector Zombie::update(Vector p) {
 	this->playerPos = p;
 	float x = (pos_v.getX()), z = -(pos_v.getZ());
-	int roundX = (x + 0.5) >= trunc(x) + 1 ? ceil(x) : floor(x);
-	int roundZ = (z + 0.5) >= trunc(z) + 1 ? ceil(z) : floor(z);
+	int roundX = (x + 0.5) >= trunc(x) + 1 ? ceil(x) : trunc(x);
+	int roundZ = (z + 0.5) >= trunc(z) + 1 ? ceil(z) : trunc(z);
 	PathFinder pathF(this->world);
 	if(counter == 0)
-		this->path = pathF.findPath(roundX, roundZ, playerPos.getX(), -playerPos.getZ());
+		this->path = pathF.findPath(roundX, roundZ, playerPos.getX(), -playerPos.getZ(), floor, getFloor(playerPos.getY(), 1.7));
 	counter++;
 	if (counter == 20) counter = 0;//check for new path every twenty steps, less processing
 	if (path.correctPath.size() > 0) {
@@ -657,6 +657,7 @@ Zombie::Zombie(float x1, float y1, float z1, World* w) {
 	Vector v = getNewPosition(FORWARD);//shift the mask one step forward to accomodate for arms out
 	this->mask = CollisionMask(v, 1);
 	this->world = w;
+	this->floor = getFloor(1);
 }
 
 void Zombie::set(Vector v) {

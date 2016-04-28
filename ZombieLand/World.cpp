@@ -202,13 +202,13 @@ void World::setPlanes() {
 	planes.push_back(setPlane(1, -49.5, -49, 3.5, 7, 31));
 
 	//Balcony wall
-	planes.push_back(setPlane(0, 6.75, 10.5, 3.5, 5, -10.5));
-	planes.push_back(setPlane(0, 49.5, 53, 3.5, 5, -10.5));
+	planes.push_back(setPlane(0, 6.75, 10.5, 3.5, 7, -10.5));
+	planes.push_back(setPlane(0, 49.5, 53, 3.5, 7, -10.5));
 
-	planes.push_back(setPlane(1, -10.5, -53, 3.5, 5, 6.75));
-	planes.push_back(setPlane(1, -10.5, -53, 3.5, 5, 53));
+	planes.push_back(setPlane(1, -10.5, -53, 3.5, 7, 6.75));
+	planes.push_back(setPlane(1, -10.5, -53, 3.5, 7, 53));
 
-	planes.push_back(setPlane(0, 6.75, 53, 3.5,5, -53));
+	planes.push_back(setPlane(0, 6.75, 53, 3.5, 7, -53));
 
 	//Inner walls
 	planes.push_back(setPlane(0, 49.5, 35, 3.5, 7, -38.5));
@@ -270,20 +270,27 @@ void World::setPlanes() {
 }
 
 void World::setObstacles() {
-	for (int i = 0; i < 60; i++)
-		for (int j = 0; j < 80; j++)
-			obstacles[i][j] = 'o';//o is open, w is wall
+	for (int k = 0; k < 3; k++)
+		for (int i = 0; i < 60; i++)
+			for (int j = 0; j < 80; j++) {
+				obstacles[k][i][j] = 'o';//o is open, w is wall
+			}
+
+
 	//set char[i][j] as w for a wall
 	for (unsigned i = 0; i < planes.size(); i++) {
 		CollisionPlane *p = planes[i];
 		int xNormal = p->getNormal().getX();
-		if (p->getV1().getY() == 3.5) {//if the wall is on bottom floor
+		int floorN = 0;
+		if (p->getV1().getY() == 3.5) floorN = 0;
+		else if (p->getV1().getY() == 7) floorN = 1;
+		else floorN = 2;
 			if (xNormal != 0) {//z changes, x is constant
 				int x = floor(p->getV1().getX());
 				int start = floor(min(-p->getV1().getZ(), -p->getV3().getZ()));
 				int end = floor(max(-p->getV1().getZ(), -p->getV3().getZ()));
 				for (int i = start; i < end; i++) {
-					obstacles[x][i] = 'w';
+					obstacles[floorN][x][i] = 'w';
 				}
 			}
 			else {//z constant, x changes
@@ -291,15 +298,15 @@ void World::setObstacles() {
 				int start = floor(min(p->getV1().getX(), p->getV3().getX()));
 				int end = floor(max(p->getV1().getX(), p->getV3().getX()));
 				for (int i = start; i < end; i++)
-					obstacles[i][z] = 'w';
+					obstacles[floorN][i][z] = 'w';
 			}
-		}
 	}
-	/*cout << endl;
+	/*
+	cout << endl;
 	for (int i = 0; i < 60; i++) {
 		for (int j = 0; j < 80; j++) {
-			if (obstacles[i][j] == 'w')
-				cout << obstacles[i][j];
+			if (obstacles1[i][j] == 'w')
+				cout << obstacles1[i][j];
 			else
 				cout << ".";
 		}

@@ -11,7 +11,7 @@ class PathFinder
 	
 public:
 	void clearGrid();
-	Path findPath(int xStart, int yStart, int xGoal, int yGoal);
+	Path findPath(int xStart, int yStart, int xGoal, int yGoal, int zombieFloor, int playerFloor);
 	PathFinder();
 	PathFinder(World* w);
 	~PathFinder();

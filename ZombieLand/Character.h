@@ -16,12 +16,16 @@ public:
 	Vector getLookVector();
 	Vector getNewPosition(int id);
 	Vector getUnitVector();
+	void checkStairs();
 	float getThetha();
 	const int FORWARD = 0;
 	const int BACKWARD = 1;
 	const int LEFT = 2;
 	const int RIGHT = 3;
 	static Vector playerPos;
+	int floor = 0;
+	int getFloor(float eyeLevel);
+	int getFloor(float y, float eyeLevel);
 	virtual ~Character();
 
 protected:
