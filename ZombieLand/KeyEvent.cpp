@@ -16,7 +16,6 @@ KeyEvent::KeyEvent(Player *player, World world, Wave *wave, AmmoBox *box)
 	}
 }
 
-
 KeyEvent::~KeyEvent()
 {
 	/*delete wave;
@@ -163,7 +162,7 @@ void KeyEvent::keyOperations()
 		player->AmmoPickup();
 	}
 
-	
+
 	player->lookAt();
 }
 
