@@ -32,69 +32,67 @@ void World::init() {
 
 void World::setPlanes() {
 	//outer wall 60x80, normal points into world
-	planes.push_back(new CollisionPlane(Vector(0, 0, -1), Vector(0.5, 7.5, -0.5),
-		Vector(0.5, 0, -0.5), Vector(59.5, 0, -0.5), Vector(59.5, 7.5, -0.5)));
-	planes.push_back(new CollisionPlane(Vector(1, 0, 0), Vector(0.5, 7.5, -0.5),
-		Vector(0.5, 0, -0.5), Vector(0.5, 0, -79.5), Vector(0.5, 7.5, -79.5)));
-	planes.push_back(new CollisionPlane(Vector(0, 0, 1), Vector(0.5, 7.5, -79.5),
-		Vector(0.5, 0, -79.5), Vector(59.5, 0, -79.5), Vector(59.5, 7.5, -79.5)));
-	planes.push_back(new CollisionPlane(Vector(-1, 0, 0), Vector(59.5, 7.5, -0.5),
-		Vector(59.5, 0, -0.5), Vector(59.5, 0, -79.5), Vector(59.5, 7.5, -79.5)));
+	planes.push_back(new CollisionPlane(Vector(0, 0, -1), Vector(0.5, 3.5, -0.5),
+		Vector(0.5, 0, -0.5), Vector(59.5, 0, -0.5), Vector(59.5, 3.5, -0.5)));
+	planes.push_back(new CollisionPlane(Vector(1, 0, 0), Vector(0.5, 3.5, -0.5),
+		Vector(0.5, 0, -0.5), Vector(0.5, 0, -79.5), Vector(0.5, 3.5, -79.5)));
+	planes.push_back(new CollisionPlane(Vector(0, 0, 1), Vector(0.5, 3.5, -79.5),
+		Vector(0.5, 0, -79.5), Vector(59.5, 0, -79.5), Vector(59.5, 3.5, -79.5)));
+	planes.push_back(new CollisionPlane(Vector(-1, 0, 0), Vector(59.5, 3.5, -0.5),
+		Vector(59.5, 0, -0.5), Vector(59.5, 0, -79.5), Vector(59.5, 3.5, -79.5)));
 
 	//building outer-rim of wall
-	planes.push_back(new CollisionPlane(Vector(0, 0, 1), Vector(10.5, 8.5, -10.5),
-		Vector(10.5, 0, -10.5), Vector(29, 0, -10.5), Vector(29, 8.5, -10.5)));
-	planes.push_back(new CollisionPlane(Vector(0, 0, 1), Vector(31, 8.5, -10.5),
-		Vector(31, 0, -10.5), Vector(49.5, 0, -10.5), Vector(49.5, 8.5, -10.5)));
+	planes.push_back(new CollisionPlane(Vector(0, 0, 1), Vector(10.5, 3.5, -10.5),
+		Vector(10.5, 0, -10.5), Vector(29, 0, -10.5), Vector(29, 3.5, -10.5)));
+	planes.push_back(new CollisionPlane(Vector(0, 0, 1), Vector(31, 3.5, -10.5),
+		Vector(31, 0, -10.5), Vector(49.5, 0, -10.5), Vector(49.5, 3.5, -10.5)));
 
-	planes.push_back(new CollisionPlane(Vector(-1, 0, 0), Vector(10.5, 8.5, -10.5),
-		Vector(10.5, 0, -10.5), Vector(10.5, 0, -49.5), Vector(10.5, 8.5, -49.5)));
+	planes.push_back(new CollisionPlane(Vector(-1, 0, 0), Vector(10.5, 3.5, -10.5),
+		Vector(10.5, 0, -10.5), Vector(10.5, 0, -49.5), Vector(10.5, 3.5, -49.5)));
 
-	planes.push_back(new CollisionPlane(Vector(0, 0, -1), Vector(10.5, 8.5, -49.5),
-		Vector(10.5, 0, -49.5), Vector(17, 0, -49.5), Vector(17, 8.5, -49.5)));
-	planes.push_back(new CollisionPlane(Vector(0, 0, -1), Vector(19, 8.5, -49.5),
-		Vector(19, 0, -49.5), Vector(29, 0, -49.5), Vector(29, 8.5, -49.5)));
-	//planes.push_back(new CollisionPlane(Vector(0, 0, -1), Vector(31, 8.5, -49.5),
-	//	Vector(31, 0, -49.5), Vector(49.5, 0, -49.5), Vector(49.5, 8.5, -49.5)));
-	planes.push_back(setPlane(0, 31, 49.5, 0, 8.5, -49.5));
+	planes.push_back(new CollisionPlane(Vector(0, 0, -1), Vector(10.5, 3.5, -49.5),
+		Vector(10.5, 0, -49.5), Vector(17, 0, -49.5), Vector(17, 3.5, -49.5)));
+	planes.push_back(new CollisionPlane(Vector(0, 0, -1), Vector(19, 3.5, -49.5),
+		Vector(19, 0, -49.5), Vector(29, 0, -49.5), Vector(29, 3.5, -49.5)));
+	planes.push_back(setPlane(0, 31, 49.5, 0, 3.5, -49.5));
 
-	planes.push_back(new CollisionPlane(Vector(1, 0, 0), Vector(49.5, 8.5, -10.5),
-		Vector(49.5, 0, -10.5), Vector(49.5, 0, -49.5), Vector(49.5, 8.5, -49.5)));
+	planes.push_back(new CollisionPlane(Vector(1, 0, 0), Vector(49.5, 3.5, -10.5),
+		Vector(49.5, 0, -10.5), Vector(49.5, 0, -49.5), Vector(49.5, 3.5, -49.5)));
 
 	//building inner-rim of wall
-	planes.push_back(new CollisionPlane(Vector(0, 0, 1), Vector(11, 8.5, -11),
-		Vector(11, 0, -11), Vector(29, 0, -11), Vector(29, 8.5, -11)));
-	planes.push_back(new CollisionPlane(Vector(0, 0, 1), Vector(31, 8.5, -11),
-		Vector(31, 0, -11), Vector(49, 0, -11), Vector(49, 8.5, -11)));
+	planes.push_back(new CollisionPlane(Vector(0, 0, 1), Vector(11, 3.5, -11),
+		Vector(11, 0, -11), Vector(29, 0, -11), Vector(29, 3.5, -11)));
+	planes.push_back(new CollisionPlane(Vector(0, 0, 1), Vector(31, 3.5, -11),
+		Vector(31, 0, -11), Vector(49, 0, -11), Vector(49, 3.5, -11)));
 
-	planes.push_back(new CollisionPlane(Vector(-1, 0, 0), Vector(11, 8.5, -11),
-		Vector(11, 0, -11), Vector(11, 0, -49), Vector(11, 8.5, -49)));
+	planes.push_back(new CollisionPlane(Vector(-1, 0, 0), Vector(11, 3.5, -11),
+		Vector(11, 0, -11), Vector(11, 0, -49), Vector(11, 3.5, -49)));
 
-	planes.push_back(new CollisionPlane(Vector(0, 0, -1), Vector(11, 8.5, -49),
-		Vector(11, 0, -49), Vector(17, 0, -49), Vector(17, 8.5, -49)));
-	planes.push_back(new CollisionPlane(Vector(0, 0, -1), Vector(19, 8.5, -49),
-		Vector(19, 0, -49), Vector(29, 0, -49), Vector(29, 8.5, -49)));
-	planes.push_back(new CollisionPlane(Vector(0, 0, -1), Vector(31, 8.5, -49),
-		Vector(31, 0, -49), Vector(49, 0, -49), Vector(49, 8.5, -49)));
+	planes.push_back(new CollisionPlane(Vector(0, 0, -1), Vector(11, 3.5, -49),
+		Vector(11, 0, -49), Vector(17, 0, -49), Vector(17, 3.5, -49)));
+	planes.push_back(new CollisionPlane(Vector(0, 0, -1), Vector(19, 3.5, -49),
+		Vector(19, 0, -49), Vector(29, 0, -49), Vector(29, 3.5, -49)));
+	planes.push_back(new CollisionPlane(Vector(0, 0, -1), Vector(31, 3.5, -49),
+		Vector(31, 0, -49), Vector(49, 0, -49), Vector(49, 3.5, -49)));
 
-	planes.push_back(new CollisionPlane(Vector(1, 0, 0), Vector(49, 8.5, -11),
-		Vector(49, 0, -11), Vector(49, 0, -49), Vector(49, 8.5, -49)));
+	planes.push_back(new CollisionPlane(Vector(1, 0, 0), Vector(49, 3.5, -11),
+		Vector(49, 0, -11), Vector(49, 0, -49), Vector(49, 3.5, -49)));
 
 	//doorway side walls
-	planes.push_back(new CollisionPlane(Vector(-1, 0, 0), Vector(29, 8.5, -11),
+	planes.push_back(new CollisionPlane(Vector(-1, 0, 0), Vector(29, 3.5, -11),
 		Vector(29, 0, -11), Vector(29, 0, -10.5), Vector(29, 3.5, -10.5)));
-	planes.push_back(new CollisionPlane(Vector(-1, 0, 0), Vector(31, 8.5, -11),
+	planes.push_back(new CollisionPlane(Vector(-1, 0, 0), Vector(31, 3.5, -11),
 		Vector(31, 0, -11), Vector(31, 0, -10.5), Vector(31, 3.5, -10.5)));
 
-	planes.push_back(new CollisionPlane(Vector(-1, 0, 0), Vector(17, 8.5, -49.5),
-		Vector(17, 0, -49.5), Vector(17, 0, -49), Vector(17, 8.5, -49)));
-	planes.push_back(new CollisionPlane(Vector(-1, 0, 0), Vector(19, 8.5, -49.5),
-		Vector(19, 0, -49.5), Vector(19, 0, -49), Vector(19, 8.5, -49)));
+	planes.push_back(new CollisionPlane(Vector(-1, 0, 0), Vector(17, 3.5, -49.5),
+		Vector(17, 0, -49.5), Vector(17, 0, -49), Vector(17, 3.5, -49)));
+	planes.push_back(new CollisionPlane(Vector(-1, 0, 0), Vector(19, 3.5, -49.5),
+		Vector(19, 0, -49.5), Vector(19, 0, -49), Vector(19, 3.5, -49)));
 
-	planes.push_back(new CollisionPlane(Vector(-1, 0, 0), Vector(29, 8.5, -49.5),
-		Vector(29, 0, -49.5), Vector(29, 0, -49), Vector(29, 8.5, -49)));
-	planes.push_back(new CollisionPlane(Vector(-1, 0, 0), Vector(31, 8.5, -49.5),
-		Vector(31, 0, -49.5), Vector(31, 0, -49), Vector(31, 8.5, -49)));
+	planes.push_back(new CollisionPlane(Vector(-1, 0, 0), Vector(29, 3.5, -49.5),
+		Vector(29, 0, -49.5), Vector(29, 0, -49), Vector(29, 3.5, -49)));
+	planes.push_back(new CollisionPlane(Vector(-1, 0, 0), Vector(31, 3.5, -49.5),
+		Vector(31, 0, -49.5), Vector(31, 0, -49), Vector(31, 3.5, -49)));
 
 	//inner walls: left side ground floor
 	planes.push_back(new CollisionPlane(Vector(0, 0, -1), Vector(49, 3.5, -46.5),
@@ -146,6 +144,129 @@ void World::setPlanes() {
 		Vector(25, 0, -13.25), Vector(11, 0, -13.25), Vector(11, 3.5, -13.25)));
 	planes.push_back(new CollisionPlane(Vector(0, 0, -1), Vector(20, 3.5, -23),
 		Vector(20, 0, -23), Vector(11, 0, -23), Vector(11, 3.5, -23)));
+
+	////////////////////////////////////////////////////////////////////////////////////
+	//SECOND FLOOR 
+	//OUTER WALL - OUTER RIM
+	planes.push_back(new CollisionPlane(Vector(0, 0, 1), Vector(10.5, 7, -10.5),
+		Vector(10.5, 3.5, -10.5), Vector(49.5, 3.5, -10.5), Vector(49.5, 7, -10.5)));
+
+	planes.push_back(new CollisionPlane(Vector(-1, 0, 0), Vector(10.5, 7, -10.5),
+		Vector(10.5, 3.5, -10.5), Vector(10.5, 3.5, -16), Vector(10.5, 7, -16)));
+	planes.push_back(new CollisionPlane(Vector(-1, 0, 0), Vector(10.5, 7, -18),
+		Vector(10.5, 3.5, -18), Vector(10.5, 3.5, -34), Vector(10.5, 7, -34)));
+	planes.push_back(new CollisionPlane(Vector(-1, 0, 0), Vector(10.5, 7, -36),
+		Vector(10.5, 3.5, -36), Vector(10.5, 3.5, -49.5), Vector(10.5, 7, -49.5)));
+
+	planes.push_back(new CollisionPlane(Vector(0, 0, -1), Vector(10.5, 7, -49.5),
+		Vector(10.5, 3.5, -49.5), Vector(29, 3.5, -49.5), Vector(29, 7, -49.5)));
+	planes.push_back(new CollisionPlane(Vector(0, 0, -1), Vector(31, 7, -49.5),
+		Vector(31, 3.5, -49.5), Vector(49.5, 3.5, -49.5), Vector(49.5, 7, -49.5)));
+
+	planes.push_back(setPlane(1, -10.5, -24.5, 3.5, 7, 49.5));
+	planes.push_back(setPlane(1, -26.5, -40.5, 3.5, 7, 49.5));
+	planes.push_back(setPlane(1, -42.5, -49.5, 3.5, 7, 49.5));
+
+	//Outer WALL - Inner Rim
+	planes.push_back(new CollisionPlane(Vector(0, 0, 1), Vector(11, 7, -11),
+		Vector(11, 3.5, -11), Vector(49, 3.5, -11), Vector(49, 7, -11)));
+
+	planes.push_back(new CollisionPlane(Vector(-1, 0, 0), Vector(11, 7, -11),
+		Vector(11, 3.5, -11), Vector(11, 3.5, -16), Vector(11, 7, -16)));
+	planes.push_back(new CollisionPlane(Vector(-1, 0, 0), Vector(11, 7, -18),
+		Vector(11, 3.5, -18), Vector(11, 3.5, -34), Vector(11, 7, -34)));
+	planes.push_back(new CollisionPlane(Vector(-1, 0, 0), Vector(11, 7, -36),
+		Vector(11, 3.5, -36), Vector(11, 3.5, -49), Vector(11, 7, -49)));
+
+	planes.push_back(new CollisionPlane(Vector(0, 0, -1), Vector(11, 7, -49),
+		Vector(11, 3.5, -49), Vector(29, 3.5, -49), Vector(29, 7, -49)));
+	planes.push_back(new CollisionPlane(Vector(0, 0, -1), Vector(31, 7, -49),
+		Vector(31, 3.5, -49), Vector(49, 3.5, -49), Vector(49, 7, -49)));
+
+	planes.push_back(setPlane(1, -11, -24.5, 3.5, 7, 49));
+	planes.push_back(setPlane(1, -26.5, -40.5, 3.5, 7, 49));
+	planes.push_back(setPlane(1, -42.5, -49, 3.5, 7, 49));
+
+	//Doorway side walls - outer wall
+	planes.push_back(setPlane(0, 49.5, 49, 3.5, 7, -24.5));
+	planes.push_back(setPlane(0, 49.5, 49, 3.5, 7, -26.5));
+	planes.push_back(setPlane(0, 49.5, 49, 3.5, 7, -40.5));
+	planes.push_back(setPlane(0, 49.5, 49, 3.5, 7, -42.5));
+
+	planes.push_back(setPlane(0, 11, 10.5, 3.5, 7, -16));
+	planes.push_back(setPlane(0, 11, 10.5, 3.5, 7, -18));
+	planes.push_back(setPlane(0, 11, 10.5, 3.5, 7, -34));
+	planes.push_back(setPlane(0, 11, 10.5, 3.5, 7, -36));
+
+	planes.push_back(setPlane(1, -49.5, -49, 3.5, 7, 29));
+	planes.push_back(setPlane(1, -49.5, -49, 3.5, 7, 31));
+
+	//Balcony wall
+	planes.push_back(setPlane(0, 6.75, 10.5, 3.5, 5, -10.5));
+	planes.push_back(setPlane(0, 49.5, 53, 3.5, 5, -10.5));
+
+	planes.push_back(setPlane(1, -10.5, -53, 3.5, 5, 6.75));
+	planes.push_back(setPlane(1, -10.5, -53, 3.5, 5, 53));
+
+	planes.push_back(setPlane(0, 6.75, 53, 3.5,5, -53));
+
+	//Inner walls
+	planes.push_back(setPlane(0, 49.5, 35, 3.5, 7, -38.5));
+	planes.push_back(setPlane(0, 49.5, 35, 3.5, 7, -29.75));
+	planes.push_back(setPlane(0, 49.5, 35, 3.5, 7, -20.75));
+
+	planes.push_back(setPlane(1, -38.5, -36.5, 3.5, 7, 35));
+	planes.push_back(setPlane(1, -34.5, -27.5, 3.5, 7, 35));
+	planes.push_back(setPlane(1, -25.5, -18.5, 3.5, 7, 35));
+	planes.push_back(setPlane(1, -16.5, -10.5, 3.5, 7, 35));
+
+	planes.push_back(setPlane(1, -49, -43.5, 3.5, 7, 25));
+	planes.push_back(setPlane(1, -41.5, -34.5, 3.5, 7, 25));
+	planes.push_back(setPlane(0, 25, 31, 3.5, 7, -34.5));
+	planes.push_back(setPlane(1, -34.5, -28.75, 3.5, 7, 31));
+	planes.push_back(setPlane(1, -26.75, -20.75, 3.5, 7, 31));
+	planes.push_back(setPlane(0, 31, 22, 3.5, 7, -20.75));
+	planes.push_back(setPlane(0, 20, 11, 3.5, 7, -20.75));
+
+	//Cubicles
+	planes.push_back(setPlane(0, 21, 15, 3.5, 7, -44));
+	planes.push_back(setPlane(0, 21, 15, 3.5, 7, -41));
+	planes.push_back(setPlane(0, 21, 15, 3.5, 7, -38));
+	planes.push_back(setPlane(0, 21, 15, 3.5, 7, -35));
+	planes.push_back(setPlane(0, 21, 15, 3.5, 7, -32));
+	planes.push_back(setPlane(0, 21, 15, 3.5, 7, -29));
+	planes.push_back(setPlane(0, 21, 15, 3.5, 7, -26));
+
+	planes.push_back(setPlane(1, -44, -41, 3.5, 7, 20));
+	planes.push_back(setPlane(1, -44, -41, 3.5, 7, 16));
+
+	planes.push_back(setPlane(1, -41, -38, 3.5, 7, 20));
+	planes.push_back(setPlane(1, -41, -38, 3.5, 7, 16));
+
+	planes.push_back(setPlane(1, -38, -35, 3.5, 7, 20));
+	planes.push_back(setPlane(1, -38, -35, 3.5, 7, 16));
+
+	planes.push_back(setPlane(1, -35, -32, 3.5, 7, 20));
+	planes.push_back(setPlane(1, -35, -32, 3.5, 7, 16));
+
+	planes.push_back(setPlane(1, -32, -29, 3.5, 7, 20));
+	planes.push_back(setPlane(1, -32, -29, 3.5, 7, 16));
+
+	planes.push_back(setPlane(1, -29, -26, 3.5, 7, 20));
+	planes.push_back(setPlane(1, -29, -26, 3.5, 7, 16));
+
+	///////////////////////////////////////////////////////////////////////////
+	//ROOF
+	planes.push_back(setPlane(1, -11, -49, 7, 8, 11));
+	planes.push_back(setPlane(0, 11, 49, 7, 8, -49));
+	planes.push_back(setPlane(1, -49, -11, 7, 8, 49));
+	planes.push_back(setPlane(0, 49, 11, 7, 8, -11));
+
+	planes.push_back(setPlane(0, 33, 45.5, 7, 8, -44));
+	planes.push_back(setPlane(0, 33, 45.5, 7, 8, -46.5));
+	planes.push_back(setPlane(1, -46.5, -44, 7, 8, 45.5));
+
+	//TO_DO: ADD INVISIBLE WALLS NEXT TO STAIRS
 }
 
 void World::setObstacles() {
@@ -156,23 +277,25 @@ void World::setObstacles() {
 	for (unsigned i = 0; i < planes.size(); i++) {
 		CollisionPlane *p = planes[i];
 		int xNormal = p->getNormal().getX();
-		if (xNormal != 0) {//z changes, x is constant
-			int x = floor(p->getV1().getX());
-			int start = floor(min(-p->getV1().getZ(), -p->getV3().getZ()));
-			int end = floor(max(-p->getV1().getZ(), -p->getV3().getZ()));
-			for (int i = start; i < end; i++) {
-				obstacles[x][i] = 'w';
+		if (p->getV1().getY() == 3.5) {//if the wall is on bottom floor
+			if (xNormal != 0) {//z changes, x is constant
+				int x = floor(p->getV1().getX());
+				int start = floor(min(-p->getV1().getZ(), -p->getV3().getZ()));
+				int end = floor(max(-p->getV1().getZ(), -p->getV3().getZ()));
+				for (int i = start; i < end; i++) {
+					obstacles[x][i] = 'w';
+				}
+			}
+			else {//z constant, x changes
+				int z = floor(-p->getV1().getZ());
+				int start = floor(min(p->getV1().getX(), p->getV3().getX()));
+				int end = floor(max(p->getV1().getX(), p->getV3().getX()));
+				for (int i = start; i < end; i++)
+					obstacles[i][z] = 'w';
 			}
 		}
-		else {//z constant, x changes
-			int z = floor(-p->getV1().getZ());
-			int start = floor(min(p->getV1().getX(), p->getV3().getX()));
-			int end = floor(max(p->getV1().getX(), p->getV3().getX()));
-			for (int i = start; i < end; i++)
-				obstacles[i][z] = 'w';
-		}
 	}
-	cout << endl;
+	/*cout << endl;
 	for (int i = 0; i < 60; i++) {
 		for (int j = 0; j < 80; j++) {
 			if (obstacles[i][j] == 'w')
@@ -181,17 +304,17 @@ void World::setObstacles() {
 				cout << ".";
 		}
 		cout << endl;
-	}
+	}*/
 }
 
 CollisionPlane* World::setPlane(float xNormal, float start, float end, float bottom, float top, float constant) {
 	if (xNormal != 0) {//x normal, z changes
-		return new CollisionPlane(Vector(xNormal, 0, 0), Vector(constant, bottom, start),
-			Vector(constant, top, start), Vector(constant, bottom, end), Vector(constant, top, end));
+		return new CollisionPlane(Vector(xNormal, 0, 0), Vector(constant, top, start),
+			Vector(constant, bottom, start), Vector(constant, bottom, end), Vector(constant, top, end));
 	}
 	else {//z normal, x changes
-		return new CollisionPlane(Vector(0, 0, 1), Vector(start, bottom, constant),
-			Vector(start, top, constant), Vector(end, bottom, constant), Vector(end, top, constant));
+		return new CollisionPlane(Vector(0, 0, 1), Vector(start, top, constant),
+			Vector(start, bottom, constant), Vector(end, bottom, constant), Vector(end, top, constant));
 	}
 }
 

@@ -107,7 +107,7 @@ void initGL()
 	glEnable(GL_DEPTH_TEST); // turns on hidden surface removal so that objects behind other objects do not get displayed
 
 	ammoBox.update();
-	cout << ammoBox.getLocation().getX() << " " << ammoBox.getLocation().getY() << " " << ammoBox.getLocation().getZ();
+	//cout << ammoBox.getLocation().getX() << " " << ammoBox.getLocation().getY() << " " << ammoBox.getLocation().getZ();
 }
 void render()
 {
