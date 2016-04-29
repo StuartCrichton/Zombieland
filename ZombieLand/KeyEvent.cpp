@@ -120,34 +120,28 @@ void KeyEvent::pressedRight()
 void KeyEvent::keyOperations()
 {
 	if (keyStates['r']) {
-		//player->init();
-		//player->lookAt();
 		player->reload();
 	}
 
 	if (keyStates['w']) {
 		pressedForward();
-		//cout << player->getPosition().getX() << " " << player->getPosition().getY() << " " << player->getPosition().getZ() << endl;
 	}
 
 	if (keyStates['s']) {
 		pressedBackwards();
-		//cout << player->getPosition().getX() << " " << player->getPosition().getY() << " " << player->getPosition().getZ() << endl;
 	}
 
 	if (keyStates['a']) {
 		pressedLeft();
-		//cout << player->getPosition().getX() << " " << player->getPosition().getY() << " " << player->getPosition().getZ() << endl;
 	}
 
 	if (keyStates['d']) {
 		pressedRight();
-		//cout << player->getPosition().getX() << " " << player->getPosition().getY() << " " << player->getPosition().getZ() << endl;
 	}
 
-	if (keyStates['c']) {
-		player->crouch();
-	}
+	//if (keyStates['c']) {
+	//	player->crouch();
+	//}
 
 	player->checkStairs();
 
