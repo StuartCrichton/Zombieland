@@ -45,7 +45,6 @@ public:
 
 private:
 	bool warped = false;
-
 	int health = 100;
 	int xOrigin = 0;
 	int yOrigin = 0;

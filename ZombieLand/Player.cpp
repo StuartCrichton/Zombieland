@@ -14,6 +14,7 @@ sf::Sound soundReload(bufferReload);
 sf::SoundBuffer bufferGun;
 sf::Sound soundGun(bufferGun);
 
+
 void Player::init() {//set the start values of the player
 	thetha = M_PI;
 	phi = 0;
@@ -95,28 +96,31 @@ void Player::shoot() {
 }
 
 void Player::reload() {
-	noRel = false;
-	//canShoot = false;
-	reloading = true;
-	previousTimeRel = glutGet(GLUT_ELAPSED_TIME);
-	bufferReload.loadFromFile("../Reload.wav");
-	soundReload.setVolume(100);
-	soundReload.play(); // Play the sound!
-	int dif = ammoCartridgeTotal - ammoCartridge;
-	ammoTotal -= dif;
-	ammoCartridge += dif;
-	//previousTime = 0;
-
+	if (ammoCartridge != 33) {//full cartridge already
+		noRel = false;
+		//canShoot = false;
+		reloading = true;
+		previousTimeRel = glutGet(GLUT_ELAPSED_TIME);
+		bufferReload.loadFromFile("../Reload.wav");
+		soundReload.setVolume(100);
+		soundReload.play(); // Play the sound!
+		int dif = ammoCartridgeTotal - ammoCartridge;
+		ammoTotal -= dif;
+		ammoCartridge += dif;
+		//previousTime = 0;
+	}
 }
 
 void Player::regainHealth() {
 	if (health < 100)
-		health++;
+		health+=2;
 }
 
 void Player::takeDamage() {
 	if (health - 5 >= 0)
 		health -= 5;
+	else
+		health = 0;
 }
 
 int Player::getHealth() {
@@ -204,7 +208,6 @@ void Player::setPrevTimeRel(float previousTimeRel) {
 void Player::setPrevTimeShoot(float previousTimeShoot) {
 	this->previousTimeShoot = previousTimeShoot;
 }
-
 Player::Player()
 {
 	init();

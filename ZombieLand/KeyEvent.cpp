@@ -1,6 +1,10 @@
 #include "KeyEvent.h"
 #include <iostream>
+#include <SFML/Audio.hpp>
 using namespace std;
+
+sf::SoundBuffer bufferAmmo;
+sf::Sound soundAmmo(bufferAmmo);
 
 KeyEvent::KeyEvent() {}
 
@@ -149,6 +153,8 @@ void KeyEvent::keyOperations()
 	if (player->getPosition().getX() >= box->getLocation().getX() && player->getPosition().getX() <= box->getLocation().getX() + 2.5 &&
 		player->getPosition().getZ() <= box->getLocation().getZ() && player->getPosition().getZ() >= box->getLocation().getZ() - 2 &&
 		player->getPosition().getY() >= box->getLocation().getY() && player->getPosition().getY() <= box->getLocation().getY() + 3.5) {
+		bufferAmmo.loadFromFile("../Ammo Box.wav");
+		soundAmmo.play();
 		box->update();
 		player->AmmoPickup();
 	}

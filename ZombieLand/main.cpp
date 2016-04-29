@@ -24,7 +24,8 @@
 
 using namespace std;
 // Global variables
-
+bool roof = false;
+bool gameOver = false;
 //bool canShoot = true;
 Player *player = new Player();
 World world;
@@ -33,7 +34,8 @@ bool canMove = true; //keeps track if a character can move for collision detecti
 vector<CollisionPlane*>* planes;
 HUD *hud = new HUD(player->getHealth(), player->getAmmoCartridge(), player->getAmmoTotal(),
 	player->getScore(), player->getWaveNumber(), player->getPosition(), player->getLookVector());
-
+sf::Music music; 
+sf::Music music2; 
 //sf::SoundBuffer bufferShot;
 //sf::Sound soundShot(bufferShot);
 
@@ -202,46 +204,53 @@ void render()
 
 void display()
 {
-	if (player->getShooting() == true) {
-		float newTimeShoot = glutGet(GLUT_ELAPSED_TIME);
-		float difference = newTimeShoot - player->getPrevTimeShoot();
-		//player->previousTime = newTime;
-		//difference /= 1000;
-		//cout << player->getcanShoot() << "   " << difference << endl;
-		if (difference >= 300) {
-			//cout << difference << endl;
-			player->setNoShoot(true);
-			player->setPrevTimeShoot(newTimeShoot);
-			player->setShooting(false);
+	if (!gameOver) {
+		if (player->getPosition().getY() > 8.5) {
+			//cout << "ROOF" << endl;
+			music.stop();
+			roof = true;
+			hud->setRoof(roof);
 		}
-	}
-	if (player->getReloading() == true) {
-		float newTimeRel = glutGet(GLUT_ELAPSED_TIME);
-		float difference = newTimeRel - player->getPrevTimeRel();
-		//player->previousTime = newTime;
-		//difference /= 1000;
-		//cout << player->getcanShoot() << "   " << difference << endl;
-		if (difference >= 3500) {
-			//cout << difference << endl;
-			player->setNoRel(true);
-			player->setPrevTimeRel(newTimeRel);
-			player->setReloading(false);
+		else {
+			//cout << "NOT ROOF" << endl;
+			roof = false;
+			hud->setRoof(roof);
 		}
-	}
 
-	int health = player->getHealth();
-	if (health == 0) {
-		hud->renderEndGameScreen();
-		//exit(0);
-		/*
-		Pause all spawn timers and pathing etc.
-		exit(0);
-		*/
-	}
-
-	keyEvents.keyOperations();
+		if (player->getShooting() == true) {
+			float newTimeShoot = glutGet(GLUT_ELAPSED_TIME);
+			float difference = newTimeShoot - player->getPrevTimeShoot();
+			//player->previousTime = newTime;
+			//difference /= 1000;
+			//cout << player->getcanShoot() << "   " << difference << endl;
+			if (difference >= 300) {
+				//cout << difference << endl;
+				player->setNoShoot(true);
+				player->setPrevTimeShoot(newTimeShoot);
+				player->setShooting(false);
+			}
+		}
+		if (player->getReloading() == true) {
+			float newTimeRel = glutGet(GLUT_ELAPSED_TIME);
+			float difference = newTimeRel - player->getPrevTimeRel();
+			//player->previousTime = newTime;
+			//difference /= 1000;
+			//cout << player->getcanShoot() << "   " << difference << endl;
+			if (difference >= 3500) {
+				//cout << difference << endl;
+				player->setNoRel(true);
+				player->setPrevTimeRel(newTimeRel);
+				player->setReloading(false);
+			}
+		}
+		keyEvents.keyOperations();
 	render();
 }
+	if (gameOver) {
+		music.stop();
+		music2.stop();
+	}
+	}
 
 void reshape(int w, int h)
 {
@@ -265,105 +274,113 @@ void reshape(int w, int h)
 }
 
 void mouseMove(int x, int y) {
+	if(!gameOver)
 	player->lookAround(x, y);
 }
 
 void mouseClick(int button, int state, int x, int y) {
-	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN && (player->getAmmoTotal() > 0 || player->getAmmoCartridge() > 0)) {
-		//if (player->getcanShoot() == true) {
-		if (player->getNoRel() == true && player->getNoShoot() == true) {
-			muzzleFlash = new MuzzleFlash(player);
-			player->shoot();
-			Ray ray(player->getPosition(), player->getUnitVector());
-			float minDistance = 1000;
-			unsigned minIndex = 1000;
-			bool somethingDies = false;
-			for (unsigned i = 0; i < wave->v_zombies.size(); i++) {
-				if (ray.intersects(wave->v_zombies[i]->mask)) {
-					bloodSplatter = new ParticleEffect(wave->v_zombies[i]->getPosition().getX(), wave->v_zombies[i]->getPosition().getY() + 1, wave->v_zombies[i]->getPosition().getZ(), 0.05, 1.0, 0.0, 0.0, 1000, 0.5);
-					somethingDies = true;
-					float d = ray.getDistance();
-					if (d < minDistance) {
-						minDistance = d;
-						minIndex = i;
+	if (!gameOver) {
+		if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN && (player->getAmmoTotal() > 0 || player->getAmmoCartridge() > 0)) {
+			//if (player->getcanShoot() == true) {
+			if (player->getNoRel() == true && player->getNoShoot() == true) {
+				muzzleFlash = new MuzzleFlash(player);
+				player->shoot();
+				Ray ray(player->getPosition(), player->getUnitVector());
+				float minDistance = 1000;
+				unsigned minIndex = 1000;
+				bool somethingDies = false;
+				for (unsigned i = 0; i < wave->v_zombies.size(); i++) {
+					if (ray.intersects(wave->v_zombies[i]->mask)) {
+						bloodSplatter = new ParticleEffect(wave->v_zombies[i]->getPosition().getX(), wave->v_zombies[i]->getPosition().getY() + 1, wave->v_zombies[i]->getPosition().getZ(), 0.05, 1.0, 0.0, 0.0, 1000, 0.5);
+						somethingDies = true;
+						float d = ray.getDistance();
+						if (d < minDistance) {
+							minDistance = d;
+							minIndex = i;
+						}
 					}
 				}
-			}
-			if (somethingDies) {
-				//bufferDie.loadFromFile("../Dying.wav");
-				//soundDie.play(); // Play the sound!
-				numOfKilledZombies++;
-				wave->v_zombies.erase(wave->v_zombies.begin() + minIndex);
-				player->scoreUp();
+				if (somethingDies) {
+					//bufferDie.loadFromFile("../Dying.wav");
+					//soundDie.play(); // Play the sound!
+					numOfKilledZombies++;
+					wave->v_zombies.erase(wave->v_zombies.begin() + minIndex);
+					player->scoreUp();
+				}
 			}
 		}
 	}
 }
 
 void healthTimer(int value) {
-	player->regainHealth();
-	glutTimerFunc(1000, healthTimer, 0);
+	if (!gameOver) {
+		player->regainHealth();
+		glutTimerFunc(2000, healthTimer, 0);
+	}
 }
 
 void WaveTimer(int value) {
-	/*
-	If it is a wave, repeat at the zombie spawn interval
-	*/
-	if (isWave) {
-		if (currentTimerDuration - timerInterval <= 0 && numOfKilledZombies == wave->numOfZombies) {
-			currentTimerDuration = wave->WAVE_COOLDOWN;
-			wave->incrementWaveNumber();
-			numOfKilledZombies = 0;
-			timerInterval = 1000;
-			isWave = false;
+	if (!gameOver) {
+		/*
+		If it is a wave, repeat at the zombie spawn interval
+		*/
+		if (isWave) {
+			if (currentTimerDuration - timerInterval <= 0 && numOfKilledZombies == wave->numOfZombies) {
+				currentTimerDuration = wave->WAVE_COOLDOWN;
+				wave->incrementWaveNumber();
+				numOfKilledZombies = 0;
+				timerInterval = 1000;
+				isWave = false;
+			}
+			else if (currentTimerDuration > 0) {
+				wave->addNewZombie();
+				currentTimerDuration -= wave->getZombieSpawnInterval();
+			}
 		}
-		else if (currentTimerDuration > 0) {
-			wave->addNewZombie();
-			currentTimerDuration -= wave->getZombieSpawnInterval();
-		}
-	}
 
-	/*
-	If it isn't a wave, repeat once every second
-	*/
-	else {
-		if (currentTimerDuration - 1000 < 0) {
-			currentTimerDuration = wave->WAVE_DURATION;
-			timerInterval = wave->getZombieSpawnInterval();
-			player->setWaveNumber(wave->waveNumber);
-			hud->update(player->getHealth(), player->getAmmoCartridge(), player->getAmmoTotal(), player->getScore(), player->getWaveNumber(), player->getPosition(), player->getLookVector());
-			isWave = true;
-		}
+		/*
+		If it isn't a wave, repeat once every second
+		*/
 		else {
-			currentTimerDuration -= 1000;
+			if (currentTimerDuration - 1000 < 0) {
+				currentTimerDuration = wave->WAVE_DURATION;
+				timerInterval = wave->getZombieSpawnInterval();
+				player->setWaveNumber(wave->waveNumber);
+				hud->update(player->getHealth(), player->getAmmoCartridge(), player->getAmmoTotal(), player->getScore(), player->getWaveNumber(), player->getPosition(), player->getLookVector());
+				isWave = true;
+			}
+			else {
+				currentTimerDuration -= 1000;
+			}
 		}
-	}
 
-	glutTimerFunc(timerInterval, WaveTimer, 0);
+		glutTimerFunc(timerInterval, WaveTimer, 0);
+	}
 }
 
 void Timer(int t) {
-	player->lookAt();
-	glutTimerFunc(20, Timer, 0);
+	if (!gameOver) {
+		player->lookAt();
+		glutTimerFunc(20, Timer, 0);
+	}
 }
 
-void ETATimer(int time)
-{
-	hud->updateETA();
-	if (hud->getMinutes() == 0 && hud->getSeconds() == 0)
-		return;
-	glutTimerFunc(1000, ETATimer, 0);
+void ETATimer(int time){
+if (!gameOver) 	{
+		hud->updateETA();
+		if (hud->getMinutes() == 0 && hud->getSeconds() == 0)
+			return;
+		glutTimerFunc(1000, ETATimer, 0);
+	}
 }
 
 void idle() {
 	player->lookAt(); // called when there is now other event
 	int health = player->getHealth();
-	if (health == 0) {
-		//hud->renderEndGameScreen();
-		/*
-		Pause all spawn timers and pathing etc.
-		exit(0);
-		*/
+	if (health == 0) 
+		gameOver = true;
+	if (hud->getTimeUp() == true) {
+		gameOver = true;
 	}
 }
 
@@ -384,17 +401,17 @@ void keyUp(unsigned char key, int x, int y) {
 /* Main function: GLUT runs as a console application starting at main() */
 int main(int argc, char** argv)
 {
-
-	sf::Music music;
+	cout<<ammoBox.getLocation().getX()<<endl;
+	cout << ammoBox.getLocation().getY()<< endl;
+	cout << ammoBox.getLocation().getZ()<< endl;
 	music.openFromFile("../Horror-theme-song.wav");
-	music.play();
+	//music.play();
 	music.setVolume(25);
 	music.setLoop(true);
 
-	sf::Music music2;
 	music2.openFromFile("../Zombie-sound.wav");
 	music2.setVolume(25);
-	music2.play();
+	//music2.play();
 	music2.setLoop(true);
 
 	glutInit(&argc, argv);
@@ -416,10 +433,11 @@ int main(int argc, char** argv)
 	glutMouseFunc(mouseClick);
 	glutPassiveMotionFunc(mouseMove);
 	glutMotionFunc(mouseMove);
+	glutIdleFunc(idle);
 
 	glutTimerFunc(0, WaveTimer, 0);
 	glutTimerFunc(0, healthTimer, 0);
-	glutTimerFunc(1000, ETATimer, 0);
+	glutTimerFunc(2000, ETATimer, 0);
 	glutTimerFunc(0, Timer, 0);
 	//glutTimerFunc(1000, soundTimer, 0);
 
