@@ -266,7 +266,7 @@ void World::setPlanes() {
 	planes.push_back(setPlane(0, 33, 45.5, 7, 8, -46.5));
 	planes.push_back(setPlane(1, -46.5, -44, 7, 8, 45.5));
 
-	//TO_DO: ADD INVISIBLE WALLS NEXT TO STAIRS
+	//TO_DO: ADD INVISIBLE WALLS NEXT TO STAIRS and add forgotten walls at stair 1 upper floor
 }
 
 void World::setObstacles() {
@@ -302,7 +302,7 @@ void World::setObstacles() {
 			}
 	}
 	
-	cout << endl;
+	/*cout << endl;
 	for (int k = 0; k < 3; k++){
 		for (int i = 0; i < 60; i++) {
 			for (int j = 0; j < 80; j++) {
@@ -314,7 +314,7 @@ void World::setObstacles() {
 			cout << endl;
 		}
 		cout << endl << endl;
-	}
+	}*/
 }
 
 CollisionPlane* World::setPlane(float xNormal, float start, float end, float bottom, float top, float constant) {
