@@ -25,14 +25,15 @@ void AmmoBox::update() {
 
 	draw();
 }
+
 Vector AmmoBox::getLocation() {
 	return pos;
 }
+
 AmmoBox::AmmoBox()
 {
 	update();
 }
-
 
 AmmoBox::~AmmoBox()
 {
