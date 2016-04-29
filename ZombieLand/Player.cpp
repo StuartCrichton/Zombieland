@@ -77,29 +77,6 @@ void Player::lookAround(int x, int y) {
 
 }
 
-void Player::crouch()
-{
-	/*
-	If the player is crouched, make him stand
-	*/
-	if (this->crouched) {
-		pos_v.setV(pos_v.getX(),
-			pos_v.getY() + 1,
-			pos_v.getZ());
-		this->crouched = false;
-	}
-	/*
-	If the player is standing, make him crouch
-	*/
-	else {
-		pos_v.setV(pos_v.getX(),
-			pos_v.getY() - 1,
-			pos_v.getZ());
-		this->crouched = true;
-	}
-	lookAt();
-}
-
 void Player::shoot() {
 	if (noRel && noShoot) {
 		//canShoot = true;

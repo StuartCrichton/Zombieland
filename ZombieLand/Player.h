@@ -14,7 +14,6 @@ public:
 	void strafeLeft();
 	void strafeRight();
 	void lookAround(int x, int y);
-	void crouch();
 	void lookAt();
 	void shoot();
 	void reload();
@@ -31,14 +30,12 @@ public:
 	void AmmoPickup();
 	bool getReloading();
 	bool getShooting();
-	//bool getcanShoot();
 	bool getNoRel();
 	bool getNoShoot();
 	float getPrevTimeRel();
 	float getPrevTimeShoot();
 	void setReloading(bool reloading);
 	void setShooting(bool shooting);
-	//void setcanShoot(bool canShoot);
 	void setNoRel(bool noRel);
 	void setNoShoot(bool noShoot);
 	void setPrevTimeRel(float previousTimeRel);
@@ -57,13 +54,11 @@ private:
 	int ammoTotal = 99;
 	int waveNumber = 1;
 	int score = 0;
-	bool crouched = false;
 
 	float previousTimeRel = 0;
 	float previousTimeShoot = 0;
 	bool reloading = false;
 	bool shooting = false;
-	//bool canShoot = true;
 	bool noRel = true;
 	bool noShoot = true;
 };
