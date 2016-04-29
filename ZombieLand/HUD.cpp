@@ -14,7 +14,7 @@ HUD::HUD() {
 
 }
 
-HUD::HUD(int health, int ammoCartridge, int ammoTotal, int score, int waveNumber, Vector pos_v, Vector look_v) {
+HUD::HUD(int health, int ammoCartridge, int ammoTotal, int score, int waveNumberrender, Vector pos_v, Vector look_v) {
 	this->health = health;
 	this->ammoCartridge = ammoCartridge;
 	this->ammoTotal = ammoTotal;
@@ -37,9 +37,11 @@ void HUD::update(int health, int ammoCartridge, int ammoTotal, int score, int wa
 int HUD::getSeconds() {
 	return seconds;
 }
+
 int HUD::getMinutes() {
 	return minutes;
 }
+
 void HUD::updateETA()
 {
 	if (seconds == 0) {
@@ -48,7 +50,7 @@ void HUD::updateETA()
 	}
 	else
 		this->seconds--;
-		//this->seconds--;
+	//this->seconds--;
 }
 
 void HUD::renderCrosshair() {
@@ -396,20 +398,26 @@ void HUD::renderETA()
 	glLoadIdentity();
 
 	//Draw the count down timer
-	glColor3f(0.2f, 1.0f, 0.0f);
+	if (minutes > 0) {
+		glColor3f(0.2f, 1.0f, 0.0f);
+	}else{
+		if (seconds <= 30) 
+			glColor3f(1.0f, 0.0f, 0.0f);
+	}
+	
 	glTranslated(glutGet(GLUT_WINDOW_WIDTH) - 100, 100, 0);
 	glRotatef(180, 1.0f, 0.0f, 0.0f);
 	glScalef(0.3f, 0.3f, 1.0f);
 	string timer;
-	if(seconds==0)
-		timer = to_string(this->minutes) + ":" + to_string(this->seconds) +"0";
+	if (seconds == 0)
+		timer = to_string(this->minutes) + ":" + to_string(this->seconds) + "0";
+	else
+		timer = to_string(this->minutes) + ":" + to_string(this->seconds);
+	if (minutes != 10)
+		if (seconds < 10)
+			timer = "0" + to_string(this->minutes) + ":0" + to_string(this->seconds);
 		else
-	timer = to_string(this->minutes) + ":" + to_string(this->seconds);
-	if(minutes != 10)
-		if (seconds < 10) 
-			timer = "0"+ to_string(this->minutes) + ":0" + to_string(this->seconds);
-		else
-		timer = "0"+to_string(this->minutes) + ":" + to_string(this->seconds);
+			timer = "0" + to_string(this->minutes) + ":" + to_string(this->seconds);
 	for (unsigned i = 0; i < timer.size(); i++) {
 		glutStrokeCharacter(GLUT_STROKE_ROMAN, timer[i]);
 	}
@@ -430,6 +438,7 @@ void HUD::renderETA()
 
 void HUD::renderEndGameScreen()
 {
+	cout << "SUCCESS!!!!!!!!!!!!" << endl;
 	glPushMatrix();
 	glDisable(GL_LIGHTING);
 	glDisable(GL_DEPTH_TEST);
@@ -485,4 +494,6 @@ void HUD::render() {
 	renderWave();
 	renderETAText();
 	renderETA();
+	if (health == 0)
+		renderEndGameScreen();
 }

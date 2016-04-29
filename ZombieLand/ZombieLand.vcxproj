@@ -157,7 +157,6 @@
     <ClCompile Include="Character.cpp" />
     <ClCompile Include="CollisionMask.cpp" />
     <ClCompile Include="CollisionPlane.cpp" />
-    <ClCompile Include="Gun.cpp" />
     <ClCompile Include="HUD.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ParticleEffect.cpp" />
@@ -180,7 +179,6 @@
     <ClInclude Include="Character.h" />
     <ClInclude Include="CollisionMask.h" />
     <ClInclude Include="CollisionPlane.h" />
-    <ClInclude Include="Gun.h" />
     <ClInclude Include="HUD.h" />
     <ClInclude Include="ParticleEffect.h" />
     <ClInclude Include="Path.h" />

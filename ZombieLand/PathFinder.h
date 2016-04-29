@@ -11,14 +11,14 @@ class PathFinder
 	
 public:
 	void clearGrid();
-	Path findPath(int xStart, int yStart, int xGoal, int yGoal);
+	Path findPath(int xStart, int yStart, int xGoal, int yGoal, int zombieFloor, int playerFloor);
 	PathFinder();
-	PathFinder(World w);
+	PathFinder(World* w);
 	~PathFinder();
 private:
 	std::vector<TileNode> closed;
 	std::priority_queue<TileNode> open;
-	World world;
+	World* world;
 	TileNode nodes[60][80];
 
 	void removeOpen(TileNode n);

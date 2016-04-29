@@ -76,7 +76,6 @@ void Player::lookAround(int x, int y) {
 
 }
 
-void Player::jump() {}
 void Player::crouch()
 {
 	/*
@@ -123,7 +122,7 @@ void Player::reload() {
 	//canShoot = false;
 	reloading = true;
 	previousTimeRel = glutGet(GLUT_ELAPSED_TIME);
-	bufferReload.loadFromFile("../reload.wav");
+	bufferReload.loadFromFile("../Reload.wav");
 	soundReload.setVolume(100);
 	soundReload.play(); // Play the sound!
 	int dif = ammoCartridgeTotal - ammoCartridge;
@@ -231,9 +230,9 @@ void Player::setPrevTimeShoot(float previousTimeShoot) {
 
 Player::Player()
 {
-	this->mask = CollisionMask(pos_v, 0.45);
 	init();
-
+	this->mask = CollisionMask(pos_v, 0.45);
+	this->floor = getFloor(1.7);
 }
 
 Player::~Player()

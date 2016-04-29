@@ -4,6 +4,7 @@
 #include "Wave.h"
 #include "CollisionPlane.h"
 #include "World.h"
+#include "AmmoBox.h"
 
 using namespace std;
 
@@ -11,7 +12,7 @@ class KeyEvent
 {
 public:
 	KeyEvent();
-	KeyEvent(Player *player, World world, Wave *wave);
+	KeyEvent(Player *player, World world, Wave *wave, AmmoBox *box);
 	~KeyEvent();
 	void keyOperations();
 	bool *keyStates = new bool[256];
@@ -20,6 +21,7 @@ private:
 	Player *player;
 	World world;
 	Wave *wave;
+	AmmoBox *box;
 	vector<CollisionPlane*>* planes;
 	bool canMove = true; //keeps track if a character can move for collision detection
 	void pressedForward();
