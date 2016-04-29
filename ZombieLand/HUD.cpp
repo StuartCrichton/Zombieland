@@ -28,6 +28,10 @@ HUD::HUD(int health, int ammoCartridge, int ammoTotal, int score, int waveNumber
 	this->look_v = look_v;
 }
 
+HUD::~HUD()
+{
+}
+
 void HUD::update(int health, int ammoCartridge, int ammoTotal, int score, int waveNumber, Vector pos_v, Vector look_v) {
 	this->health = health;
 	this->ammoCartridge = ammoCartridge;

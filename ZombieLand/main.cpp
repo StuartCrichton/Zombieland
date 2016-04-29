@@ -26,19 +26,21 @@ using namespace std;
 // Global variables
 bool roof = false;
 bool gameOver = false;
-//bool canShoot = true;
+bool canMove = true;
+
+//Necessary pointers and classes
 Player *player = new Player();
 World world;
 Vector v;
-bool canMove = true; //keeps track if a character can move for collision detection
 vector<CollisionPlane*>* planes;
 HUD *hud = new HUD(player->getHealth(), player->getAmmoCartridge(), player->getAmmoTotal(),
 	player->getScore(), player->getWaveNumber(), player->getPosition(), player->getLookVector());
-sf::Music music; 
-sf::Music music2; 
-//sf::SoundBuffer bufferShot;
-//sf::Sound soundShot(bufferShot);
 
+//Stuff pertaining to audio
+sf::Music music;
+sf::Music music2;
+
+//Stuff pertaining to lighting
 int dimx = 60;
 int dimz = 80;
 GLfloat light_position[] = { dimx + 10, 10, -dimz - 10,0.0 };
@@ -67,13 +69,9 @@ void deletePointers() {
 	for (unsigned i = wave->v_zombies.size() - 1; i >= 0; i--)
 		delete wave->v_zombies[i];
 	delete player;
-	player = NULL;
 	delete hud;
-	hud = NULL;
 	delete bloodSplatter;
-	bloodSplatter = NULL;
 	delete muzzleFlash;
-	muzzleFlash = NULL;
 }
 
 void initGL()
@@ -244,13 +242,13 @@ void display()
 			}
 		}
 		keyEvents.keyOperations();
-	render();
-}
+		render();
+	}
 	if (gameOver) {
 		music.stop();
 		music2.stop();
 	}
-	}
+}
 
 void reshape(int w, int h)
 {
@@ -274,8 +272,8 @@ void reshape(int w, int h)
 }
 
 void mouseMove(int x, int y) {
-	if(!gameOver)
-	player->lookAround(x, y);
+	if (!gameOver)
+		player->lookAround(x, y);
 }
 
 void mouseClick(int button, int state, int x, int y) {
@@ -365,8 +363,8 @@ void Timer(int t) {
 	}
 }
 
-void ETATimer(int time){
-if (!gameOver) 	{
+void ETATimer(int time) {
+	if (!gameOver) {
 		hud->updateETA();
 		if (hud->getMinutes() == 0 && hud->getSeconds() == 0)
 			return;
@@ -377,7 +375,7 @@ if (!gameOver) 	{
 void idle() {
 	player->lookAt(); // called when there is now other event
 	int health = player->getHealth();
-	if (health == 0) 
+	if (health == 0)
 		gameOver = true;
 	if (hud->getTimeUp() == true) {
 		gameOver = true;
@@ -401,9 +399,9 @@ void keyUp(unsigned char key, int x, int y) {
 /* Main function: GLUT runs as a console application starting at main() */
 int main(int argc, char** argv)
 {
-	cout<<ammoBox.getLocation().getX()<<endl;
-	cout << ammoBox.getLocation().getY()<< endl;
-	cout << ammoBox.getLocation().getZ()<< endl;
+	cout << ammoBox.getLocation().getX() << endl;
+	cout << ammoBox.getLocation().getY() << endl;
+	cout << ammoBox.getLocation().getZ() << endl;
 	music.openFromFile("../Horror-theme-song.wav");
 	//music.play();
 	music.setVolume(25);
