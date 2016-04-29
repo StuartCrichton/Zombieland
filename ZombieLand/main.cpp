@@ -25,6 +25,7 @@
 using namespace std;
 // Global variables
 
+//bool canShoot = true;
 Player *player = new Player();
 World world;
 Vector v;
@@ -32,6 +33,9 @@ bool canMove = true; //keeps track if a character can move for collision detecti
 vector<CollisionPlane*>* planes;
 HUD *hud = new HUD(player->getHealth(), player->getAmmoCartridge(), player->getAmmoTotal(),
 	player->getScore(), player->getWaveNumber(), player->getPosition(), player->getLookVector());
+
+//sf::SoundBuffer bufferShot;
+//sf::Sound soundShot(bufferShot);
 
 int dimx = 60;
 int dimz = 80;
@@ -41,7 +45,7 @@ GLfloat light_position2[] = { dimx / 2 , 30, -(dimz / 2),1.0 };
 GLfloat light_position3[] = { dimx / 2, -50, -(dimz / 2), 1.0 };
 
 //Stuff pertraining to the wave
-Wave *wave;
+Wave *wave; 
 float currentTimerDuration;
 int timerInterval;
 int numOfKilledZombies = 0;
@@ -56,20 +60,6 @@ AmmoBox ammoBox;
 
 //Multiple key pressed stuff
 KeyEvent keyEvents;
-
-void deletePointers() {
-	for (unsigned i = wave->v_zombies.size() - 1; i >= 0; i--)
-		delete wave->v_zombies[i];
-	delete player;
-	player = NULL;
-	delete hud;
-	hud = NULL;
-	delete bloodSplatter;
-	bloodSplatter = NULL;
-	delete muzzleFlash;
-	muzzleFlash = NULL;
-}
-
 
 void initGL()
 {
@@ -119,7 +109,6 @@ void initGL()
 	ammoBox.update();
 	//cout << ammoBox.getLocation().getX() << " " << ammoBox.getLocation().getY() << " " << ammoBox.getLocation().getZ();
 }
-
 void render()
 {
 	// GL_DEPTH_BUFFER_BIT - resets the depth test values for hidden surface removal
@@ -149,8 +138,8 @@ void render()
 		Vector v = wave->v_zombies[i]->update(player->getPosition());
 		bool move = true;
 		for (unsigned j = 0; j < wave->v_zombies.size(); j++) {
-			if (i != j)
-				if (wave->v_zombies[j]->mask.intersects(CollisionMask(v, 1))) {
+			if(i != j)
+				if (wave->v_zombies[j]->mask.intersects(CollisionMask(v, 0.7))) {
 					move = false;
 					break;
 				}
@@ -159,6 +148,13 @@ void render()
 			wave->v_zombies[i]->set(v);
 		wave->v_zombies[i]->render();
 	}
+
+	ammoBox.draw();
+	
+
+	/*cout << player.getPosition().getX() << " "
+	<< player.getPosition().getY() << " "
+	<< player.getPosition().getZ() << endl;*/
 
 	//Draw the Gun
 	glDisable(GL_DEPTH_TEST);
@@ -174,7 +170,9 @@ void render()
 	glPopMatrix();
 	glEnable(GL_DEPTH_TEST);
 
-	ammoBox.draw();
+	//update and display the HUD
+	hud->update(player->getHealth(), player->getAmmoCartridge(), player->getAmmoTotal(), player->getScore(), player->getWaveNumber(), player->getPosition(), player->getLookVector());
+	hud->render();
 
 	int a;
 	if (bloodSplatter != nullptr) {
@@ -190,14 +188,8 @@ void render()
 			muzzleFlash = nullptr;
 	}
 
-	//update and display the HUD
-	hud->update(player->getHealth(), player->getAmmoCartridge(), player->getAmmoTotal(), player->getScore(), player->getWaveNumber(), player->getPosition(), player->getLookVector());
-	hud->render();
-
-
 	glFlush();   // ******** DO NOT FORGET THIS **********
 }
-
 void display()
 {
 	if (player->getShooting() == true) {
@@ -226,10 +218,20 @@ void display()
 			player->setReloading(false);
 		}
 	}
+
+	int health = player->getHealth();
+	if (health == 0) {
+		hud->renderEndGameScreen();
+		//exit(0);
+		/*
+		Pause all spawn timers and pathing etc.
+		exit(0);
+		*/
+	}
+
 	keyEvents.keyOperations();
 	render();
 }
-
 void reshape(int w, int h)
 {
 	// Prevent a divide by zero, when window is too short
@@ -251,17 +253,6 @@ void reshape(int w, int h)
 	glLoadIdentity();
 }
 
-void idle() {
-	player->lookAt(); // called when there is now other event
-	int health = player->getHealth();
-	if (health == 0) {
-		hud->renderEndGameScreen();
-		/*
-		Pause all spawn timers and pathing etc.
-		exit(0);
-		*/
-	}
-}
 
 void mouseMove(int x, int y) {
 	player->lookAround(x, y);
@@ -271,7 +262,7 @@ void mouseClick(int button, int state, int x, int y) {
 	if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN && (player->getAmmoTotal() > 0 || player->getAmmoCartridge() > 0)) {
 		//if (player->getcanShoot() == true) {
 		if (player->getNoRel() == true && player->getNoShoot() == true) {
-			muzzleFlash = new MuzzleFlash(player);
+		muzzleFlash = new MuzzleFlash(player);
 			player->shoot();
 			Ray ray(player->getPosition(), player->getUnitVector());
 			float minDistance = 1000;
@@ -279,7 +270,7 @@ void mouseClick(int button, int state, int x, int y) {
 			bool somethingDies = false;
 			for (unsigned i = 0; i < wave->v_zombies.size(); i++) {
 				if (ray.intersects(wave->v_zombies[i]->mask)) {
-					bloodSplatter = new ParticleEffect(wave->v_zombies[i]->getPosition().getX(), wave->v_zombies[i]->getPosition().getY() + 1, wave->v_zombies[i]->getPosition().getZ(), 0.05, 1.0, 0.0, 0.0, 1000, 0.5);
+					bloodSplatter = new ParticleEffect(wave->v_zombies[i]->getPosition().getX(), wave->v_zombies[i]->getPosition().getY()+1, wave->v_zombies[i]->getPosition().getZ(), 0.05, 1.0, 0.0, 0.0, 1000, 0.5);
 					somethingDies = true;
 					float d = ray.getDistance();
 					if (d < minDistance) {
@@ -346,6 +337,12 @@ void Timer(int t) {
 	glutTimerFunc(20, Timer, 0);
 }
 
+/*void soundTimer(int t) {
+bufferScream.loadFromFile("../Psycho Scream.wav");
+soundScream.play();
+glutTimerFunc(60000, soundTimer, 0);
+}*/
+
 void ETATimer(int time)
 {
 	hud->updateETA();
@@ -354,19 +351,42 @@ void ETATimer(int time)
 	glutTimerFunc(1000, ETATimer, 0);
 }
 
-void keyPressed(unsigned char key, int x, int y) {
-	if (key != 27) {
-		keyEvents.keyStates[key] = true;
-	}
-	else {
-		deletePointers();
-		exit(0);
-	}
 
+ //void shootTimer(int value) {
+//	player->setShoot();
+//}
+
+void idle() {
+	player->lookAt(); // called when there is now other event
+	int health = player->getHealth();
+	if (health == 0) {
+		//hud->renderEndGameScreen();
+		/*
+		Pause all spawn timers and pathing etc.
+		exit(0);
+		*/
+	}
+}
+
+void keyPressed(unsigned char key, int x, int y) {
+	keyEvents.keyStates[key] = true;
 }
 
 void keyUp(unsigned char key, int x, int y) {
 	keyEvents.keyStates[key] = false;
+}
+
+void deletePointers() {
+	for (unsigned i = wave->v_zombies.size()-1; i >= 0; i--)
+		delete wave->v_zombies[i];
+	delete player;
+	player = NULL;
+	delete hud;
+	hud = NULL;
+	delete bloodSplatter;
+	bloodSplatter = NULL;
+	delete muzzleFlash;
+	muzzleFlash = NULL;
 }
 
 /* Main function: GLUT runs as a console application starting at main() */
@@ -374,14 +394,14 @@ int main(int argc, char** argv)
 {
 
 	sf::Music music;
-	music.openFromFile("../Haunted.wav");
+	music.openFromFile("../Horror-theme-song.wav");
 	music.play();
 	music.setVolume(25);
 	music.setLoop(true);
 
 	sf::Music music2;
 	music2.openFromFile("../Zombie-sound.wav");
-	music2.setVolume(20);
+	music2.setVolume(25);
 	music2.play();
 	music2.setLoop(true);
 
@@ -392,7 +412,6 @@ int main(int argc, char** argv)
 	glutCreateWindow("ZombieLand Survivor");
 	//glutFullScreen();
 	world.init();
-
 	wave = new Wave(&world);
 	currentTimerDuration = wave->WAVE_DURATION;
 	timerInterval = wave->getZombieSpawnInterval();
@@ -410,7 +429,8 @@ int main(int argc, char** argv)
 	glutTimerFunc(0, healthTimer, 0);
 	glutTimerFunc(1000, ETATimer, 0);
 	glutTimerFunc(0, Timer, 0);
-
+	//glutTimerFunc(1000, soundTimer, 0);
+	
 	initGL();
 
 	glutMainLoop();

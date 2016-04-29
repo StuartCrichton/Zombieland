@@ -301,17 +301,20 @@ void World::setObstacles() {
 					obstacles[floorN][i][z] = 'w';
 			}
 	}
-	/*
+	
 	cout << endl;
-	for (int i = 0; i < 60; i++) {
-		for (int j = 0; j < 80; j++) {
-			if (obstacles1[i][j] == 'w')
-				cout << obstacles1[i][j];
-			else
-				cout << ".";
+	for (int k = 0; k < 3; k++){
+		for (int i = 0; i < 60; i++) {
+			for (int j = 0; j < 80; j++) {
+				if (obstacles[k][i][j] == 'w')
+					cout << obstacles[k][i][j];
+				else
+					cout << ".";
+			}
+			cout << endl;
 		}
-		cout << endl;
-	}*/
+		cout << endl << endl;
+	}
 }
 
 CollisionPlane* World::setPlane(float xNormal, float start, float end, float bottom, float top, float constant) {

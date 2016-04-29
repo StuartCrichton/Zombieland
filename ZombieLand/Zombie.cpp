@@ -591,8 +591,8 @@ Vector Zombie::update(Vector p) {
 	int roundX = (x + 0.5) >= trunc(x) + 1 ? ceil(x) : trunc(x);
 	int roundZ = (z + 0.5) >= trunc(z) + 1 ? ceil(z) : trunc(z);
 	PathFinder pathF(this->world);
-	if(counter == 0)
-		this->path = pathF.findPath(roundX, roundZ, playerPos.getX(), -playerPos.getZ(), floor, getFloor(playerPos.getY(), 1.7));
+	if(counter == 0 || path.correctPath.size() == 0)
+		this->path = pathF.findPath(roundX, roundZ, playerPos.getX(), -playerPos.getZ(), floor, getFloor(playerPos.getY(), 1.6));
 	counter++;
 	if (counter == 20) counter = 0;//check for new path every twenty steps, less processing
 	if (path.correctPath.size() > 0) {
@@ -636,7 +636,9 @@ Vector Zombie::update(Vector p) {
 			this->thetha = 270;
 		}
 		this->thetha = (this->thetha)*M_PI / 180;
-		Vector v = Vector(newX, 1, -newZ);
+		this->checkStairs();
+		pos_v.setY(pos_v.getY() - 0.7);
+		Vector v = Vector(newX, pos_v.getY(), -newZ);
 		mask.update(v);
 		if (mask.intersects(CollisionMask(playerPos, 0.7))) {
 			mask.update(pos_v);
@@ -645,6 +647,7 @@ Vector Zombie::update(Vector p) {
 			return v;
 		}
 	}
+	floor = getFloor(1);
 	return pos_v;
 }
 

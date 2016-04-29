@@ -74,7 +74,7 @@ Vector Character::getUnitVector() {
 }
 
 void Character::checkStairs() {
-	if (pos_v.getZ() >= -49 && pos_v.getZ() <= -46.5 &&
+	if (pos_v.getZ() >= -49 && pos_v.getZ() <= -46.5 &&//staircase 1
 		pos_v.getX() >= 35.5 && pos_v.getX() <= 45.5 &&
 		pos_v.getY() <= 5.4)
 	{
@@ -82,7 +82,7 @@ void Character::checkStairs() {
 		pos_v.setY(ratio*3.5 + 1.7);
 	}
 
-	else if (pos_v.getZ() >= -13.5 && pos_v.getZ() <= -11 &&
+	else if (pos_v.getZ() >= -13.5 && pos_v.getZ() <= -11 &&//staircase 2
 		pos_v.getX() >= 15 && pos_v.getX() <= 25 &&
 		pos_v.getY() <= 5.4)
 	{
@@ -90,7 +90,7 @@ void Character::checkStairs() {
 		pos_v.setY(ratio*3.5 + 1.7);
 	}
 
-	else if (pos_v.getZ() >= -46.5 && pos_v.getZ() <= -44
+	else if (pos_v.getZ() >= -46.5 && pos_v.getZ() <= -44//staircase 3
 		&& pos_v.getX() >= 35.5 && pos_v.getX() <= 45.5 &&
 		pos_v.getY() >= (5) && pos_v.getY() <= (3.5 + 1.7 + 3.5))
 	{
@@ -110,9 +110,9 @@ void Character::checkStairs() {
 
 int Character::getFloor(float eyeLevel) {
 	float y = pos_v.getY() - eyeLevel;
-	if (y >= 0 && y <= 3.5)
+	if (y >= 0 && y < 3.5)
 		return 0;
-	else if (y >= 3.5 && y <= 7)
+	else if (y >= 3.5 && y < 7)
 		return 1;
 	else
 		return 2;
