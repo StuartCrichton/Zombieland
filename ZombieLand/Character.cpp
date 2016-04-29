@@ -98,12 +98,12 @@ void Character::checkStairs() {
 		pos_v.setY(ratio*3.5 + 1.7 + 3.5);
 	}
 
-	else {
-		if (pos_v.getY() >= (4.5) && pos_v.getY() <= (6))
+	else {//correction for after stair movement
+		if (pos_v.getY() >= (4) && pos_v.getY() <= (6))
 			pos_v.setY(5.2);
-		else if (pos_v.getY() >= (8) && pos_v.getY() <= (9.5))
+		else if (pos_v.getY() >= (7.8) && pos_v.getY() <= (9.5))
 			pos_v.setY(8.7);
-		else if (pos_v.getY() >= (1) && pos_v.getY() <= (2))
+		else if (pos_v.getY() >= (0) && pos_v.getY() <= (2))
 			pos_v.setY(1.7);
 	}
 }
