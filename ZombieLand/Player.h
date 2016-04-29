@@ -9,7 +9,6 @@ public:
 	Player();
 	~Player();
 	void init();
-	void setY(float x);
 	void setReloading(bool reloading);
 	void setShooting(bool shooting);
 	void setNoRel(bool noRel);
