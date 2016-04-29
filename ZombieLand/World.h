@@ -19,7 +19,7 @@ public:
 	//char obstacles1[60][80];//first floor
 	//char obstacles2[60][80];//roof
 	void init();
-	virtual ~World();
+	~World();
 
 protected:
 
