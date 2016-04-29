@@ -152,9 +152,6 @@ void Player::scoreUp() {
 	this->score++;
 }
 
-void Player::setY(float x) {
-	this->pos_v = Vector(pos_v.getX(), 1.7 + x, pos_v.getZ());
-}
 
 float Player::getPhi() {
 	return this->phi;
