@@ -23,8 +23,8 @@ World::World()
 
 
 void World::init() {
-	this->building.loadObjFile("../Office.obj");//create the building
-	this->ammoBox.loadObjFile("../AmmoBox.obj");//create the ammo box
+	this->building.loadObjFile("../Office.obj");
+	this->ammoBox.loadObjFile("../AmmoBox.obj");
 	this->gun.loadObjFile("../Gun3.obj");
 	setPlanes();
 	setObstacles();

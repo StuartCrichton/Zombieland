@@ -37,9 +37,11 @@ void HUD::update(int health, int ammoCartridge, int ammoTotal, int score, int wa
 int HUD::getSeconds() {
 	return seconds;
 }
+
 int HUD::getMinutes() {
 	return minutes;
 }
+
 void HUD::updateETA()
 {
 	if (seconds == 0) {

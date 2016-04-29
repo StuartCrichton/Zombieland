@@ -122,7 +122,7 @@ void Player::reload() {
 	//canShoot = false;
 	reloading = true;
 	previousTimeRel = glutGet(GLUT_ELAPSED_TIME);
-	bufferReload.loadFromFile("../reload.wav");
+	bufferReload.loadFromFile("../Reload.wav");
 	soundReload.setVolume(100);
 	soundReload.play(); // Play the sound!
 	int dif = ammoCartridgeTotal - ammoCartridge;
