@@ -7,8 +7,16 @@ class Player : public Character
 {
 public:
 	Player();
-	void setY(float x);
+	~Player();
 	void init();
+	void setY(float x);
+	void setReloading(bool reloading);
+	void setShooting(bool shooting);
+	void setNoRel(bool noRel);
+	void setNoShoot(bool noShoot);
+	void setPrevTimeRel(float previousTimeRel);
+	void setPrevTimeShoot(float previousTimeShoot);
+	void setWaveNumber(int waveNumber);
 	void rotateY(int angle);
 	void moveBackward();
 	void strafeLeft();
@@ -20,29 +28,20 @@ public:
 	void takeDamage();
 	void regainHealth();
 	void scoreUp();
-	int getHealth();
-	int getAmmoCartridge();
-	int getAmmoTotal();
-	int getWaveNumber();
-	void setWaveNumber(int waveNumber);
-	int getScore();
-	float getPhi();
 	void AmmoPickup();
+	
 	bool getReloading();
 	bool getShooting();
 	bool getNoRel();
 	bool getNoShoot();
+	float getPhi();
 	float getPrevTimeRel();
 	float getPrevTimeShoot();
-	void setReloading(bool reloading);
-	void setShooting(bool shooting);
-	void setNoRel(bool noRel);
-	void setNoShoot(bool noShoot);
-	void setPrevTimeRel(float previousTimeRel);
-	void setPrevTimeShoot(float previousTimeShoot);
-	virtual ~Player();
-
-protected:
+	int getScore();
+	int getHealth();
+	int getAmmoCartridge();
+	int getAmmoTotal();
+	int getWaveNumber();
 
 private:
 	bool warped = false;
