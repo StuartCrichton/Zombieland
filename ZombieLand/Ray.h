@@ -6,7 +6,7 @@ class Ray
 {
 public:
 	Ray(Vector o, Vector d);
-	virtual ~Ray();
+	~Ray();
 	Vector getOrigin();
 	Vector getDirection();
 	bool intersects(CollisionMask sphere);
