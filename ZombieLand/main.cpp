@@ -21,6 +21,7 @@
 #include "MuzzleFlash.h"
 #include "KeyEvent.h"
 #include "MuzzleFlash.h"
+#include "Lighting.h"
 
 using namespace std;
 // Global variables
@@ -39,12 +40,9 @@ sf::Music music2;
 //sf::SoundBuffer bufferShot;
 //sf::Sound soundShot(bufferShot);
 
-int dimx = 60;
-int dimz = 80;
-GLfloat light_position[] = { dimx + 10, 10, -dimz - 10,0.0 };
-GLfloat light_position1[] = { -dimx + 5, 10, dimz - 5, 1.0 };
-GLfloat light_position2[] = { dimx / 2 , 30, -(dimz / 2),1.0 };
-GLfloat light_position3[] = { dimx / 2, -50, -(dimz / 2), 1.0 };
+Lighting light;
+
+
 
 //Stuff pertraining to the wave
 Wave *wave;
@@ -80,49 +78,13 @@ void initGL()
 {
 	// Set "clearing" or background color
 	glClearColor(0, 0.1, 0.4, 1);
+
 	glutSetCursor(GLUT_CURSOR_NONE);
 	//glClearColor(0, 0, 0, 1); // White and opaque
-
-	glEnable(GL_LIGHTING); // turns on the lighting model in OpenGL
-
-	GLfloat diffuse0[] = { 0.9, 0.9, 0.9, 1.0 };
-
-	GLfloat diffuse[] = { 1.0, 1.0, 1.0, 1.0 };
-	GLfloat specular[] = { 1.0, 1.0, 1.0, 1.0 };
-	GLfloat ambient[] = { 1.0,1.0,1.0,1 };
-
-	glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse0);
-	glLightfv(GL_LIGHT0, GL_SPECULAR, specular);
-	glLightfv(GL_LIGHT0, GL_AMBIENT, ambient);
-
-	glLightfv(GL_LIGHT1, GL_DIFFUSE, diffuse);
-	glLightfv(GL_LIGHT1, GL_AMBIENT, ambient);
-	glLightfv(GL_LIGHT1, GL_SPECULAR, specular);
-
-	glLightfv(GL_LIGHT2, GL_DIFFUSE, diffuse);
-	glLightfv(GL_LIGHT2, GL_AMBIENT, ambient);
-	glLightfv(GL_LIGHT2, GL_SPECULAR, specular);
-
-	glLightfv(GL_LIGHT3, GL_DIFFUSE, diffuse);
-	glLightfv(GL_LIGHT3, GL_AMBIENT, ambient);
-	glLightfv(GL_LIGHT3, GL_SPECULAR, specular);
-
-
-	GLfloat ambientColor[] = { 1.0f, 1.0f, 1.0f, 1.0f }; //Color (0.2, 0.2, 0.2)
-	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambientColor);
-
-	GLfloat mat_amb[] = { 1.0,1.0,1.0,1.0 };
-	glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, mat_amb);
-
-	glEnable(GL_LIGHT0);//corner1
-	glEnable(GL_LIGHT1);//middle
-	glEnable(GL_LIGHT2);//corner2
-	glEnable(GL_LIGHT3);//below
 
 	glEnable(GL_DEPTH_TEST); // turns on hidden surface removal so that objects behind other objects do not get displayed
 
 	ammoBox.update();
-	//cout << ammoBox.getLocation().getX() << " " << ammoBox.getLocation().getY() << " " << ammoBox.getLocation().getZ();
 }
 
 void render()
@@ -136,10 +98,7 @@ void render()
 	// Set the camera
 	player->lookAt();
 
-	glLightfv(GL_LIGHT0, GL_POSITION, light_position);
-	glLightfv(GL_LIGHT1, GL_POSITION, light_position1);
-	glLightfv(GL_LIGHT2, GL_POSITION, light_position2);
-	glLightfv(GL_LIGHT3, GL_POSITION, light_position3);
+	light.lightInitGL();
 
 	//Draw the building
 	GLfloat color[] = { 0.5f, 0.5f, 0.5f, 1.0f };
@@ -200,6 +159,7 @@ void render()
 	hud->render();
 
 	glFlush();   // ******** DO NOT FORGET THIS **********
+	glutSwapBuffers();
 }
 
 void display()

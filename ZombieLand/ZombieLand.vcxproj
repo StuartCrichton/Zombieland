@@ -152,6 +152,7 @@
     <ClCompile Include="AmmoBox.cpp" />
     <ClCompile Include="AssimpModelLoader.cpp" />
     <ClCompile Include="KeyEvent.cpp" />
+    <ClCompile Include="Lighting.cpp" />
     <ClCompile Include="MuzzleFlash.cpp" />
     <ClCompile Include="Particle.cpp" />
     <ClCompile Include="Character.cpp" />
@@ -174,6 +175,7 @@
     <ClInclude Include="AmmoBox.h" />
     <ClInclude Include="AssimpModelLoader.h" />
     <ClInclude Include="KeyEvent.h" />
+    <ClInclude Include="Lighting.h" />
     <ClInclude Include="MuzzleFlash.h" />
     <ClInclude Include="Particle.h" />
     <ClInclude Include="Character.h" />

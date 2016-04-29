@@ -61,7 +61,7 @@ void AssimpModelLoader::loadObjFile(const char *filename)
 
 			float specularity[] = { specular.r,specular.g,specular.b,specular.a };
 			//std::cout << specularity[0] << " " << specularity[1] << " " << specularity[2] << "\n";
-			glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, specularity);
+			glMaterialfv(GL_FRONT, GL_SPECULAR, specularity);
 		}
 
 		aiColor4D ambient;
@@ -69,7 +69,7 @@ void AssimpModelLoader::loadObjFile(const char *filename)
 		{
 			float ambiention[] = { ambient.r,ambient.g,ambient.b,ambient.a };
 			//std::cout << ambiention[0] << " " << ambiention[1] << " " << ambiention[2] << "\n";
-			glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, ambiention);
+			glMaterialfv(GL_FRONT, GL_AMBIENT, ambiention);
 		}
 
 		GLuint texture = 0;

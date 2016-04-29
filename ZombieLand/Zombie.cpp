@@ -13,6 +13,8 @@ using namespace std;
 void Zombie::drawZombie() {
 	glPushMatrix();
 
+	glEnable(GL_NORMALIZE);
+
 	GLfloat white[] = { 1.0f,1.0f,1.0f, 1.0f };
 	GLfloat black[] = { 0.0f,0.0f,0.0f, 1.0f };
 	GLfloat red[] = { 1.0f,0.0f,0.0f, 1.0f };
@@ -31,8 +33,8 @@ void Zombie::drawZombie() {
 	GLfloat mat_shininess4[] = { 0.0 };
 	GLfloat mat_shininess5[] = { 90.0 };
 	GLfloat mat_shininess6[] = { 100.0 };
-	glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess4);
-	GLfloat color[] = { 0.5f, 0.5f, 0.5f, 1.0f };
+	//glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess4);
+	GLfloat color[] = { 0.8f, 0.8f, 0.8f, 1.0f };
 	glMaterialfv(GL_FRONT, GL_DIFFUSE, color);
 
 	glRotatef(-thetha * 180 / M_PI, 0, 1, 0);
@@ -80,7 +82,7 @@ void Zombie::drawZombie() {
 	// (3) Clip
 	glPushMatrix();
 	//glColor3f(0.5, 0.5, 0.5);
-	GLfloat color4[] = { 0.015f, 0.015f, 0.015f, 1.0f };
+	GLfloat color4[] = { 0.5f, 0.5f, 0.5f, 1.0f };
 	glMaterialfv(GL_FRONT, GL_DIFFUSE, color4);
 	glTranslatef(-0.15, 0.51, -0.12);
 	glScalef(0.009, 0.122, 0.02);
@@ -97,6 +99,8 @@ void Zombie::drawZombie() {
 	glutSolidCube(0.5);
 	glPopMatrix();
 
+	glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess2);
+
 	// (2) Card
 	glPushMatrix();
 	//glColor3f(1.0, 1.0, 1.0);
@@ -110,7 +114,7 @@ void Zombie::drawZombie() {
 	// (3) Photo
 	glPushMatrix();
 	//glColor3f(0.5, 0.62, 0.7); // Perfect colour
-	GLfloat color6[] = { 0.05f, 0.062f, 0.07f, 1.0f };
+	GLfloat color6[] = { 0.5f, 0.62f, 0.7f, 1.0f };
 	glMaterialfv(GL_FRONT, GL_DIFFUSE, color6);
 	glTranslatef(0.162, 0.4585, -0.111);
 	glScalef(0.09, 0.09, 0.05);
@@ -120,7 +124,7 @@ void Zombie::drawZombie() {
 	// (4) Writing
 	glPushMatrix();
 	//glColor3f(0.35, 0.35, 0.35);
-	GLfloat color7[] = { 0.026f, 0.026f, 0.026f, 1.0f };
+	GLfloat color7[] = { 0.35f, 0.35f, 0.35f, 1.0f };
 	glMaterialfv(GL_FRONT, GL_DIFFUSE, color7);
 	glTranslatef(0.12, 0.468, -0.12);
 	glRotatef(90, 0.0, 0.0, 1.0);
@@ -139,7 +143,7 @@ void Zombie::drawZombie() {
 
 	glPushMatrix();
 	//glColor3f(0.45, 0.45, 0.45);
-	GLfloat color8[] = { 0.45f, 0.45f, 0.54f, 1.0f };
+	GLfloat color8[] = { 0.45f, 0.45f, 0.45f, 1.0f };
 	glMaterialfv(GL_FRONT, GL_DIFFUSE, color8);
 	glTranslatef(0.096, 0.451, -0.12);
 	glRotatef(90, 0.0, 0.0, 1.0);
@@ -155,6 +159,8 @@ void Zombie::drawZombie() {
 	glScalef(0.005, 0.12, 0.02);
 	glutSolidCube(0.5);
 	glPopMatrix();
+
+	glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess1);
 
 	/// Draw Left Upper Arm
 	glPushMatrix();
@@ -226,7 +232,7 @@ void Zombie::drawZombie() {
 	/// Draw Left Sleeve Roll
 	glPushMatrix();
 	//glColor3f(0.835, 0.835, 0.835);
-	GLfloat color10[] = { 0.5f, 0.5f, 0.5f, 1.0f };
+	GLfloat color10[] = { 0.835f, 0.835f, 0.835f, 1.0f };
 	glMaterialfv(GL_FRONT, GL_DIFFUSE, color10);
 	glTranslatef(-0.39, 0.39, -0.28);
 	glRotatef(90, 1.0, 0.0, 0.0);
