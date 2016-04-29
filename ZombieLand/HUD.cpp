@@ -7,8 +7,12 @@
 #include <iostream>
 #include <math.h>
 #include <string>
+#include <SFML/Audio.hpp>
 
 using namespace std;
+
+sf::SoundBuffer bufferEnd;
+sf::Sound soundEnd(bufferEnd);
 
 HUD::HUD() {
 
@@ -34,6 +38,12 @@ void HUD::update(int health, int ammoCartridge, int ammoTotal, int score, int wa
 	this->look_v = look_v;
 }
 
+bool HUD::getTimeUp() {
+	return timeUp;
+}
+void HUD::setRoof(bool roof) {
+	this->roof = roof;
+}
 int HUD::getSeconds() {
 	return seconds;
 }
@@ -422,6 +432,8 @@ void HUD::renderETA()
 		glutStrokeCharacter(GLUT_STROKE_ROMAN, timer[i]);
 	}
 
+	if (minutes == 0 && seconds == 0)
+		timeUp = true;
 	//Reset Colors
 	glColor3f(0.0f, 1.0f, 0.3f);
 	glPopMatrix();
@@ -438,7 +450,6 @@ void HUD::renderETA()
 
 void HUD::renderEndGameScreen()
 {
-	cout << "SUCCESS!!!!!!!!!!!!" << endl;
 	glPushMatrix();
 	glDisable(GL_LIGHTING);
 	glDisable(GL_DEPTH_TEST);
@@ -460,11 +471,19 @@ void HUD::renderEndGameScreen()
 	glEnd();
 
 	//Draw the game over text
-	glColor3f(1.0f, 0.0f, 0.0f);
+	//glColor3f(1.0f, 0.0f, 0.0f);
 	glTranslated((glutGet(GLUT_WINDOW_WIDTH) / 2.0) - 100.0, glutGet(GLUT_WINDOW_HEIGHT) / 2.0, 0);
 	glRotatef(180, 1.0f, 0.0f, 0.0f);
 	glScalef(0.3f, 0.3f, 1.0f);
-	string gameover = "Game Over";
+	string gameover;
+	if (roof) {
+		gameover = "You Win";
+		glColor3f(1.0f, 1.0f, 1.0f);
+	}
+	else if (!roof || health == 0) {
+		gameover = "Game Over";
+		glColor3f(1.0f, 0.0f, 0.0f);
+	}
 	for (unsigned i = 0; i < gameover.size(); i++) {
 		glutStrokeCharacter(GLUT_STROKE_ROMAN, gameover[i]);
 	}
@@ -494,6 +513,12 @@ void HUD::render() {
 	renderWave();
 	renderETAText();
 	renderETA();
-	if (health == 0)
+	if (health == 0 || timeUp) {
 		renderEndGameScreen();
+		if(roof)
+			bufferEnd.loadFromFile("../You_Win.wav");
+		else if (!roof || health == 0) 
+		bufferEnd.loadFromFile("../GAME OVER.wav");
+		soundEnd.play();
+	}
 }
