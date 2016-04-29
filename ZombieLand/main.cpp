@@ -218,6 +218,17 @@ void display()
 			player->setReloading(false);
 		}
 	}
+
+	int health = player->getHealth();
+	if (health == 0) {
+		hud->renderEndGameScreen();
+		//exit(0);
+		/*
+		Pause all spawn timers and pathing etc.
+		exit(0);
+		*/
+	}
+
 	keyEvents.keyOperations();
 	render();
 }
@@ -242,17 +253,6 @@ void reshape(int w, int h)
 	glLoadIdentity();
 }
 
-void idle() {
-	player->lookAt(); // called when there is now other event
-	int health = player->getHealth();
-	if (health == 0) {
-		hud->renderEndGameScreen();
-		/*
-		Pause all spawn timers and pathing etc.
-		exit(0);
-		*/
-	}
-}
 
 void mouseMove(int x, int y) {
 	player->lookAround(x, y);
@@ -356,6 +356,17 @@ void ETATimer(int time)
 //	player->setShoot();
 //}
 
+void idle() {
+	player->lookAt(); // called when there is now other event
+	int health = player->getHealth();
+	if (health == 0) {
+		//hud->renderEndGameScreen();
+		/*
+		Pause all spawn timers and pathing etc.
+		exit(0);
+		*/
+	}
+}
 
 void keyPressed(unsigned char key, int x, int y) {
 	keyEvents.keyStates[key] = true;
@@ -383,15 +394,15 @@ int main(int argc, char** argv)
 {
 
 	sf::Music music;
-	music.openFromFile("../Haunted.wav");
-	//music.play();
+	music.openFromFile("../Horror-theme-song.wav");
+	music.play();
 	music.setVolume(25);
 	music.setLoop(true);
 
 	sf::Music music2;
 	music2.openFromFile("../Zombie-sound.wav");
-	music2.setVolume(20);
-	//music2.play();
+	music2.setVolume(25);
+	music2.play();
 	music2.setLoop(true);
 
 	glutInit(&argc, argv);

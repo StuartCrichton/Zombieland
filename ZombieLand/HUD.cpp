@@ -14,7 +14,7 @@ HUD::HUD() {
 
 }
 
-HUD::HUD(int health, int ammoCartridge, int ammoTotal, int score, int waveNumber, Vector pos_v, Vector look_v) {
+HUD::HUD(int health, int ammoCartridge, int ammoTotal, int score, int waveNumberrender, Vector pos_v, Vector look_v) {
 	this->health = health;
 	this->ammoCartridge = ammoCartridge;
 	this->ammoTotal = ammoTotal;
@@ -430,6 +430,7 @@ void HUD::renderETA()
 
 void HUD::renderEndGameScreen()
 {
+	cout << "SUCCESS!!!!!!!!!!!!" << endl;
 	glPushMatrix();
 	glDisable(GL_LIGHTING);
 	glDisable(GL_DEPTH_TEST);
@@ -485,4 +486,6 @@ void HUD::render() {
 	renderWave();
 	renderETAText();
 	renderETA();
+	if(health == 0)
+	renderEndGameScreen();
 }
