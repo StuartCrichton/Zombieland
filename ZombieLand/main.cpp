@@ -372,7 +372,7 @@ void keyPressed(unsigned char key, int x, int y) {
 		keyEvents.keyStates[key] = true;
 	}
 	else {
-		deletePointers();
+		//deletePointers();
 		exit(0);
 	}
 }
