@@ -148,9 +148,6 @@ void KeyEvent::keyOperations()
 	if (keyStates['c']) {
 		player->crouch();
 	}
-	if (keyStates[27]) {
-		exit(0);
-	}
 
 	player->checkStairs();
 
