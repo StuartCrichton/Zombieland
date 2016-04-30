@@ -14,7 +14,7 @@ void Wave::addNewZombie()
 {
 	unsigned int time_ui = unsigned int(time(NULL));
 	srand(time_ui);
-	int randomSpawnLocation = rand() % 8;
+	int randomSpawnLocation = rand() % 7;
 
 	Zombie *zombie = new Zombie(ZOMBIE_SPAWN_LOCATIONS[randomSpawnLocation][0], ZOMBIE_SPAWN_LOCATIONS[randomSpawnLocation][1], ZOMBIE_SPAWN_LOCATIONS[randomSpawnLocation][2], this->world);
 	v_zombies.push_back(zombie);
@@ -43,4 +43,8 @@ Wave::Wave(World* w)
 
 Wave::~Wave()
 {
+	for (unsigned i = 0; i < v_zombies.size(); i++) {
+		delete v_zombies[i];
+		v_zombies.erase(v_zombies.begin() + i);
+	}
 }

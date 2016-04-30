@@ -27,18 +27,19 @@ using namespace std;
 // Global variables
 bool roof = false;
 bool gameOver = false;
-//bool canShoot = true;
+bool canMove = true;
+
+//Necessary pointers and classes
 Player *player = new Player();
 World world;
 Vector v;
-bool canMove = true; //keeps track if a character can move for collision detection
 vector<CollisionPlane*>* planes;
 HUD *hud = new HUD(player->getHealth(), player->getAmmoCartridge(), player->getAmmoTotal(),
 	player->getScore(), player->getWaveNumber(), player->getPosition(), player->getLookVector());
+
+//Stuff pertaining to audio
 sf::Music music; 
 sf::Music music2; 
-//sf::SoundBuffer bufferShot;
-//sf::Sound soundShot(bufferShot);
 
 Lighting light;
 
@@ -62,16 +63,12 @@ AmmoBox ammoBox;
 KeyEvent keyEvents;
 
 void deletePointers() {
-	for (unsigned i = wave->v_zombies.size() - 1; i >= 0; i--)
-		delete wave->v_zombies[i];
+	
+	delete wave;
 	delete player;
-	player = NULL;
 	delete hud;
-	hud = NULL;
 	delete bloodSplatter;
-	bloodSplatter = NULL;
 	delete muzzleFlash;
-	muzzleFlash = NULL;
 }
 
 void initGL()
@@ -110,11 +107,11 @@ void render()
 	}*/
 
 	for (int i = 0; i < wave->v_zombies.size(); i++) {
-		Vector v = wave->v_zombies[i]->update(player->getPosition());
+		Vector v = wave->v_zombies[i]->update(player->getPosition(), player->floor);
 		bool move = true;
 		for (unsigned j = 0; j < wave->v_zombies.size(); j++) {
 			if (i != j)
-				if (wave->v_zombies[j]->mask.intersects(CollisionMask(v, 0.7))) {
+				if (wave->v_zombies[j]->mask.intersects(CollisionMask(v, 0.2))) {
 					move = false;
 					break;
 				}
@@ -154,9 +151,14 @@ void render()
 			muzzleFlash = nullptr;
 	}
 
+	
+
 	//update and display the HUD
 	hud->update(player->getHealth(), player->getAmmoCartridge(), player->getAmmoTotal(), player->getScore(), player->getWaveNumber(), player->getPosition(), player->getLookVector());
 	hud->render();
+
+
+	
 
 	glFlush();   // ******** DO NOT FORGET THIS **********
 	glutSwapBuffers();
@@ -234,7 +236,7 @@ void reshape(int w, int h)
 }
 
 void mouseMove(int x, int y) {
-	if(!gameOver)
+	if (!gameOver)
 	player->lookAround(x, y);
 }
 
@@ -325,8 +327,8 @@ void Timer(int t) {
 	}
 }
 
-void ETATimer(int time){
-if (!gameOver) 	{
+void ETATimer(int time) {
+	if (!gameOver) {
 		hud->updateETA();
 		if (hud->getMinutes() == 0 && hud->getSeconds() == 0)
 			return;
@@ -349,7 +351,7 @@ void keyPressed(unsigned char key, int x, int y) {
 		keyEvents.keyStates[key] = true;
 	}
 	else {
-		//deletePointers();
+		deletePointers();
 		exit(0);
 	}
 }
@@ -361,17 +363,17 @@ void keyUp(unsigned char key, int x, int y) {
 /* Main function: GLUT runs as a console application starting at main() */
 int main(int argc, char** argv)
 {
-	cout<<ammoBox.getLocation().getX()<<endl;
-	cout << ammoBox.getLocation().getY()<< endl;
-	cout << ammoBox.getLocation().getZ()<< endl;
+	cout << ammoBox.getLocation().getX() << endl;
+	cout << ammoBox.getLocation().getY() << endl;
+	cout << ammoBox.getLocation().getZ() << endl;
 	music.openFromFile("../Horror-theme-song.wav");
-	//music.play();
+	music.play();
 	music.setVolume(25);
 	music.setLoop(true);
 
 	music2.openFromFile("../Zombie-sound.wav");
 	music2.setVolume(25);
-	//music2.play();
+	music2.play();
 	music2.setLoop(true);
 
 	glutInit(&argc, argv);
@@ -379,7 +381,7 @@ int main(int argc, char** argv)
 	glutInitWindowSize(1024, 600);
 	glutInitWindowPosition(50, 50);
 	glutCreateWindow("ZombieLand Survivor");
-	//glutFullScreen();
+	glutFullScreen();
 	world.init();
 	wave = new Wave(&world);
 	currentTimerDuration = wave->WAVE_DURATION;

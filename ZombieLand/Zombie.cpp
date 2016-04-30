@@ -587,18 +587,19 @@ void Zombie::drawZombie() {
 void Zombie::render() {
 	glPushMatrix();
 	glTranslated(pos_v.getX(), pos_v.getY(), pos_v.getZ());
+	//glutSolidSphere(0.7, 16, 16);
 	drawZombie();
 	glPopMatrix();
 }
 
-Vector Zombie::update(Vector p) {
+Vector Zombie::update(Vector p, int pFloor) {
 	this->playerPos = p;
 	float x = (pos_v.getX()), z = -(pos_v.getZ());
 	int roundX = (x + 0.5) >= trunc(x) + 1 ? ceil(x) : trunc(x);
 	int roundZ = (z + 0.5) >= trunc(z) + 1 ? ceil(z) : trunc(z);
 	PathFinder pathF(this->world);
 	if(counter == 0 || path.correctPath.size() == 0)
-		this->path = pathF.findPath(roundX, roundZ, playerPos.getX(), -playerPos.getZ(), floor, getFloor(playerPos.getY(), 1.6));
+		this->path = pathF.findPath(roundX, roundZ, playerPos.getX(), -playerPos.getZ(), floor, pFloor);
 	counter++;
 	if (counter == 20) counter = 0;//check for new path every twenty steps, less processing
 	if (path.correctPath.size() > 0) {
@@ -644,12 +645,16 @@ Vector Zombie::update(Vector p) {
 		this->thetha = (this->thetha)*M_PI / 180;
 		this->checkStairs();
 		pos_v.setY(pos_v.getY() - 0.7);
+		if (floor == 1 && newZ > 53) {
+			cout << "no";
+		}
 		Vector v = Vector(newX, pos_v.getY(), -newZ);
 		mask.update(v);
 		if (mask.intersects(CollisionMask(playerPos, 0.7))) {
 			mask.update(pos_v);
 		}
 		else {
+			floor = getFloor(1);
 			return v;
 		}
 	}
@@ -667,6 +672,7 @@ Zombie::Zombie(float x1, float y1, float z1, World* w) {
 	this->mask = CollisionMask(v, 1);
 	this->world = w;
 	this->floor = getFloor(1);
+	this->spawn = pos_v;
 }
 
 void Zombie::set(Vector v) {

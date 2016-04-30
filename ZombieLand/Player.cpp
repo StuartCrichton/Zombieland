@@ -32,8 +32,8 @@ void Player::lookAt() {//Camera function calls gluLookAt
 void Player::rotateY(int angle) {        //rotates the camera a set angle in the y-axis
 	float radian = (angle*M_PI) / 1800;   //convert angle to radians and scale down
 	phi -= radian;
-	if (phi > M_PI / 2) phi = M_PI / 2;
-	if (phi < -M_PI / 2) phi = -M_PI / 2;
+	if (phi > M_PI / 6) phi = M_PI / 6;
+	if (phi < -M_PI / 8) phi = -M_PI / 8;
 	look_v.setV(look_v.getX(), sin(phi), look_v.getZ());
 }
 

@@ -10,6 +10,7 @@ class HUD {
 public:
 	HUD();
 	HUD(int health, int ammoCartridge, int ammoTotal, int score, int waveNumber, Vector pos_v, Vector look_v);
+	~HUD();
 	void update(int health, int ammoCartridge, int ammoTotal, int score, int waveNumber, Vector pos_v, Vector look_v);
 	int getSeconds();
 	int getMinutes();

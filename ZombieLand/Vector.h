@@ -26,10 +26,7 @@ public:
 	const Vector &operator+=(const Vector &other);
 	const Vector &operator-=(const Vector &other);
 
-	virtual ~Vector();
-
-protected:
-
+	~Vector();
 private:
 	float x = 0, y = 0, z = 0;
 };

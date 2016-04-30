@@ -26,18 +26,18 @@ void PathFinder::clearGrid() {
 
 Path PathFinder::findPath(int xStart, int yStart, int xGoal, int yGoal, int zombieFloor, int playerFloor) {
 	if (zombieFloor != playerFloor) {//if on different levels
-		if (zombieFloor == 0) {//go to top of staircase closest to zombie
+	if (zombieFloor == 0) {//go to top of staircase closest to zombie
 			Vector stair1(45.5, 3.5, 48);
 			Vector stair2(15, 3.5, 12);
 			Vector zombie(xStart, 1, yStart);
 			float dist1 = zombie.getDistance(stair1);
 			float dist2 = zombie.getDistance(stair2);
 			if (dist1 <= dist2) {
-				xGoal = 48;
+				xGoal = 46;
 				yGoal = 48;
 			}
 			else {
-				xGoal = 13;
+				xGoal = 16;
 				yGoal = 12;
 			}
 		}
@@ -49,16 +49,16 @@ Path PathFinder::findPath(int xStart, int yStart, int xGoal, int yGoal, int zomb
 				float dist1 = zombie.getDistance(stair1);
 				float dist2 = zombie.getDistance(stair2);
 				if (dist1 <= dist2) {
-					xGoal = 35;
+					xGoal = 37;
 					yGoal = 48;
 				}
 				else {
-					xGoal = 25;
+					xGoal = 24;
 					yGoal = 12;
 				}
 			}
 			else if (playerFloor == 2) {//if the player is on the roof, go to roof
-				xGoal = 36;
+				xGoal = 37;
 				yGoal = 45;
 			}
 		}
@@ -66,8 +66,6 @@ Path PathFinder::findPath(int xStart, int yStart, int xGoal, int yGoal, int zomb
 			xGoal = 44;
 			yGoal = 45;
 		}
-		if (xStart == 44 && yStart == 45 && zombieFloor == 2)
-			zombieFloor = 1;
 	}
 
 		if (world->obstacles[zombieFloor][xGoal][yGoal] == 'w')
@@ -90,7 +88,7 @@ Path PathFinder::findPath(int xStart, int yStart, int xGoal, int yGoal, int zomb
 			open.pop();
 			nodes[current.x][current.y].status = 'C';
 			for (int i = -1; i <= 1; i++) {
-				for (int j = -1; j <= 1; j++) {
+				loop : for (int j = -1; j <= 1; j++) {
 
 					int xNeighbour = i + current.x;
 					int yNeighbour = j + current.y;

@@ -33,7 +33,6 @@ bool Ray::pointInSphere(CollisionMask sphere, Vector v)
 
 float Ray::getDistance()
 {
-	cout << distance << endl;
 	return distance;
 }
 

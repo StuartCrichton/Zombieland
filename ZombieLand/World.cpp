@@ -126,8 +126,6 @@ void World::setPlanes() {
 		Vector(24.75, 0, -15.5), Vector(24.75, 0, -13.25), Vector(24.75, 3.5, -13.25)));
 	planes.push_back(new CollisionPlane(Vector(1, 0, 0), Vector(21.5, 3.5, -18),
 		Vector(21.5, 0, -18), Vector(21.5, 0, -13.5), Vector(21.5, 3.5, -13.5)));
-	planes.push_back(new CollisionPlane(Vector(1, 0, 0), Vector(20, 3.5, -24),
-		Vector(20, 0, -24), Vector(20, 0, -23), Vector(20, 3.5, -23)));
 
 	planes.push_back(new CollisionPlane(Vector(1, 0, 0), Vector(24.75, 3.5, -24),
 		Vector(24.75, 0, -24), Vector(24.75, 0, -17.5), Vector(24.75, 3.5, -17.5)));
@@ -142,8 +140,6 @@ void World::setPlanes() {
 		Vector(25, 0, -13), Vector(11, 0, -13), Vector(11, 3.5, -13)));
 	planes.push_back(new CollisionPlane(Vector(0, 0, -1), Vector(25, 3.5, -13.25),
 		Vector(25, 0, -13.25), Vector(11, 0, -13.25), Vector(11, 3.5, -13.25)));
-	planes.push_back(new CollisionPlane(Vector(0, 0, -1), Vector(20, 3.5, -23),
-		Vector(20, 0, -23), Vector(11, 0, -23), Vector(11, 3.5, -23)));
 
 	////////////////////////////////////////////////////////////////////////////////////
 	//SECOND FLOOR 
@@ -165,7 +161,7 @@ void World::setPlanes() {
 
 	planes.push_back(setPlane(1, -10.5, -24.5, 3.5, 7, 49.5));
 	planes.push_back(setPlane(1, -26.5, -40.5, 3.5, 7, 49.5));
-	planes.push_back(setPlane(1, -42.5, -49.5, 3.5, 7, 49.5));
+	planes.push_back(setPlane(1, -42.5, -50, 3.5, 7, 49.5));
 
 	//Outer WALL - Inner Rim
 	planes.push_back(new CollisionPlane(Vector(0, 0, 1), Vector(11, 7, -11),
@@ -205,8 +201,8 @@ void World::setPlanes() {
 	planes.push_back(setPlane(0, 6.75, 10.5, 3.5, 7, -10.5));
 	planes.push_back(setPlane(0, 49.5, 53, 3.5, 7, -10.5));
 
-	planes.push_back(setPlane(1, -10.5, -53, 3.5, 7, 6.75));
-	planes.push_back(setPlane(1, -10.5, -53, 3.5, 7, 53));
+	planes.push_back(setPlane(1, -10.5, -54, 3.5, 7, 6.75));
+	planes.push_back(setPlane(1, -10.5, -54, 3.5, 7, 53));
 
 	planes.push_back(setPlane(0, 6.75, 53, 3.5, 7, -53));
 
@@ -227,6 +223,10 @@ void World::setPlanes() {
 	planes.push_back(setPlane(1, -26.75, -20.75, 3.5, 7, 31));
 	planes.push_back(setPlane(0, 31, 22, 3.5, 7, -20.75));
 	planes.push_back(setPlane(0, 20, 11, 3.5, 7, -20.75));
+
+	planes.push_back(setPlane(1, -49, -44, 3.5, 7, 35.5));
+	planes.push_back(setPlane(0, 35.5, 45.6, 3.5, 7, -44));
+	planes.push_back(setPlane(0, 35.5, 45.6, 3.5, 7, -46.5));
 
 	//Cubicles
 	planes.push_back(setPlane(0, 21, 15, 3.5, 7, -44));
@@ -252,8 +252,13 @@ void World::setPlanes() {
 	planes.push_back(setPlane(1, -32, -29, 3.5, 7, 20));
 	planes.push_back(setPlane(1, -32, -29, 3.5, 7, 16));
 
+	//Arround staircases
 	planes.push_back(setPlane(1, -29, -26, 3.5, 7, 20));
 	planes.push_back(setPlane(1, -29, -26, 3.5, 7, 16));
+
+	planes.push_back(setPlane(1, -11, -14, 3.5, 7, 25));
+	planes.push_back(setPlane(0, 25, 15, 3.5, 7, -13.5));
+	
 
 	///////////////////////////////////////////////////////////////////////////
 	//ROOF
@@ -262,9 +267,9 @@ void World::setPlanes() {
 	planes.push_back(setPlane(1, -49, -11, 7, 8, 49));
 	planes.push_back(setPlane(0, 49, 11, 7, 8, -11));
 
-	planes.push_back(setPlane(0, 33, 45.5, 7, 8, -44));
-	planes.push_back(setPlane(0, 33, 45.5, 7, 8, -46.5));
-	planes.push_back(setPlane(1, -46.5, -44, 7, 8, 45.5));
+	planes.push_back(setPlane(0, 33, 46, 7, 8, -44));
+	planes.push_back(setPlane(0, 33, 46, 7, 8, -46.5));
+	planes.push_back(setPlane(1, -47, -44, 7, 8, 45.5));
 
 	//TO_DO: ADD INVISIBLE WALLS NEXT TO STAIRS and add forgotten walls at stair 1 upper floor
 }

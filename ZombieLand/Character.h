@@ -15,6 +15,7 @@ public:
 	Vector getPosition();
 	Vector getLookVector();
 	Vector getNewPosition(int id);
+	Vector getNewPosition(int id, float step);
 	Vector getUnitVector();
 	void checkStairs();
 	float getThetha();
@@ -25,7 +26,6 @@ public:
 	static Vector playerPos;
 	int floor = 0;
 	int getFloor(float eyeLevel);
-	int getFloor(float y, float eyeLevel);
 	virtual ~Character();
 
 protected:
