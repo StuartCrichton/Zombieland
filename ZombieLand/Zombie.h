@@ -13,6 +13,9 @@ public:
 	void drawZombie();
 	void set(Vector v);
 	Vector update(Vector playerPos, int floor);
+	CollisionMask head;
+	void takeDamage();
+	int getHealth();
 	~Zombie();
 protected:
 
@@ -22,6 +25,6 @@ private:
 	World* world;//for wall collision
 	Path path;
 	int counter = 0;
-
+	int health = 3;
 };
 
