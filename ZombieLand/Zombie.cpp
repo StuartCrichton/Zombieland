@@ -33,7 +33,7 @@ void Zombie::drawZombie() {
 	GLfloat mat_shininess4[] = { 0.0 };
 	GLfloat mat_shininess5[] = { 90.0 };
 	GLfloat mat_shininess6[] = { 100.0 };
-	//glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess4);
+	glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess4);
 	GLfloat color[] = { 0.8f, 0.8f, 0.8f, 1.0f };
 	glMaterialfv(GL_FRONT, GL_DIFFUSE, color);
 

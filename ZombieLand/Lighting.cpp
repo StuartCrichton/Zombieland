@@ -29,16 +29,16 @@ void Lighting::lightInitGL()
 	//glEnable(GL_LIGHT3);//below
 
 
-	GLfloat diffuseSun[] = { 1.0, 1.0, 1.0, 1.0 };
+	GLfloat diffuseSun[] = { 0.3, 0.3, 0.3, 1.0 };
 	glLightfv(GL_LIGHT1, GL_DIFFUSE, diffuseSun);
 
-	GLfloat ambientSun[] = { 0.8, 0.8, 0.8, 1.0 };
+	GLfloat ambientSun[] = { 0.5, 0.5, 0.5, 0.4 };
 	glLightfv(GL_LIGHT1, GL_AMBIENT, ambientSun);
 
-	GLfloat specularSun[] = { 0.5, 0.5, 0.5, 1.0 };
+	GLfloat specularSun[] = { 0.5, 0.5, 0.5, 0.2 };
 	glLightfv(GL_LIGHT1, GL_SPECULAR, specularSun);
 
-	GLfloat posSun[] = { light_X, 100, light_Z, 1 };
+	GLfloat posSun[] = { light_X, 100, light_Z, 0 };
 	glLightfv(GL_LIGHT1, GL_POSITION, posSun);
 
 	//GLfloat sunDirection[] = { 30.0, 5.0, -40.0 };
@@ -65,14 +65,14 @@ void Lighting::lightInitGL()
 	//glEnable(GL_COLOR_MATERIAL);
 	//glEnable(GL_LIGHTING); // turns on the lighting model in OpenGL
 
-	GLfloat diffuse[] = { 0.7, 0.7, 0.7, 1.0 };
-	GLfloat specular[] = { 0.7, 0.7, 0.7, 1.0 };
+	GLfloat diffuse[] = { 0.3, 0.3, 0.3, 0.8 };
+	GLfloat specular[] = { 0.3, 0.3, 0.3, 0.2 };
 	//GLfloat ambient0[] = { 0.3,0.3,0.3,0.3 };
 	//GLfloat ambient[] = { 0.5, 0.5, 0.5, 0.5 };
 
-	GLfloat spot_direction[] = { 55, 0, -75, 0 };
-	GLfloat spot_exponent[] = { 100.0f };
-	GLfloat spot_cutoff[] = { 95.0 };
+	GLfloat spot_direction[] = { 15, -50, 40, 0 };
+	GLfloat spot_exponent[] = { 150.0f };
+	GLfloat spot_cutoff[] = { 70.0 };
 
 
 
@@ -83,7 +83,7 @@ void Lighting::lightInitGL()
 	glLightfv(GL_LIGHT0, GL_SPOT_EXPONENT, spot_exponent);
 	glLightfv(GL_LIGHT0, GL_SPOT_CUTOFF, spot_cutoff);
 
-	//glLightf(GL_LIGHT0, GL_CONSTANT_ATTENUATION, 0.02);
+	glLightf(GL_LIGHT0, GL_CONSTANT_ATTENUATION, 0.2);
 	//glLightf(GL_LIGHT0, GL_LINEAR_ATTENUATION, 0.5);
 	//glLightf(GL_LIGHT0, GL_QUADRATIC_ATTENUATION, 0.5);
 
