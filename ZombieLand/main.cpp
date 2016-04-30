@@ -135,18 +135,6 @@ void render()
 	// Set the camera
 	player->lookAt();
 
-	//Draw a Ray from gun 10 units forward
-	glBegin(GL_QUADS);
-	glVertex3f(player->getPosition().getX(), player->getPosition().getY(), player->getPosition().getZ());
-	glVertex3f(player->getPosition().getX() + 5,
-		player->getPosition().getY() + 1,
-		player->getPosition().getZ() + 5);
-	glVertex3f(player->getPosition().getX(), 0.5, player->getPosition().getZ());
-	glVertex3f(player->getPosition().getX() + 5,
-		0.5,
-		player->getPosition().getZ() + 5);
-	glEnd();
-
 	glLightfv(GL_LIGHT0, GL_POSITION, light_position);
 	glLightfv(GL_LIGHT1, GL_POSITION, light_position1);
 	glLightfv(GL_LIGHT2, GL_POSITION, light_position2);

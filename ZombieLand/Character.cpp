@@ -69,6 +69,32 @@ Vector Character::getNewPosition(int id)//return the new position of where the c
 
 }
 
+Vector Character::getNewPosition(int id, float step)//return the new position of where the character should be if he moves
+{
+	if (id == FORWARD)
+		return Vector(pos_v.getX() + look_v.getX() * step, pos_v.getY(), pos_v.getZ() + look_v.getZ() * step);
+	else if (id == BACKWARD)
+		return Vector(pos_v.getX() - look_v.getX() * step, pos_v.getY(), pos_v.getZ() - look_v.getZ() * step);
+	else if (id == LEFT) {
+		look_v.setV(sin(thetha + M_PI / 2), look_v.getY(), -cos(thetha + M_PI / 2));
+		Vector v(pos_v.getX() - look_v.getX() * step,
+			pos_v.getY(),
+			pos_v.getZ() - look_v.getZ() * step);
+		look_v.setV(sin(thetha), look_v.getY(), -cos(thetha));
+		return v;
+	}
+	else if (id == RIGHT) {
+		look_v.setV(sin(thetha + M_PI / 2), look_v.getY(), -cos(thetha + M_PI / 2));
+		Vector v(pos_v.getX() + look_v.getX() * step,
+			pos_v.getY(),
+			pos_v.getZ() + look_v.getZ() * step);
+		look_v.setV(sin(thetha), look_v.getY(), -cos(thetha));
+		return v;
+	}
+	else return pos_v;
+
+}
+
 Vector Character::getUnitVector() {
 	return this->look_v;
 }
@@ -99,9 +125,9 @@ void Character::checkStairs() {
 	}
 
 	else {//correction for after stair movement
-		if (pos_v.getY() >= (4) && pos_v.getY() <= (6))
+		if (pos_v.getY() >= (3) && pos_v.getY() <= (6))
 			pos_v.setY(5.2);
-		else if (pos_v.getY() >= (7.8) && pos_v.getY() <= (9.5))
+		else if (pos_v.getY() >= (6.5) && pos_v.getY() <= (9.5))
 			pos_v.setY(8.7);
 		else if (pos_v.getY() >= (0) && pos_v.getY() <= (2))
 			pos_v.setY(1.7);

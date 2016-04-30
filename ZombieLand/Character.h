@@ -15,6 +15,7 @@ public:
 	Vector getPosition();
 	Vector getLookVector();
 	Vector getNewPosition(int id);
+	Vector getNewPosition(int id, float step);
 	Vector getUnitVector();
 	void checkStairs();
 	float getThetha();

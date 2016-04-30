@@ -58,7 +58,7 @@ Path PathFinder::findPath(int xStart, int yStart, int xGoal, int yGoal, int zomb
 				}
 			}
 			else if (playerFloor == 2) {//if the player is on the roof, go to roof
-				xGoal = 36;
+				xGoal = 35;
 				yGoal = 45;
 			}
 		}
@@ -90,13 +90,39 @@ Path PathFinder::findPath(int xStart, int yStart, int xGoal, int yGoal, int zomb
 			open.pop();
 			nodes[current.x][current.y].status = 'C';
 			for (int i = -1; i <= 1; i++) {
-				for (int j = -1; j <= 1; j++) {
+				loop : for (int j = -1; j <= 1; j++) {
 
 					int xNeighbour = i + current.x;
 					int yNeighbour = j + current.y;
 					if (i == 0 && j == 0)continue;
 
 					if (world->obstacles[zombieFloor][xNeighbour][yNeighbour] == 'o') {
+						if (i != 0 && j != 0) //if corner skip
+						{ 
+							bool ignore = false;
+							switch (i) {
+							case -1: if (j == 1 && world->obstacles[zombieFloor][xNeighbour][yNeighbour] == 'w'
+								|| j == -1 && world->obstacles[zombieFloor][xNeighbour][yNeighbour] == 'w')
+								ignore = true;
+								break;
+							case 1: if (j == 1 && world->obstacles[zombieFloor][xNeighbour][yNeighbour] == 'w'
+								|| j == -1 && world->obstacles[zombieFloor][xNeighbour][yNeighbour] == 'w')
+								ignore = true;
+								break;
+							}
+							switch (j) {
+							case -1: if (i == 1 && world->obstacles[zombieFloor][xNeighbour][yNeighbour] == 'w'
+								|| i == -1 && world->obstacles[zombieFloor][xNeighbour][yNeighbour] == 'w')
+								ignore = true;
+								break;
+							case 1: if (i == 1 && world->obstacles[zombieFloor][xNeighbour][yNeighbour] == 'w'
+								|| i == -1 && world->obstacles[zombieFloor][xNeighbour][yNeighbour] == 'w')
+								ignore = true;
+								break;
+							}
+							if(ignore)
+								continue; 
+						}
 						float addG = 1;
 						if (i != 0 && j != 0)
 							addG = 1.414;
