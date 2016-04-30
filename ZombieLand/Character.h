@@ -26,7 +26,6 @@ public:
 	static Vector playerPos;
 	int floor = 0;
 	int getFloor(float eyeLevel);
-	int getFloor(float y, float eyeLevel);
 	virtual ~Character();
 
 protected:

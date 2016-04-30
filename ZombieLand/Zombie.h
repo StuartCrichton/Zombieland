@@ -12,14 +12,16 @@ public:
 	void render();
 	void drawZombie();
 	void set(Vector v);
-	Vector update(Vector playerPos);
+	Vector update(Vector playerPos, int floor);
 	~Zombie();
 protected:
 
 private:
 	Vector playerPos;
+	Vector spawn;
 	World* world;//for wall collision
 	Path path;
 	int counter = 0;
+
 };
 

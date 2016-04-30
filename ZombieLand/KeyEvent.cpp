@@ -148,6 +148,7 @@ void KeyEvent::keyOperations()
 	//}
 
 	player->checkStairs();
+	player->floor = player->getFloor(1.7);
 
 	//ammoBox collision check
 	if (player->getPosition().getX() >= box->getLocation().getX() && player->getPosition().getX() <= box->getLocation().getX() + 2.5 &&

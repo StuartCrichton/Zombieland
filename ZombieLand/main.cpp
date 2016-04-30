@@ -66,8 +66,8 @@ AmmoBox ammoBox;
 KeyEvent keyEvents;
 
 void deletePointers() {
-	for (unsigned i = wave->v_zombies.size() - 1; i >= 0; i--)
-		delete wave->v_zombies[i];
+	
+	delete wave;
 	delete player;
 	delete hud;
 	delete bloodSplatter;
@@ -150,7 +150,7 @@ void render()
 	}*/
 
 	for (int i = 0; i < wave->v_zombies.size(); i++) {
-		Vector v = wave->v_zombies[i]->update(player->getPosition());
+		Vector v = wave->v_zombies[i]->update(player->getPosition(), player->floor);
 		bool move = true;
 		for (unsigned j = 0; j < wave->v_zombies.size(); j++) {
 			if (i != j)
@@ -393,7 +393,7 @@ void keyPressed(unsigned char key, int x, int y) {
 		keyEvents.keyStates[key] = true;
 	}
 	else {
-		//deletePointers();
+		deletePointers();
 		exit(0);
 	}
 }
@@ -409,13 +409,13 @@ int main(int argc, char** argv)
 	cout << ammoBox.getLocation().getY() << endl;
 	cout << ammoBox.getLocation().getZ() << endl;
 	music.openFromFile("../Horror-theme-song.wav");
-	//music.play();
+	music.play();
 	music.setVolume(25);
 	music.setLoop(true);
 
 	music2.openFromFile("../Zombie-sound.wav");
 	music2.setVolume(25);
-	//music2.play();
+	music2.play();
 	music2.setLoop(true);
 
 	glutInit(&argc, argv);
@@ -423,7 +423,7 @@ int main(int argc, char** argv)
 	glutInitWindowSize(1024, 600);
 	glutInitWindowPosition(50, 50);
 	glutCreateWindow("ZombieLand Survivor");
-	//glutFullScreen();
+	glutFullScreen();
 	world.init();
 	wave = new Wave(&world);
 	currentTimerDuration = wave->WAVE_DURATION;

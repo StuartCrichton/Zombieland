@@ -26,18 +26,18 @@ void PathFinder::clearGrid() {
 
 Path PathFinder::findPath(int xStart, int yStart, int xGoal, int yGoal, int zombieFloor, int playerFloor) {
 	if (zombieFloor != playerFloor) {//if on different levels
-		if (zombieFloor == 0) {//go to top of staircase closest to zombie
+	if (zombieFloor == 0) {//go to top of staircase closest to zombie
 			Vector stair1(45.5, 3.5, 48);
 			Vector stair2(15, 3.5, 12);
 			Vector zombie(xStart, 1, yStart);
 			float dist1 = zombie.getDistance(stair1);
 			float dist2 = zombie.getDistance(stair2);
 			if (dist1 <= dist2) {
-				xGoal = 48;
+				xGoal = 46;
 				yGoal = 48;
 			}
 			else {
-				xGoal = 13;
+				xGoal = 16;
 				yGoal = 12;
 			}
 		}
@@ -49,16 +49,16 @@ Path PathFinder::findPath(int xStart, int yStart, int xGoal, int yGoal, int zomb
 				float dist1 = zombie.getDistance(stair1);
 				float dist2 = zombie.getDistance(stair2);
 				if (dist1 <= dist2) {
-					xGoal = 35;
+					xGoal = 37;
 					yGoal = 48;
 				}
 				else {
-					xGoal = 25;
+					xGoal = 24;
 					yGoal = 12;
 				}
 			}
 			else if (playerFloor == 2) {//if the player is on the roof, go to roof
-				xGoal = 35;
+				xGoal = 37;
 				yGoal = 45;
 			}
 		}
@@ -66,8 +66,6 @@ Path PathFinder::findPath(int xStart, int yStart, int xGoal, int yGoal, int zomb
 			xGoal = 44;
 			yGoal = 45;
 		}
-		if (xStart == 44 && yStart == 45 && zombieFloor == 2)
-			zombieFloor = 1;
 	}
 
 		if (world->obstacles[zombieFloor][xGoal][yGoal] == 'w')
@@ -97,32 +95,6 @@ Path PathFinder::findPath(int xStart, int yStart, int xGoal, int yGoal, int zomb
 					if (i == 0 && j == 0)continue;
 
 					if (world->obstacles[zombieFloor][xNeighbour][yNeighbour] == 'o') {
-						if (i != 0 && j != 0) //if corner skip
-						{ 
-							bool ignore = false;
-							switch (i) {
-							case -1: if (j == 1 && world->obstacles[zombieFloor][xNeighbour][yNeighbour] == 'w'
-								|| j == -1 && world->obstacles[zombieFloor][xNeighbour][yNeighbour] == 'w')
-								ignore = true;
-								break;
-							case 1: if (j == 1 && world->obstacles[zombieFloor][xNeighbour][yNeighbour] == 'w'
-								|| j == -1 && world->obstacles[zombieFloor][xNeighbour][yNeighbour] == 'w')
-								ignore = true;
-								break;
-							}
-							switch (j) {
-							case -1: if (i == 1 && world->obstacles[zombieFloor][xNeighbour][yNeighbour] == 'w'
-								|| i == -1 && world->obstacles[zombieFloor][xNeighbour][yNeighbour] == 'w')
-								ignore = true;
-								break;
-							case 1: if (i == 1 && world->obstacles[zombieFloor][xNeighbour][yNeighbour] == 'w'
-								|| i == -1 && world->obstacles[zombieFloor][xNeighbour][yNeighbour] == 'w')
-								ignore = true;
-								break;
-							}
-							if(ignore)
-								continue; 
-						}
 						float addG = 1;
 						if (i != 0 && j != 0)
 							addG = 1.414;
