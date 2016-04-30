@@ -117,6 +117,7 @@ void initGL()
 	glEnable(GL_LIGHT2);//corner2
 	glEnable(GL_LIGHT3);//below
 
+
 	glEnable(GL_DEPTH_TEST); // turns on hidden surface removal so that objects behind other objects do not get displayed
 
 	ammoBox.update();
@@ -133,6 +134,18 @@ void render()
 	glLoadIdentity();
 	// Set the camera
 	player->lookAt();
+
+	//Draw a Ray from gun 10 units forward
+	glBegin(GL_QUADS);
+	glVertex3f(player->getPosition().getX(), player->getPosition().getY(), player->getPosition().getZ());
+	glVertex3f(player->getPosition().getX() + 5,
+		player->getPosition().getY() + 1,
+		player->getPosition().getZ() + 5);
+	glVertex3f(player->getPosition().getX(), 0.5, player->getPosition().getZ());
+	glVertex3f(player->getPosition().getX() + 5,
+		0.5,
+		player->getPosition().getZ() + 5);
+	glEnd();
 
 	glLightfv(GL_LIGHT0, GL_POSITION, light_position);
 	glLightfv(GL_LIGHT1, GL_POSITION, light_position1);
@@ -153,7 +166,7 @@ void render()
 		bool move = true;
 		for (unsigned j = 0; j < wave->v_zombies.size(); j++) {
 			if (i != j)
-				if (wave->v_zombies[j]->mask.intersects(CollisionMask(v, 0.7))) {
+				if (wave->v_zombies[j]->mask.intersects(CollisionMask(v, 0.2))) {
 					move = false;
 					break;
 				}
@@ -193,9 +206,14 @@ void render()
 			muzzleFlash = nullptr;
 	}
 
+	
+
 	//update and display the HUD
 	hud->update(player->getHealth(), player->getAmmoCartridge(), player->getAmmoTotal(), player->getScore(), player->getWaveNumber(), player->getPosition(), player->getLookVector());
 	hud->render();
+
+
+	
 
 	glFlush();   // ******** DO NOT FORGET THIS **********
 }

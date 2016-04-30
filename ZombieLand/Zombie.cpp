@@ -581,6 +581,7 @@ void Zombie::drawZombie() {
 void Zombie::render() {
 	glPushMatrix();
 	glTranslated(pos_v.getX(), pos_v.getY(), pos_v.getZ());
+	//glutSolidSphere(0.7, 16, 16);
 	drawZombie();
 	glPopMatrix();
 }
