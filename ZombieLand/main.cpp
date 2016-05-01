@@ -13,7 +13,8 @@
 #include "World.h"
 #include "Vector.h"
 #include "HUD.h"
-#include "Ray.h"
+//#include "Ray.h"
+#include "Bullet.h"
 #include "Wave.h";
 #include "AmmoBox.h"
 #include <SFML/Audio.hpp>
@@ -37,6 +38,7 @@ Player *player = new Player();
 World world;
 Vector v;
 vector<CollisionPlane*>* planes;
+vector<Bullet*> bullets;
 HUD *hud = new HUD(player->getHealth(), player->getAmmoCartridge(), player->getAmmoTotal(),
 	player->getScore(), player->getWaveNumber(), player->getPosition(), player->getLookVector());
 
@@ -170,6 +172,48 @@ void render()
 	for (CollisionPlane* p : *planes) {
 	p->debug();
 	}*/
+
+	//draw bullets
+	for (unsigned i = 0; i < bullets.size(); i++) {
+		bullets[i]->update();
+		bool stillAlive = true;
+		if (bullets[i]->getSteps() < 50) {
+			for (unsigned j = 0; j < wave->v_zombies.size(); j++) {
+				if (bullets[i]->mask.intersects(wave->v_zombies[j]->head)) {
+					bloodSplatter = new ParticleEffect(bullets[i]->getPosition().getX(), bullets[i]->getPosition().getY(), bullets[i]->getPosition().getZ(), 0.05, 1.0, 0.0, 0.0, 1000, 0.5);
+					stillAlive = false;
+					delete bullets[i];
+					bullets.erase(bullets.begin() + i);
+					delete wave->v_zombies[j];
+					numOfKilledZombies++;
+					wave->v_zombies.erase(wave->v_zombies.begin() + j);
+					player->scoreUp();
+					break;
+				}
+				else if (bullets[i]->mask.intersects(wave->v_zombies[j]->mask)) {
+					bloodSplatter = new ParticleEffect(bullets[i]->getPosition().getX(), bullets[i]->getPosition().getY(), bullets[i]->getPosition().getZ(), 0.05, 1.0, 0.0, 0.0, 1000, 0.5);
+					stillAlive = false;
+					delete bullets[i];
+					bullets.erase(bullets.begin() + i);
+					wave->v_zombies[j]->takeDamage();
+					if (wave->v_zombies[j]->getHealth() == 0) {
+						delete wave->v_zombies[j];
+						numOfKilledZombies++;
+						wave->v_zombies.erase(wave->v_zombies.begin() + j);
+						player->scoreUp();
+					}
+					break;
+				}
+			}
+			if (stillAlive)
+				bullets[i]->render();
+		}
+		else {
+			delete bullets[i];
+			bullets.erase(bullets.begin() + i);
+		}
+	}
+
 
 	for (int i = 0; i < wave->v_zombies.size(); i++) {
 		Vector v = wave->v_zombies[i]->update(player->getPosition(), player->floor);
@@ -319,43 +363,8 @@ void mouseClick(int button, int state, int x, int y) {
 			if (player->getNoRel() == true && player->getNoShoot() == true) {
 				muzzleFlash = new MuzzleFlash(player);
 				player->shoot();
-				Ray ray(&player->getPosition(), &player->getUnitVector());
-				float minDistance = 1000;
-				unsigned minIndex = 1000;
-				bool somethingHit = false;
-				bool head = false;
-				for (unsigned i = 0; i < wave->v_zombies.size(); i++) {
-					if (ray.intersects(wave->v_zombies[i]->mask)) {
-						bloodSplatter = new ParticleEffect(wave->v_zombies[i]->getPosition().getX(), wave->v_zombies[i]->getPosition().getY() + 1, wave->v_zombies[i]->getPosition().getZ(), 0.05, 1.0, 0.0, 0.0, 1000, 0.5);
-						float d = ray.getDistance();
-						if (d < minDistance) {
-							minDistance = d;
-							minIndex = i;
-							head = false;
-							somethingHit = true;
-						}
-					}
-						if (ray.intersects(wave->v_zombies[i]->head)) {
-							bloodSplatter = new ParticleEffect(wave->v_zombies[i]->getPosition().getX(), wave->v_zombies[i]->getPosition().getY() + 1, wave->v_zombies[i]->getPosition().getZ(), 0.05, 1.0, 0.0, 0.0, 1000, 0.5);
-							float d = ray.getDistance();
-							if (d < minDistance) {
-								somethingHit = true;
-								minDistance = d;
-								minIndex = i;
-								head = true;
-							}
-						}
-				}
-				if (somethingHit) {
-					//bufferDie.loadFromFile("../Dying.wav");
-					//soundDie.play(); // Play the sound!
-					wave->v_zombies[minIndex]->takeDamage();
-					if (head || wave->v_zombies[minIndex]->getHealth() == 0) {
-						numOfKilledZombies++;
-						wave->v_zombies.erase(wave->v_zombies.begin() + minIndex);
-						player->scoreUp();
-					}
-				}
+				Bullet* bullet = new Bullet(&player->getPosition(), &player->getUnitVector());
+				bullets.push_back(bullet);
 			}
 		}
 	}

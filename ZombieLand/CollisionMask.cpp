@@ -45,12 +45,6 @@ bool CollisionMask::intersectsPlane(CollisionPlane *plane) {
 		}
 	}
 	return false;
-		
-	/*cout << position.getX() << " y " << position.getY() << " z " << position.getZ() << endl
-		<< plane->getV1().getX() << " "
-		<< plane->getV1().getZ() << " " << endl
-		<< plane->getV3().getX() << " "
-		<< plane->getV3().getZ() << " " << endl;*/
 }
 
 Vector CollisionMask::getPosition()
