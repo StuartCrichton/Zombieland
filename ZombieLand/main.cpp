@@ -114,7 +114,7 @@ void render()
 	}*/
 
 	for (int i = 0; i < wave->v_zombies.size(); i++) {
-		Vector v = wave->v_zombies[i]->update(player->getPosition());
+		Vector v = wave->v_zombies[i]->update(player->getPosition(), player->floor);
 		bool move = true;
 		for (unsigned j = 0; j < wave->v_zombies.size(); j++) {
 			if (i != j)

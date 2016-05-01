@@ -37,7 +37,7 @@ Path PathFinder::findPath(int xStart, int yStart, int xGoal, int yGoal, int zomb
 				yGoal = 48;
 			}
 			else {
-				xGoal = 16;
+				xGoal = 14;
 				yGoal = 12;
 			}
 		}
@@ -45,7 +45,7 @@ Path PathFinder::findPath(int xStart, int yStart, int xGoal, int yGoal, int zomb
 			if (playerFloor == 0) {//go to bottom of stair closest to zombie
 				Vector stair1(35.5, 3.5, 48);
 				Vector stair2(25, 3.5, 12);
-				Vector zombie(xStart, 1, yStart);
+				Vector zombie(xStart, 3.5, yStart);
 				float dist1 = zombie.getDistance(stair1);
 				float dist2 = zombie.getDistance(stair2);
 				if (dist1 <= dist2) {

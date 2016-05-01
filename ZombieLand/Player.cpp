@@ -114,6 +114,8 @@ void Player::reload() {
 void Player::regainHealth() {
 	if (health < 100)
 		health+=2;
+	if (health > 100)
+		health = 100;
 }
 
 void Player::takeDamage() {
