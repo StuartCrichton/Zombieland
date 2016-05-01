@@ -29,6 +29,8 @@ bool roof = false;
 bool gameOver = false;
 bool canMove = true;
 
+Lighting light;
+
 //Necessary pointers and classes
 Player *player = new Player();
 World world;
@@ -41,7 +43,12 @@ HUD *hud = new HUD(player->getHealth(), player->getAmmoCartridge(), player->getA
 sf::Music music; 
 sf::Music music2; 
 
-Lighting light;
+int dimx = 60;
+int dimz = 80;
+GLfloat light_position[] = { dimx + 10, 10, -dimz - 10,0.0 };
+GLfloat light_position1[] = { -dimx + 5, 10, dimz - 5, 1.0 };
+GLfloat light_position2[] = { dimx / 2 , 30, -(dimz / 2),1.0 };
+GLfloat light_position3[] = { dimx / 2, -50, -(dimz / 2), 1.0 };
 
 
 
@@ -63,8 +70,8 @@ AmmoBox ammoBox;
 KeyEvent keyEvents;
 
 void deletePointers() {
-	
-	delete wave;
+	for (unsigned i = wave->v_zombies.size() - 1; i >= 0; i--)
+		delete wave->v_zombies[i];
 	delete player;
 	delete hud;
 	delete bloodSplatter;
@@ -107,11 +114,11 @@ void render()
 	}*/
 
 	for (int i = 0; i < wave->v_zombies.size(); i++) {
-		Vector v = wave->v_zombies[i]->update(player->getPosition(), player->floor);
+		Vector v = wave->v_zombies[i]->update(player->getPosition());
 		bool move = true;
 		for (unsigned j = 0; j < wave->v_zombies.size(); j++) {
 			if (i != j)
-				if (wave->v_zombies[j]->mask.intersects(CollisionMask(v, 0.2))) {
+				if (wave->v_zombies[j]->mask.intersects(CollisionMask(v, 0.7))) {
 					move = false;
 					break;
 				}
@@ -151,14 +158,9 @@ void render()
 			muzzleFlash = nullptr;
 	}
 
-	
-
 	//update and display the HUD
 	hud->update(player->getHealth(), player->getAmmoCartridge(), player->getAmmoTotal(), player->getScore(), player->getWaveNumber(), player->getPosition(), player->getLookVector());
 	hud->render();
-
-
-	
 
 	glFlush();   // ******** DO NOT FORGET THIS **********
 	glutSwapBuffers();
@@ -351,7 +353,7 @@ void keyPressed(unsigned char key, int x, int y) {
 		keyEvents.keyStates[key] = true;
 	}
 	else {
-		deletePointers();
+		//deletePointers();
 		exit(0);
 	}
 }
@@ -367,13 +369,13 @@ int main(int argc, char** argv)
 	cout << ammoBox.getLocation().getY() << endl;
 	cout << ammoBox.getLocation().getZ() << endl;
 	music.openFromFile("../Horror-theme-song.wav");
-	music.play();
+	//music.play();
 	music.setVolume(25);
 	music.setLoop(true);
 
 	music2.openFromFile("../Zombie-sound.wav");
 	music2.setVolume(25);
-	music2.play();
+	//music2.play();
 	music2.setLoop(true);
 
 	glutInit(&argc, argv);
@@ -381,7 +383,7 @@ int main(int argc, char** argv)
 	glutInitWindowSize(1024, 600);
 	glutInitWindowPosition(50, 50);
 	glutCreateWindow("ZombieLand Survivor");
-	glutFullScreen();
+	//glutFullScreen();
 	world.init();
 	wave = new Wave(&world);
 	currentTimerDuration = wave->WAVE_DURATION;
