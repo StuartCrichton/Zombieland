@@ -584,11 +584,21 @@ void Zombie::drawZombie() {
 	glMaterialfv(GL_FRONT, GL_SHININESS, mat_shininess1);
 }
 
+void Zombie::takeDamage() {
+	health--;
+}
+
+int Zombie::getHealth() {
+	return health;
+}
+
 void Zombie::render() {
 	glPushMatrix();
 	glTranslated(pos_v.getX(), pos_v.getY(), pos_v.getZ());
 	//glutSolidSphere(0.7, 16, 16);
 	drawZombie();
+	//glTranslatef(0,0.95,0);
+	//glutSolidSphere(0.3,16,16);
 	glPopMatrix();
 }
 
@@ -670,6 +680,7 @@ Zombie::Zombie(float x1, float y1, float z1, World* w) {
 	this->look_v.setV(sin(thetha), sin(phi), -cos(thetha));
 	Vector v = getNewPosition(FORWARD);//shift the mask one step forward to accomodate for arms out
 	this->mask = CollisionMask(v, 1);
+	this->head = CollisionMask(v + Vector(0, 0.95, 0), 0.3);
 	this->world = w;
 	this->floor = getFloor(1);
 	this->spawn = pos_v;
@@ -680,6 +691,8 @@ void Zombie::set(Vector v) {
 	this->look_v.setV(sin(this->thetha), sin(phi), -cos(this->thetha));
 	if(path.correctPath.size()>0)
 		path.correctPath.pop();
+	Vector v1(pos_v.getX(), pos_v.getY() + 0.95, pos_v.getZ());
+	this->head.update(v1);
 }
 
 Zombie::~Zombie()
