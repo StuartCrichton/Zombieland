@@ -19,7 +19,7 @@ bool Ray::intersects(CollisionMask sphere)
 	if (f < 0) return false;
 
 	Vector v2 = pos_v + dir*f;
-	distance = pos_v.getDistance(v2);
+	distance = pos_v.getDistance(&v2);
 	return pointInSphere(sphere, v2);
 }
 

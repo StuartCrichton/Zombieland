@@ -32,11 +32,11 @@ void Vector::setV(float a, float b, float c)
 	this->setZ(c);
 }
 
-float Vector::getDistance(Vector v)
+float Vector::getDistance(Vector* v)
 {
-	float a = x - v.getX();
-	float b = y - v.getY();
-	float c = z - v.getZ();
+	float a = x - v->getX();
+	float b = y - v->getY();
+	float c = z - v->getZ();
 	float d = a*a;
 	float e = b*b;
 	float f = c*c;
@@ -98,6 +98,13 @@ const Vector &Vector::operator-=(const Vector &other) {
 	x -= other.x;
 	y -= other.y;
 	z -= other.z;
+	return *this;
+}
+
+const Vector &Vector::operator=(const Vector &other) {
+	x = other.x;
+	y = other.y;
+	z = other.z;
 	return *this;
 }
 

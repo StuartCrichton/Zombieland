@@ -39,7 +39,7 @@ float Particle::currentRadius()
 {
 	Vector v1 = Vector(Xpos, Ypos, Zpos);
 	Vector v2 = Vector(initXpos, initYpos, initZpos);
-	float distance = v1.getDistance(v2);
+	float distance = v1.getDistance(&v2);
 	return distance;
 }
 

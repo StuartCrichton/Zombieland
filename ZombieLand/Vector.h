@@ -11,7 +11,7 @@ public:
 	void setY(float y);
 	void setZ(float z);
 	void setV(float x, float y, float z);
-	float getDistance(Vector v);
+	float getDistance(Vector* v);
 	float dotProduct();
 	float dotProduct(Vector v);
 
@@ -25,6 +25,7 @@ public:
 	const Vector &operator/=(float scale);
 	const Vector &operator+=(const Vector &other);
 	const Vector &operator-=(const Vector &other);
+	const Vector &operator=(const Vector &other);
 
 	~Vector();
 private:

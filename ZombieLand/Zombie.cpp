@@ -655,10 +655,7 @@ Vector Zombie::update(Vector p, int pFloor) {
 		this->thetha = (this->thetha)*M_PI / 180;
 		this->checkStairs();
 		pos_v.setY(pos_v.getY() - 0.7);
-		if (floor == 1 && newZ > 53) {
-			cout << "no";
-		}
-		Vector v = Vector(newX, pos_v.getY(), -newZ);
+		Vector v = Vector(newX, pos_v.getY(), -newZ); //getNewPosition(FORWARD, 0.1);//Vector(newX, pos_v.getY(), -newZ);
 		mask.update(v);
 		if (mask.intersects(CollisionMask(playerPos, 0.7))) {
 			mask.update(pos_v);
@@ -686,11 +683,16 @@ Zombie::Zombie(float x1, float y1, float z1, World* w) {
 	this->spawn = pos_v;
 }
 
-void Zombie::set(Vector v) {
-	this->pos_v = v;
+void Zombie::set(Vector* v) {
+	this->pos_v = *v;
 	this->look_v.setV(sin(this->thetha), sin(phi), -cos(this->thetha));
-	if(path.correctPath.size()>0)
-		path.correctPath.pop();
+	if (path.correctPath.size() > 0) {
+		/*float x1 = path.correctPath.top().getX();
+		float y1 = pos_v.getY();
+		float z1 = -path.correctPath.top().getY();
+		if(pos_v.getDistance(&Vector(x1,y1,z1)) < 0.2)*/
+			path.correctPath.pop();
+	}
 	Vector v1(pos_v.getX(), pos_v.getY() + 0.95, pos_v.getZ());
 	this->head.update(v1);
 }

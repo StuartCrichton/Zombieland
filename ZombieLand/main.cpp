@@ -124,7 +124,7 @@ void render()
 				}
 		}
 		if (move)
-			wave->v_zombies[i]->set(v);
+			wave->v_zombies[i]->set(&v);
 		wave->v_zombies[i]->render();
 	}
 

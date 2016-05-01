@@ -11,7 +11,7 @@ public:
 	Zombie(float x, float y, float z, World* w);
 	void render();
 	void drawZombie();
-	void set(Vector v);
+	void set(Vector* v);
 	Vector update(Vector playerPos, int floor);
 	CollisionMask head;
 	void takeDamage();
