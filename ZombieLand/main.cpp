@@ -244,7 +244,7 @@ void mouseMove(int x, int y) {
 
 void mouseClick(int button, int state, int x, int y) {
 	if (!gameOver) {
-		if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN && (player->getAmmoTotal() > 0 || player->getAmmoCartridge() > 0)) {
+		if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN && (player->getAmmoCartridge() > 0)) {
 			//if (player->getcanShoot() == true) {
 			if (player->getNoRel() == true && player->getNoShoot() == true) {
 				muzzleFlash = new MuzzleFlash(player);
@@ -337,6 +337,12 @@ void WaveTimer(int value) {
 void Timer(int t) {
 	if (!gameOver) {
 		player->lookAt();
+		int health = player->getHealth();
+		if (health == 0)
+			gameOver = true;
+		if (hud->getTimeUp() == true) {
+			gameOver = true;
+		}
 		glutTimerFunc(20, Timer, 0);
 	}
 }
@@ -347,16 +353,6 @@ void ETATimer(int time) {
 		if (hud->getMinutes() == 0 && hud->getSeconds() == 0)
 			return;
 		glutTimerFunc(1000, ETATimer, 0);
-	}
-}
-
-void idle() {
-	player->lookAt(); // called when there is now other event
-	int health = player->getHealth();
-	if (health == 0) 
-		gameOver = true;
-	if (hud->getTimeUp() == true) {
-		gameOver = true;
 	}
 }
 
@@ -377,9 +373,9 @@ void keyUp(unsigned char key, int x, int y) {
 /* Main function: GLUT runs as a console application starting at main() */
 int main(int argc, char** argv)
 {
-	cout << ammoBox.getLocation().getX() << endl;
-	cout << ammoBox.getLocation().getY() << endl;
-	cout << ammoBox.getLocation().getZ() << endl;
+	//cout << ammoBox.getLocation().getX() << endl;
+	//cout << ammoBox.getLocation().getY() << endl;
+	//cout << ammoBox.getLocation().getZ() << endl;
 	music.openFromFile("../Horror-theme-song.wav");
 	//music.play();
 	music.setVolume(25);
@@ -409,7 +405,6 @@ int main(int argc, char** argv)
 	glutMouseFunc(mouseClick);
 	glutPassiveMotionFunc(mouseMove);
 	glutMotionFunc(mouseMove);
-	glutIdleFunc(idle);
 
 	glutTimerFunc(0, WaveTimer, 0);
 	glutTimerFunc(0, healthTimer, 0);

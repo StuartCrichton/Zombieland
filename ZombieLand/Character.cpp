@@ -138,7 +138,7 @@ int Character::getFloor(float eyeLevel) {
 	float y = pos_v.getY() - eyeLevel + 0.1;
 	if (y >= 0 && y < 1.5)
 		return 0;
-	else if (y >= 3 && y < 6)
+	else if (y >= 1.5 && y < 6)
 		return 1;
 	else
 		return 2;

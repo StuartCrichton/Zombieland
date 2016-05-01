@@ -33,7 +33,7 @@ Path PathFinder::findPath(int xStart, int yStart, int xGoal, int yGoal, int zomb
 			float dist1 = zombie.getDistance(stair1);
 			float dist2 = zombie.getDistance(stair2);
 			if (dist1 <= dist2) {
-				xGoal = 46;
+				xGoal = 44;
 				yGoal = 48;
 			}
 			else {

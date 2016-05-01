@@ -96,7 +96,7 @@ void Player::shoot() {
 }
 
 void Player::reload() {
-	if (ammoCartridge != 33) {//full cartridge already
+	if (ammoCartridge != 33 && ammoTotal > 0) {//full cartridge already
 		noRel = false;
 		//canShoot = false;
 		reloading = true;
@@ -104,9 +104,8 @@ void Player::reload() {
 		bufferReload.loadFromFile("../Reload.wav");
 		soundReload.setVolume(100);
 		soundReload.play(); // Play the sound!
-		int dif = ammoCartridgeTotal - ammoCartridge;
-		ammoTotal -= dif;
-		ammoCartridge += dif;
+		ammoTotal -= ammoCartridgeTotal;
+		ammoCartridge = ammoCartridgeTotal;
 		//previousTime = 0;
 	}
 }
