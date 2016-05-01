@@ -310,36 +310,39 @@ void mouseClick(int button, int state, int x, int y) {
 				Ray ray(player->getPosition(), player->getUnitVector());
 				float minDistance = 1000;
 				unsigned minIndex = 1000;
-				bool somethingDies = false;
+				bool somethingHit = false;
+				bool head = false;
 				for (unsigned i = 0; i < wave->v_zombies.size(); i++) {
 					if (ray.intersects(wave->v_zombies[i]->mask)) {
 						bloodSplatter = new ParticleEffect(wave->v_zombies[i]->getPosition().getX(), wave->v_zombies[i]->getPosition().getY() + 1, wave->v_zombies[i]->getPosition().getZ(), 0.05, 1.0, 0.0, 0.0, 1000, 0.5);
-						wave->v_zombies[i]->takeDamage();
-						if (wave->v_zombies[i]->getHealth() == 0) {
-							somethingDies = true;
-						}
 						float d = ray.getDistance();
 						if (d < minDistance) {
 							minDistance = d;
 							minIndex = i;
+							head = false;
+							somethingHit = true;
 						}
 					}
 						if (ray.intersects(wave->v_zombies[i]->head)) {
 							bloodSplatter = new ParticleEffect(wave->v_zombies[i]->getPosition().getX(), wave->v_zombies[i]->getPosition().getY() + 1, wave->v_zombies[i]->getPosition().getZ(), 0.05, 1.0, 0.0, 0.0, 1000, 0.5);
-							somethingDies = true;
 							float d = ray.getDistance();
 							if (d < minDistance) {
+								somethingHit = true;
 								minDistance = d;
 								minIndex = i;
+								head = true;
 							}
 						}
 				}
-				if (somethingDies) {
+				if (somethingHit) {
 					//bufferDie.loadFromFile("../Dying.wav");
 					//soundDie.play(); // Play the sound!
-					numOfKilledZombies++;
-					wave->v_zombies.erase(wave->v_zombies.begin() + minIndex);
-					player->scoreUp();
+					wave->v_zombies[minIndex]->takeDamage();
+					if (head || wave->v_zombies[minIndex]->getHealth() == 0) {
+						numOfKilledZombies++;
+						wave->v_zombies.erase(wave->v_zombies.begin() + minIndex);
+						player->scoreUp();
+					}
 				}
 			}
 		}

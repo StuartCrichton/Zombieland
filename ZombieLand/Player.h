@@ -47,9 +47,9 @@ private:
 	int health = 100;
 	int xOrigin = 0;
 	int yOrigin = 0;
-	int ammoCartridge = 33;
-	int ammoCartridgeTotal = 33;
-	int ammoTotal = 99;
+	int ammoCartridge = 11;
+	int ammoCartridgeTotal = 11;
+	int ammoTotal = 44;
 	int waveNumber = 1;
 	int score = 0;
 
