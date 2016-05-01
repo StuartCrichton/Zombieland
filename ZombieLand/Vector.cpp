@@ -48,9 +48,9 @@ float Vector::dotProduct()
 	return x*x + y*y + z*z;
 }
 
-float Vector::dotProduct(Vector v2)
+float Vector::dotProduct(Vector* v2)
 {
-	return x*v2.getX() + y*v2.getY() + z*v2.getZ();
+	return x*v2->getX() + y*v2->getY() + z*v2->getZ();
 }
 
 Vector Vector::operator*(float scale) const {

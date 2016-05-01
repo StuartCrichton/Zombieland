@@ -5,7 +5,7 @@
 class Ray
 {
 public:
-	Ray(Vector o, Vector d);
+	Ray(Vector* o, Vector* d);
 	~Ray();
 	Vector getOrigin();
 	Vector getDirection();
@@ -14,7 +14,7 @@ public:
 protected:
 
 private:
-	bool pointInSphere(CollisionMask sphere, Vector v);
+	bool pointInSphere(CollisionMask sphere, Vector* v);
 	Vector pos_v;
 	Vector dir;
 	float distance;

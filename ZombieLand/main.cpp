@@ -186,7 +186,19 @@ void render()
 		wave->v_zombies[i]->render();
 	}
 
+
+	//debug ray cast
+	/*glPushMatrix();
+	glTranslatef(player->getPosition().getX() + 20 * player->getUnitVector().getX(),
+		player->getPosition().getY() + 20 * player->getUnitVector().getY(),
+		player->getPosition().getZ() + 20 * player->getUnitVector().getZ());
+	glutSolidSphere(1, 16, 16);
+	glPopMatrix();*/
+
+
 	ammoBox.draw();
+
+	
 
 	//Draw the Gun
 	glDisable(GL_DEPTH_TEST);
@@ -307,7 +319,7 @@ void mouseClick(int button, int state, int x, int y) {
 			if (player->getNoRel() == true && player->getNoShoot() == true) {
 				muzzleFlash = new MuzzleFlash(player);
 				player->shoot();
-				Ray ray(player->getPosition(), player->getUnitVector());
+				Ray ray(&player->getPosition(), &player->getUnitVector());
 				float minDistance = 1000;
 				unsigned minIndex = 1000;
 				bool somethingHit = false;
@@ -438,13 +450,13 @@ int main(int argc, char** argv)
 	//cout << ammoBox.getLocation().getY() << endl;
 	//cout << ammoBox.getLocation().getZ() << endl;
 	music.openFromFile("../Horror-theme-song.wav");
-	music.play();
+	//music.play();
 	music.setVolume(25);
 	music.setLoop(true);
 
 	music2.openFromFile("../Zombie-sound.wav");
 	music2.setVolume(25);
-	music2.play();
+	//music2.play();
 	music2.setLoop(true);
 
 	glutInit(&argc, argv);

@@ -13,7 +13,7 @@ public:
 	void setV(float x, float y, float z);
 	float getDistance(Vector* v);
 	float dotProduct();
-	float dotProduct(Vector v);
+	float dotProduct(Vector* v);
 
 	Vector operator*(float scale) const;
 	Vector operator/(float scale) const;

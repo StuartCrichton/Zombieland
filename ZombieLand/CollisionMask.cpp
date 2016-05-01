@@ -23,7 +23,7 @@ float CollisionMask::maxN(float a, float b) {
 
 bool CollisionMask::intersectsPlane(CollisionPlane *plane) {
 	Vector tmp = this->position - plane->getV1();
-	float dotP = tmp.dotProduct(plane->getNormal());
+	float dotP = tmp.dotProduct(&plane->getNormal());
 	dotP = abs(dotP);
 	if (dotP > this->size) return false;
 	else {
