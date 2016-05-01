@@ -22,6 +22,7 @@
 #include "KeyEvent.h"
 #include "MuzzleFlash.h"
 #include "Lighting.h"
+#include "Imageloader.h"
 
 using namespace std;
 // Global variables
@@ -42,15 +43,6 @@ HUD *hud = new HUD(player->getHealth(), player->getAmmoCartridge(), player->getA
 //Stuff pertaining to audio
 sf::Music music; 
 sf::Music music2; 
-
-int dimx = 60;
-int dimz = 80;
-GLfloat light_position[] = { dimx + 10, 10, -dimz - 10,0.0 };
-GLfloat light_position1[] = { -dimx + 5, 10, dimz - 5, 1.0 };
-GLfloat light_position2[] = { dimx / 2 , 30, -(dimz / 2),1.0 };
-GLfloat light_position3[] = { dimx / 2, -50, -(dimz / 2), 1.0 };
-
-
 
 //Stuff pertraining to the wave
 Wave *wave;
@@ -91,6 +83,40 @@ void initGL()
 	ammoBox.update();
 }
 
+//Makes the image into a texture, and returns the id of the texture
+GLuint loadTexture(Image* image) {
+	GLuint textureId;
+	glGenTextures(1, &textureId); //Make room for our texture
+	glBindTexture(GL_TEXTURE_2D, textureId); //Tell OpenGL which texture to edit
+											 //Map the image to the texture
+	glTexImage2D(GL_TEXTURE_2D,                //Always GL_TEXTURE_2D
+		0,                            //0 for now
+		GL_RGB,                       //Format OpenGL uses for image
+		image->width, image->height,  //Width and height
+		0,                            //The border of the image
+		GL_RGB, //GL_RGB, because pixels are stored in RGB format
+		GL_UNSIGNED_BYTE, //GL_UNSIGNED_BYTE, because pixels are stored
+						  //as unsigned numbers
+		image->pixels);               //The actual pixel data
+	return textureId; //Returns the id of the texture
+}
+
+GLuint _textureId; //The id of the texture
+
+void initRendering() {
+	glEnable(GL_SMOOTH);
+	glEnable(GL_DEPTH_TEST);
+	//glEnable(GL_LIGHTING);
+	//glEnable(GL_LIGHT0);
+	//glEnable(GL_NORMALIZE);
+	//glEnable(GL_COLOR_MATERIAL);
+
+	//	Image* image = loadBMP("../sky_103.bmp");
+	Image* image = loadBMP("../sky.bmp");
+	_textureId = loadTexture(image);
+	delete image;
+}
+
 void render()
 {
 	// GL_DEPTH_BUFFER_BIT - resets the depth test values for hidden surface removal
@@ -101,6 +127,38 @@ void render()
 	glLoadIdentity();
 	// Set the camera
 	player->lookAt();
+
+	//Sky Texture
+	glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, _textureId);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glColor3f(1.0f, 1.0f, 1.0f);
+	glDisable(GL_LIGHTING);
+
+	int xgap = 100;
+	int zgap = 100;
+	int x = 180;
+	int z = -200;
+	GLfloat color2[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+	glMaterialfv(GL_FRONT, GL_DIFFUSE, color2);
+	glBegin(GL_QUADS);
+	for (int i = 0; i < 3; i++) {//z
+		for (int j = 0; j < 4; j++) {//x
+			glTexCoord2f(0.0f, 0.0f);
+			glVertex3f((x - (j*xgap)), 10.0f, z);
+			glTexCoord2f(1.0f, 0.0f);
+			glVertex3f((x - (j*xgap)) - xgap, 10.0f, z);
+			glTexCoord2f(1.0f, 1.0f);
+			glVertex3f((x - (j*xgap)) - xgap, 10.0f, z + zgap);
+			glTexCoord2f(0.0f, 1.0f);
+			glVertex3f((x - (j*xgap)), 10.0f, z + zgap);
+		}
+		z = z + zgap;
+	}	glEnd();
+
+	glEnable(GL_LIGHTING);
+	glDisable(GL_TEXTURE_2D);
 
 	light.lightInitGL();
 
@@ -377,13 +435,13 @@ int main(int argc, char** argv)
 	//cout << ammoBox.getLocation().getY() << endl;
 	//cout << ammoBox.getLocation().getZ() << endl;
 	music.openFromFile("../Horror-theme-song.wav");
-	//music.play();
+	music.play();
 	music.setVolume(25);
 	music.setLoop(true);
 
 	music2.openFromFile("../Zombie-sound.wav");
 	music2.setVolume(25);
-	//music2.play();
+	music2.play();
 	music2.setLoop(true);
 
 	glutInit(&argc, argv);
@@ -392,6 +450,9 @@ int main(int argc, char** argv)
 	glutInitWindowPosition(50, 50);
 	glutCreateWindow("ZombieLand Survivor");
 	//glutFullScreen();
+
+	initRendering();
+
 	world.init();
 	wave = new Wave(&world);
 	currentTimerDuration = wave->WAVE_DURATION;

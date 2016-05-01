@@ -151,6 +151,7 @@
   <ItemGroup>
     <ClCompile Include="AmmoBox.cpp" />
     <ClCompile Include="AssimpModelLoader.cpp" />
+    <ClCompile Include="ImageLoader.cpp" />
     <ClCompile Include="KeyEvent.cpp" />
     <ClCompile Include="Lighting.cpp" />
     <ClCompile Include="MuzzleFlash.cpp" />
@@ -174,6 +175,7 @@
   <ItemGroup>
     <ClInclude Include="AmmoBox.h" />
     <ClInclude Include="AssimpModelLoader.h" />
+    <ClInclude Include="ImageLoader.h" />
     <ClInclude Include="KeyEvent.h" />
     <ClInclude Include="Lighting.h" />
     <ClInclude Include="MuzzleFlash.h" />
