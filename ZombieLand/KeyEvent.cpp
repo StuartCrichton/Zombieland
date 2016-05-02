@@ -11,7 +11,7 @@ KeyEvent::KeyEvent() {}
 KeyEvent::KeyEvent(Player *player, World *world, Wave *wave, AmmoBox *box)
 {
 	this->player = player;
-	this->world = *world;
+	this->world = world;
 	this->wave = wave;
 	this->box = box;
 
@@ -37,7 +37,7 @@ void KeyEvent::pressedForward()
 			player->takeDamage();
 		}
 	}
-	planes = world.getPlanes();
+	planes = world->getPlanes();
 	for (CollisionPlane* p : *planes) {
 		if (player->mask.intersectsPlane(p)) {
 			canMove = false;
@@ -60,7 +60,7 @@ void KeyEvent::pressedBackwards()
 			player->takeDamage();
 		}
 	}
-	planes = world.getPlanes();
+	planes = world->getPlanes();
 	for (CollisionPlane* p : *planes) {
 		if (player->mask.intersectsPlane(p)) {
 			canMove = false;
@@ -83,7 +83,7 @@ void KeyEvent::pressedLeft()
 			player->takeDamage();
 		}
 	}
-	planes = world.getPlanes();
+	planes = world->getPlanes();
 	for (CollisionPlane* p : *planes) {
 		if (player->mask.intersectsPlane(p)) {
 			canMove = false;
@@ -106,7 +106,7 @@ void KeyEvent::pressedRight()
 			player->takeDamage();
 		}
 	}
-	planes = world.getPlanes();
+	planes = world->getPlanes();
 	for (CollisionPlane* p : *planes) {
 		if (player->mask.intersectsPlane(p)) {
 			canMove = false;

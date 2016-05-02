@@ -19,7 +19,7 @@ public:
 private:
 	Vector v;
 	Player *player;
-	World world;
+	World* world;
 	Wave *wave;
 	AmmoBox *box;
 	vector<CollisionPlane*>* planes;

@@ -66,11 +66,14 @@ KeyEvent *keyEvents;
 void deletePointers() {
 	delete player;
 	delete wave;
+	delete world;
 	delete hud;
+	
+	
 	delete bloodSplatter;
 	delete muzzleFlash;
 	delete keyEvents;
-	delete world;
+	
 }
 
 void initGL()
@@ -175,7 +178,7 @@ void render()
 	GLfloat color[] = { 0.5f, 0.5f, 0.5f, 1.0f };
 	glMaterialfv(GL_FRONT, GL_DIFFUSE, color);
 	glMaterialfv(GL_FRONT, GL_AMBIENT, ambient1);
-	world.building.Draw(1);
+	world->building.Draw(1);
 
 	//draw bullets
 	for (unsigned i = 0; i < bullets.size(); i++) {
@@ -478,13 +481,13 @@ int main(int argc, char** argv)
 	//cout << ammoBox.getLocation().getY() << endl;
 	//cout << ammoBox.getLocation().getZ() << endl;
 	music.openFromFile("../Horror-theme-song.wav");
-	music.play();
+	//music.play();
 	music.setVolume(25);
 	music.setLoop(true);
 
 	music2.openFromFile("../Zombie-sound.wav");
 	music2.setVolume(25);
-	music2.play();
+	//music2.play();
 	music2.setLoop(true);
 
 	glutInit(&argc, argv);

@@ -2,7 +2,6 @@
 #ifndef HUD_H
 #define HUD_H
 #include "Vector.h"
-#include "World.h"
 
 using namespace std;
 
@@ -21,7 +20,6 @@ public:
 	void setRoof(bool roof);
 private:
 	Vector pos_v, look_v;
-	World world;
 	bool timeUp = false;
 	bool roof = false;
 	int health = 100, ammoCartridge = 33, ammoTotal = 99, score = 0, waveNumber = 1;
