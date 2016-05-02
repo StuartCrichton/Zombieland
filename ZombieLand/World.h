@@ -16,9 +16,7 @@ public:
 	AssimpModelLoader zombie;
 	vector<CollisionPlane*> planes;
 	vector<CollisionPlane*>* getPlanes();
-	char obstacles[3][60][80];//ground
-	//char obstacles1[60][80];//first floor
-	//char obstacles2[60][80];//roof
+	char obstacles[3][60][80];
 	void init();
 	~World();
 
