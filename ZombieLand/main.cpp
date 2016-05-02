@@ -181,7 +181,7 @@ void render()
 	//draw bullets
 	if(bullet != nullptr) {
 		/////////////////////////////////////////////create series of spheres 
-		for (int i = 0; i < 20; i++)//check 20 tiny steps of bullet
+		for (int i = 0; i < 30; i++)//check 20 tiny steps of bullet
 		{
 			if (bullet != nullptr) {
 				bullet->update();
