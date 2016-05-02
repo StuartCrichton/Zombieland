@@ -126,15 +126,21 @@ void render()
 	// Reset transformations
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
+
+	GLfloat ambient1[] = { 0.5f, 0.5f, 0.5f, 1.0f };
+	//glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambient1);
+
 	// Set the camera
 	player->lookAt();
+
+	light.lightInitGL();
 
 	//Sky Texture
 	glEnable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, _textureId);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glColor3f(1.0f, 1.0f, 1.0f);
+	glColor3f(0.5f, 0.5f, 0.5f);
 	glDisable(GL_LIGHTING);
 
 	int xgap = 100;
@@ -142,7 +148,9 @@ void render()
 	int x = 180;
 	int z = -200;
 	GLfloat color2[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+	
 	glMaterialfv(GL_FRONT, GL_DIFFUSE, color2);
+	glMaterialfv(GL_FRONT, GL_AMBIENT, ambient1);
 	glBegin(GL_QUADS);
 	for (int i = 0; i < 3; i++) {//z
 		for (int j = 0; j < 4; j++) {//x
@@ -161,12 +169,13 @@ void render()
 	glEnable(GL_LIGHTING);
 	glDisable(GL_TEXTURE_2D);
 
-	light.lightInitGL();
+	//light.lightInitGL();
 
 	//Draw the building
 	GLfloat color[] = { 0.5f, 0.5f, 0.5f, 1.0f };
 	glMaterialfv(GL_FRONT, GL_DIFFUSE, color);
-	world->building.Draw(1);
+	glMaterialfv(GL_FRONT, GL_AMBIENT, ambient1);
+	world.building.Draw(1);
 
 	//draw bullets
 	for (unsigned i = 0; i < bullets.size(); i++) {
@@ -270,6 +279,8 @@ void render()
 	//update and display the HUD
 	hud->update(player->getHealth(), player->getAmmoCartridge(), player->getAmmoTotal(), player->getScore(), player->getWaveNumber(), player->getPosition(), player->getLookVector());
 	hud->render();
+
+	//light.lightInitGL();
 
 	glFlush();   // ******** DO NOT FORGET THIS **********
 	glutSwapBuffers();
@@ -467,13 +478,13 @@ int main(int argc, char** argv)
 	//cout << ammoBox.getLocation().getY() << endl;
 	//cout << ammoBox.getLocation().getZ() << endl;
 	music.openFromFile("../Horror-theme-song.wav");
-	//music.play();
+	music.play();
 	music.setVolume(25);
 	music.setLoop(true);
 
 	music2.openFromFile("../Zombie-sound.wav");
 	music2.setVolume(25);
-	//music2.play();
+	music2.play();
 	music2.setLoop(true);
 
 	glutInit(&argc, argv);
@@ -501,7 +512,7 @@ int main(int argc, char** argv)
 
 	glutTimerFunc(0, WaveTimer, 0);
 	glutTimerFunc(0, healthTimer, 0);
-	glutTimerFunc(2000, ETATimer, 0);
+	glutTimerFunc(1000, ETATimer, 0);
 	glutTimerFunc(0, Timer, 0);
 	//glutTimerFunc(1000, soundTimer, 0);
 
