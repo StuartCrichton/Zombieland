@@ -189,6 +189,7 @@ void render()
 					for (unsigned j = 0; j < wave->v_zombies.size(); j++) {
 						if (bullet->mask.intersects(wave->v_zombies[j]->head)) {
 							bloodSplatter = new ParticleEffect(bullet->getPosition().getX(), bullet->getPosition().getY(), bullet->getPosition().getZ(), 0.05, 1.0, 0.0, 0.0, 1000, 0.5);
+							delete bullet;
 							bullet = nullptr;
 							delete wave->v_zombies[j];
 							numOfKilledZombies++;
@@ -198,6 +199,7 @@ void render()
 						}
 						else if (bullet->mask.intersects(wave->v_zombies[j]->mask)) {
 							bloodSplatter = new ParticleEffect(bullet->getPosition().getX(), bullet->getPosition().getY(), bullet->getPosition().getZ(), 0.05, 1.0, 0.0, 0.0, 1000, 0.5);
+							delete bullet;
 							bullet = nullptr;
 							wave->v_zombies[j]->takeDamage();
 							if (wave->v_zombies[j]->getHealth() == 0) {
@@ -211,6 +213,7 @@ void render()
 					}
 				}
 				else {
+					delete bullet;
 					bullet = nullptr;
 				}
 			}
