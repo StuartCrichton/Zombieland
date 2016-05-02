@@ -613,8 +613,6 @@ Vector Zombie::update(Vector p, int pFloor) {
 	PathFinder pathF(this->world);
 	if(counter == 0 || path.correctPath.size() == 0)
 		this->path = pathF.findPath(roundX, roundZ, playerPos.getX(), -playerPos.getZ(), floor, pFloor);
-	counter++;
-	if (counter == 20) counter = 0;//check for new path every twenty steps, less processing
 	if (path.correctPath.size() > 0) {
 		int newX = path.correctPath.top().getX();
 		int newZ = path.correctPath.top().getY();
@@ -632,28 +630,28 @@ Vector Zombie::update(Vector p, int pFloor) {
 			up = true;
 		}
 		if (up) {
-			this->thetha = 90;
+			this->thetha = 0;
 			if (right) {
 				this->thetha = 45;
 			}
 			else if (left) {
-				this->thetha = 135;
+				this->thetha = 315;
 			}
 		}
 		else if (down) {
-			this->thetha = 270;
+			this->thetha = 180;
 			if (right) {
-				this->thetha = 225;
+				this->thetha = 135;
 			}
 			else if (left) {
-				this->thetha = 135;
+				this->thetha = 225;
 			}
 		}
 		else if (right) {
-			this->thetha = 0;
+			this->thetha = 90;
 		}
 		else if (left) {
-			this->thetha = 180;
+			this->thetha = 270;
 		}
 		this->thetha = (this->thetha)*M_PI / 180;
 		this->checkStairs();
@@ -686,6 +684,8 @@ Zombie::Zombie(float x1, float y1, float z1, World* w) {
 
 void Zombie::set(Vector* v) {
 	this->pos_v = *v;
+	counter++;
+	if (counter == 40) counter = 0;//check for new path every twenty steps, less processing
 	this->look_v.setV(sin(this->thetha), sin(phi), -cos(this->thetha));
 	if (path.correctPath.size() > 0) {
 		/*float x1 = path.correctPath.top().getX();

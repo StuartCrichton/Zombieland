@@ -117,8 +117,8 @@ void Player::regainHealth() {
 }
 
 void Player::takeDamage() {
-	if (health - 5 >= 0)
-		health -= 5;
+	if (health - 2 >= 0)
+		health -= 2;
 	else
 		health = 0;
 }

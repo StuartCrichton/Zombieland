@@ -10,9 +10,9 @@ Bullet::Bullet(Vector* position, Vector* direction)
 }
 
 void Bullet::update() {
-	float x = position.getX() + 0.5*direction.getX();
-	float y = position.getY() + 0.5*direction.getY();
-	float z = position.getZ() + 0.5*direction.getZ();
+	float x = position.getX() + 0.1*direction.getX();
+	float y = position.getY() + 0.1*direction.getY();
+	float z = position.getZ() + 0.1*direction.getZ();
 
 	this->position.setV(x, y, z);
 	this->mask.update(position);

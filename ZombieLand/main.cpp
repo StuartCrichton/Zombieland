@@ -38,7 +38,7 @@ Player *player = new Player();
 World *world = new World();
 Vector v;
 vector<CollisionPlane*>* planes;
-vector<Bullet*> bullets;
+Bullet* bullet;
 HUD *hud = new HUD(player->getHealth(), player->getAmmoCartridge(), player->getAmmoTotal(),
 	player->getScore(), player->getWaveNumber(), player->getPosition(), player->getLookVector());
 
@@ -68,12 +68,10 @@ void deletePointers() {
 	delete wave;
 	delete world;
 	delete hud;
-	
-	
+	delete bullet;	
 	delete bloodSplatter;
 	delete muzzleFlash;
-	delete keyEvents;
-	
+	delete keyEvents;	
 }
 
 void initGL()
@@ -181,49 +179,52 @@ void render()
 	world->building.Draw(1);
 
 	//draw bullets
-	for (unsigned i = 0; i < bullets.size(); i++) {
-		bullets[i]->update();
-		bool stillAlive = true;
-		if (bullets[i]->getSteps() < 50) {
-			for (unsigned j = 0; j < wave->v_zombies.size(); j++) {
-				if (bullets[i]->mask.intersects(wave->v_zombies[j]->head)) {
-					bloodSplatter = new ParticleEffect(bullets[i]->getPosition().getX(), bullets[i]->getPosition().getY(), bullets[i]->getPosition().getZ(), 0.05, 1.0, 0.0, 0.0, 1000, 0.5);
-					stillAlive = false;
-					delete bullets[i];
-					bullets.erase(bullets.begin() + i);
-					delete wave->v_zombies[j];
-					numOfKilledZombies++;
-					wave->v_zombies.erase(wave->v_zombies.begin() + j);
-					player->scoreUp();
-					break;
-				}
-				else if (bullets[i]->mask.intersects(wave->v_zombies[j]->mask)) {
-					bloodSplatter = new ParticleEffect(bullets[i]->getPosition().getX(), bullets[i]->getPosition().getY(), bullets[i]->getPosition().getZ(), 0.05, 1.0, 0.0, 0.0, 1000, 0.5);
-					stillAlive = false;
-					delete bullets[i];
-					bullets.erase(bullets.begin() + i);
-					wave->v_zombies[j]->takeDamage();
-					if (wave->v_zombies[j]->getHealth() == 0) {
-						delete wave->v_zombies[j];
-						numOfKilledZombies++;
-						wave->v_zombies.erase(wave->v_zombies.begin() + j);
-						player->scoreUp();
+	if(bullet != nullptr) {
+		/////////////////////////////////////////////create series of spheres 
+		for (int i = 0; i < 20; i++)//check 20 tiny steps of bullet
+		{
+			if (bullet != nullptr) {
+				bullet->update();
+				if (bullet->getSteps() < 200) {
+					for (unsigned j = 0; j < wave->v_zombies.size(); j++) {
+						if (bullet->mask.intersects(wave->v_zombies[j]->head)) {
+							bloodSplatter = new ParticleEffect(bullet->getPosition().getX(), bullet->getPosition().getY(), bullet->getPosition().getZ(), 0.05, 1.0, 0.0, 0.0, 1000, 0.5);
+							bullet = nullptr;
+							delete wave->v_zombies[j];
+							numOfKilledZombies++;
+							wave->v_zombies.erase(wave->v_zombies.begin() + j);
+							player->scoreUp();
+							break;
+						}
+						else if (bullet->mask.intersects(wave->v_zombies[j]->mask)) {
+							bloodSplatter = new ParticleEffect(bullet->getPosition().getX(), bullet->getPosition().getY(), bullet->getPosition().getZ(), 0.05, 1.0, 0.0, 0.0, 1000, 0.5);
+							bullet = nullptr;
+							wave->v_zombies[j]->takeDamage();
+							if (wave->v_zombies[j]->getHealth() == 0) {
+								delete wave->v_zombies[j];
+								numOfKilledZombies++;
+								wave->v_zombies.erase(wave->v_zombies.begin() + j);
+								player->scoreUp();
+							}
+							break;
+						}
 					}
-					break;
+				}
+				else {
+					bullet = nullptr;
 				}
 			}
-			if (stillAlive)
-				bullets[i]->render();
 		}
-		else {
-			delete bullets[i];
-			bullets.erase(bullets.begin() + i);
-		}
+		if (bullet!=nullptr)
+			bullet->render();
 	}
 
 
 	for (int i = 0; i < wave->v_zombies.size(); i++) {
 		Vector v = wave->v_zombies[i]->update(player->getPosition(), player->floor);
+		if (v == wave->v_zombies[i]->getPosition()) {
+			player->takeDamage();
+		}
 		bool move = true;
 		for (unsigned j = 0; j < wave->v_zombies.size(); j++) {
 			if (i != j)
@@ -285,7 +286,7 @@ void render()
 
 	//light.lightInitGL();
 
-	glFlush();   // ******** DO NOT FORGET THIS **********
+	//glFlush();   // ******** DO NOT FORGET THIS **********
 	glutSwapBuffers();
 }
 
@@ -367,8 +368,7 @@ void mouseClick(int button, int state, int x, int y) {
 			if (player->getNoRel() == true && player->getNoShoot() == true) {
 				muzzleFlash = new MuzzleFlash(player);
 				player->shoot();
-				Bullet* bullet = new Bullet(&player->getPosition(), &player->getUnitVector());
-				bullets.push_back(bullet);
+				bullet = new Bullet(&player->getPosition(), &player->getUnitVector());
 			}
 		}
 	}
@@ -481,13 +481,13 @@ int main(int argc, char** argv)
 	//cout << ammoBox.getLocation().getY() << endl;
 	//cout << ammoBox.getLocation().getZ() << endl;
 	music.openFromFile("../Horror-theme-song.wav");
-	//music.play();
+	music.play();
 	music.setVolume(25);
 	music.setLoop(true);
 
 	music2.openFromFile("../Zombie-sound.wav");
 	music2.setVolume(25);
-	//music2.play();
+	music2.play();
 	music2.setLoop(true);
 
 	glutInit(&argc, argv);
@@ -495,7 +495,7 @@ int main(int argc, char** argv)
 	glutInitWindowSize(1024, 600);
 	glutInitWindowPosition(50, 50);
 	glutCreateWindow("ZombieLand Survivor");
-	//glutFullScreen();
+	glutFullScreen();
 
 	initRendering();
 

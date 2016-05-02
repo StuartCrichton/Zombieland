@@ -108,6 +108,13 @@ const Vector &Vector::operator=(const Vector &other) {
 	return *this;
 }
 
+bool &Vector::operator==(const Vector &other) {
+	bool state = false;
+	if(x == other.x && y == other.y && z == other.z)
+		state = true;
+	return state;
+}
+
 Vector::Vector()
 {
 	//ctor
