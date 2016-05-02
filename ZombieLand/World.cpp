@@ -26,6 +26,7 @@ void World::init() {
 	this->building.loadObjFile("../Office.obj");
 	this->ammoBox.loadObjFile("../AmmoBox.obj");
 	this->gun.loadObjFile("../Gun3.obj");
+	//this->zombie.loadObjFile("../Zombie.obj");
 	setPlanes();
 	setObstacles();
 }

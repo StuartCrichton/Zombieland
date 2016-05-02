@@ -13,6 +13,7 @@ public:
 	AssimpModelLoader building;
 	AssimpModelLoader ammoBox;
 	AssimpModelLoader gun;
+	AssimpModelLoader zombie;
 	vector<CollisionPlane*> planes;
 	vector<CollisionPlane*>* getPlanes();
 	char obstacles[3][60][80];//ground
