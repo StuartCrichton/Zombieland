@@ -175,7 +175,7 @@ void render()
 	GLfloat color[] = { 0.5f, 0.5f, 0.5f, 1.0f };
 	glMaterialfv(GL_FRONT, GL_DIFFUSE, color);
 	glMaterialfv(GL_FRONT, GL_AMBIENT, ambient1);
-	world.building.Draw(1);
+	world->building.Draw(1);
 
 	//draw bullets
 	for (unsigned i = 0; i < bullets.size(); i++) {
