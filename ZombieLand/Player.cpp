@@ -6,6 +6,7 @@
 #endif // _WIN32
 #include <iostream>
 #include <SFML/Audio.hpp>
+#include <math.h>;
 
 using namespace std;
 
@@ -117,14 +118,14 @@ void Player::regainHealth() {
 }
 
 void Player::takeDamage() {
-	if (health - 1 >= 0)
-		health --;
+	if (health - 0.25 >= 0)
+		health -= 0.25;
 	else
 		health = 0;
 }
 
 int Player::getHealth() {
-	return this->health;
+	return ceil(this->health);
 }
 
 int Player::getAmmoCartridge() {
@@ -159,7 +160,7 @@ float Player::getPhi() {
 
 void Player::AmmoPickup() {
 	ammoCartridge = ammoCartridgeTotal;
-	ammoTotal = 99;
+	ammoTotal = 44;
 }
 
 bool Player::getReloading() {

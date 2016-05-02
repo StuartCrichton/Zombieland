@@ -231,7 +231,7 @@ void render()
 		bool move = true;
 		for (unsigned j = 0; j < wave->v_zombies.size(); j++) {
 			if (i != j)
-				if (wave->v_zombies[j]->mask.intersects(CollisionMask(v, 0.7))) {
+				if (wave->v_zombies[j]->mask.intersects(CollisionMask(v, 0.4))) {
 					move = false;
 					break;
 				}

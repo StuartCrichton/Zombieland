@@ -44,7 +44,7 @@ public:
 
 private:
 	bool warped = false;
-	int health = 100;
+	float health = 100.0f;
 	int xOrigin = 0;
 	int yOrigin = 0;
 	int ammoCartridge = 11;
