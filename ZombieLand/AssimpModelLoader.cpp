@@ -29,7 +29,7 @@ void AssimpModelLoader::loadObjFile(const char *filename)
 	// Load the model and create a display list for it.
 	std::cout << "loading " << filename << std::endl;
 	Assimp::Importer importer;
-	const aiScene* scene = importer.ReadFile(filename, aiProcessPreset_TargetRealtime_Fast);
+	const aiScene* scene = importer.ReadFile(filename, aiProcess_Triangulate);
 
 	GLuint displaylist = glGenLists(1);
 	glNewList(displaylist, GL_COMPILE);
@@ -90,12 +90,12 @@ void AssimpModelLoader::loadObjFile(const char *filename)
 			glBindTexture(GL_TEXTURE_2D, texture);
 
 			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, surface->w, surface->h, 0, GL_RGB, GL_UNSIGNED_BYTE, surface->pixels);
-
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+			
+			//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+			//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-
+			
 			SDL_FreeSurface(surface);
 			glDisable(GL_TEXTURE_2D);
 		}

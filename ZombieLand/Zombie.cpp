@@ -595,8 +595,11 @@ int Zombie::getHealth() {
 void Zombie::render() {
 	glPushMatrix();
 	glTranslated(pos_v.getX(), pos_v.getY(), pos_v.getZ());
+	//glRotatef(thetha*180/M_PI, 0, 1, 0);
 	//glutSolidSphere(0.7, 16, 16);
 	drawZombie();
+	//glScalef(1.8,1.8,1.8);
+	//glCallList(4);
 	//glTranslatef(0,0.95,0);
 	//glutSolidSphere(0.4,16,16);
 	glPopMatrix();
@@ -629,28 +632,28 @@ Vector Zombie::update(Vector p, int pFloor) {
 			up = true;
 		}
 		if (up) {
-			this->thetha = 0;
+			this->thetha = 90;
 			if (right) {
 				this->thetha = 45;
 			}
 			else if (left) {
-				this->thetha = 315;
+				this->thetha = 135;
 			}
 		}
 		else if (down) {
-			this->thetha = 180;
+			this->thetha = 270;
 			if (right) {
-				this->thetha = 135;
+				this->thetha = 225;
 			}
 			else if (left) {
-				this->thetha = 225;
+				this->thetha = 135;
 			}
 		}
 		else if (right) {
-			this->thetha = 90;
+			this->thetha = 0;
 		}
 		else if (left) {
-			this->thetha = 270;
+			this->thetha = 180;
 		}
 		this->thetha = (this->thetha)*M_PI / 180;
 		this->checkStairs();
