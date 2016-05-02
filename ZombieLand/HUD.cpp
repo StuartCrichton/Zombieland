@@ -482,13 +482,13 @@ void HUD::renderEndGameScreen()
 	glRotatef(180, 1.0f, 0.0f, 0.0f);
 	glScalef(0.3f, 0.3f, 1.0f);
 	string gameover;
-	if (roof) {
-		gameover = "You Win";
-		glColor3f(1.0f, 1.0f, 1.0f);
-	}
-	else if (!roof || health == 0) {
+	if (!roof || health == 0) {
 		gameover = "Game Over";
 		glColor3f(1.0f, 0.0f, 0.0f);
+	}
+	else if (roof) {
+		gameover = "You Win";
+		glColor3f(1.0f, 1.0f, 1.0f);
 	}
 	for (unsigned i = 0; i < gameover.size(); i++) {
 		glutStrokeCharacter(GLUT_STROKE_ROMAN, gameover[i]);
@@ -521,10 +521,10 @@ void HUD::render() {
 	renderETA();
 	if (health == 0 || timeUp) {
 		renderEndGameScreen();
-		if(roof)
+		if (!roof || health == 0)
+			bufferEnd.loadFromFile("../GAME OVER.wav");
+		else if(roof)
 			bufferEnd.loadFromFile("../You_Win.wav");
-		else if (!roof || health == 0) 
-		bufferEnd.loadFromFile("../GAME OVER.wav");
 		soundEnd.play();
 	}
 }

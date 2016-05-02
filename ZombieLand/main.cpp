@@ -297,7 +297,6 @@ void display()
 {
 	if (!gameOver) {
 		if (player->getPosition().getY() > 8.5) {
-			music.stop();
 			roof = true;
 			hud->setRoof(roof);
 		}
@@ -498,7 +497,7 @@ int main(int argc, char** argv)
 	glutInitWindowSize(1024, 600);
 	glutInitWindowPosition(50, 50);
 	glutCreateWindow("ZombieLand Survivor");
-	glutFullScreen();
+	//glutFullScreen();
 
 	initRendering();
 
