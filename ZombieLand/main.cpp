@@ -349,7 +349,6 @@ void mouseMove(int x, int y) {
 void mouseClick(int button, int state, int x, int y) {
 	if (!gameOver) {
 		if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN && (player->getAmmoCartridge() > 0)) {
-			//if (player->getcanShoot() == true) {
 			if (player->getNoRel() == true && player->getNoShoot() == true) {
 				muzzleFlash = new MuzzleFlash(player);
 				player->shoot();
@@ -438,6 +437,8 @@ void keyPressed(unsigned char key, int x, int y) {
 			keyEvents.keyStates['s'] = true;
 		else if (key == 'd' || key == 'D')
 			keyEvents.keyStates['d'] = true;
+		else if (key == 'r' || key == 'R')
+			keyEvents.keyStates['r'] = true;
 	}
 	else {
 		//deletePointers();
@@ -454,6 +455,8 @@ void keyUp(unsigned char key, int x, int y) {
 		keyEvents.keyStates['s'] = false;
 	else if (key == 'd' || key == 'D')
 		keyEvents.keyStates['d'] = false;
+	else if (key == 'r' || key == 'R')
+		keyEvents.keyStates['r'] = false;
 }
 
 /* Main function: GLUT runs as a console application starting at main() */
@@ -477,7 +480,7 @@ int main(int argc, char** argv)
 	glutInitWindowSize(1024, 600);
 	glutInitWindowPosition(50, 50);
 	glutCreateWindow("ZombieLand Survivor");
-	glutFullScreen();
+	//glutFullScreen();
 
 	initRendering();
 

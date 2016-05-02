@@ -103,7 +103,7 @@ void Lighting::update()
 	GLfloat time_New = glutGet(GLUT_ELAPSED_TIME);
 	GLfloat diff = time_New - time_Prev;
 	time_Prev = time_New;
-	diff = diff / 10;
+	diff = diff / 1000;
 	GLfloat steps = diff;
 	this->angle += steps;
 

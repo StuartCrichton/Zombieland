@@ -124,6 +124,7 @@ void KeyEvent::pressedRight()
 void KeyEvent::keyOperations()
 {
 	if (keyStates['r']) {
+		cout << "Reloading" << endl;
 		player->reload();
 	}
 
@@ -142,10 +143,6 @@ void KeyEvent::keyOperations()
 	if (keyStates['d']) {
 		pressedRight();
 	}
-
-	//if (keyStates['c']) {
-	//	player->crouch();
-	//}
 
 	player->checkStairs();
 	player->floor = player->getFloor(1.7);
