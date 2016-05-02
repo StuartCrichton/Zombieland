@@ -52,7 +52,7 @@ void AssimpModelLoader::loadObjFile(const char *filename)
 
 			float diffusal[] = { diffuse.r,diffuse.g,diffuse.b,diffuse.a };
 			//std::cout << diffusal[0] << " " << diffusal[1] << " " << diffusal[2] << "\n";
-			glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, diffusal);
+			glMaterialfv(GL_FRONT, GL_DIFFUSE, diffusal);
 		}
 
 		aiColor4D specular;
