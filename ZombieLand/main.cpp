@@ -35,7 +35,7 @@ Lighting light;
 
 //Necessary pointers and classes
 Player *player = new Player();
-World world;
+World *world = new World();
 Vector v;
 vector<CollisionPlane*>* planes;
 vector<Bullet*> bullets;
@@ -61,15 +61,16 @@ MuzzleFlash *muzzleFlash;
 AmmoBox ammoBox;
 
 //Multiple key pressed stuff
-KeyEvent keyEvents;
+KeyEvent *keyEvents;
 
 void deletePointers() {
-	for (unsigned i = wave->v_zombies.size() - 1; i >= 0; i--)
-		delete wave->v_zombies[i];
 	delete player;
+	delete wave;
 	delete hud;
 	delete bloodSplatter;
 	delete muzzleFlash;
+	delete keyEvents;
+	delete world;
 }
 
 void initGL()
@@ -165,7 +166,7 @@ void render()
 	//Draw the building
 	GLfloat color[] = { 0.5f, 0.5f, 0.5f, 1.0f };
 	glMaterialfv(GL_FRONT, GL_DIFFUSE, color);
-	world.building.Draw(1);
+	world->building.Draw(1);
 
 	//draw bullets
 	for (unsigned i = 0; i < bullets.size(); i++) {
@@ -248,7 +249,7 @@ void render()
 	glRotatef(player->getPhi() * 180 / 3.14, 1, 0, 0);
 	glTranslatef(0, -0.3, 0);
 	glScalef(0.001, 0.001, 0.001);
-	world.gun.Draw(3);
+	world->gun.Draw(3);
 	glPopMatrix();
 	glEnable(GL_DEPTH_TEST);
 
@@ -311,7 +312,7 @@ void display()
 				player->setReloading(false);
 			}
 		}
-		keyEvents.keyOperations();
+		keyEvents->keyOperations();
 		render();
 	}
 	if (gameOver) {
@@ -430,33 +431,33 @@ void ETATimer(int time) {
 void keyPressed(unsigned char key, int x, int y) {
 	if (key != 27) {
 		if (key == 'w' || key == 'W')
-			keyEvents.keyStates['w'] = true;
+			keyEvents->keyStates['w'] = true;
 		else if (key == 'a' || key == 'A')
-			keyEvents.keyStates['a'] = true;
+			keyEvents->keyStates['a'] = true;
 		else if (key == 's' || key == 'S')
-			keyEvents.keyStates['s'] = true;
+			keyEvents->keyStates['s'] = true;
 		else if (key == 'd' || key == 'D')
-			keyEvents.keyStates['d'] = true;
+			keyEvents->keyStates['d'] = true;
 		else if (key == 'r' || key == 'R')
-			keyEvents.keyStates['r'] = true;
+			keyEvents->keyStates['r'] = true;
 	}
 	else {
-		//deletePointers();
+		deletePointers();
 		exit(0);
 	}
 }
 
 void keyUp(unsigned char key, int x, int y) {
 	if (key == 'w' || key == 'W')
-		keyEvents.keyStates['w'] = false;
+		keyEvents->keyStates['w'] = false;
 	else if (key == 'a' || key == 'A')
-		keyEvents.keyStates['a'] = false;
+		keyEvents->keyStates['a'] = false;
 	else if (key == 's' || key == 'S')
-		keyEvents.keyStates['s'] = false;
+		keyEvents->keyStates['s'] = false;
 	else if (key == 'd' || key == 'D')
-		keyEvents.keyStates['d'] = false;
+		keyEvents->keyStates['d'] = false;
 	else if (key == 'r' || key == 'R')
-		keyEvents.keyStates['r'] = false;
+		keyEvents->keyStates['r'] = false;
 }
 
 /* Main function: GLUT runs as a console application starting at main() */
@@ -484,14 +485,14 @@ int main(int argc, char** argv)
 
 	initRendering();
 
-	world.init();
-	wave = new Wave(&world);
+	world->init();
+	wave = new Wave(world);
 	currentTimerDuration = wave->WAVE_DURATION;
 	timerInterval = wave->getZombieSpawnInterval();
 
 	glutDisplayFunc(display);
 	glutReshapeFunc(reshape);
-	keyEvents = KeyEvent(player, world, wave, &ammoBox);
+	keyEvents = new KeyEvent(player, world, wave, &ammoBox);
 	glutKeyboardFunc(keyPressed);
 	glutKeyboardUpFunc(keyUp);
 	glutMouseFunc(mouseClick);

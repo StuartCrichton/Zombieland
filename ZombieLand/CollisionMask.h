@@ -12,9 +12,7 @@ public:
 	bool intersects(CollisionMask mask);
 	bool intersectsPlane(CollisionPlane *plane);
 	void update(Vector v);
-	virtual ~CollisionMask();
-
-protected:
+	~CollisionMask();
 
 private:
 	float minN(float a, float b);

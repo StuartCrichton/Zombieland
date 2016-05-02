@@ -60,6 +60,7 @@ void Player::strafeRight()
 		pos_v.getZ() + look_v.getZ() * step);
 	look_v.setV(sin(thetha), look_v.getY(), -cos(thetha));
 }
+
 void Player::lookAround(int x, int y) {
 	xOrigin = glutGet(GLUT_WINDOW_WIDTH) / 2;
 	yOrigin = glutGet(GLUT_WINDOW_HEIGHT) / 2;
@@ -168,42 +169,47 @@ bool Player::getReloading() {
 bool Player::getShooting() {
 	return this->shooting;
 }
+
 bool Player::getNoRel() {
 	return this->noRel;
 }
+
 bool Player::getNoShoot() {
 	return this->noShoot;
 }
-/*bool Player::getcanShoot() {
-	return this->canShoot;
-}*/
+
 float Player::getPrevTimeRel() {
 	return this->previousTimeRel;
 }
+
 float Player::getPrevTimeShoot() {
 	return this->previousTimeShoot;
 }
+
 void Player::setReloading(bool reloading) {
 	this->reloading = reloading;
 }
+
 void Player::setShooting(bool shooting) {
 	this->shooting = shooting;
 }
-/*void Player::setcanShoot(bool canShoot) {
-	this->canShoot = canShoot;
-}*/
+
 void Player::setNoShoot(bool noShoot) {
 	this->noShoot = noShoot;
 }
+
 void Player::setNoRel(bool noRel) {
 	this->noRel = noRel;
 }
+
 void Player::setPrevTimeRel(float previousTimeRel) {
 	this->previousTimeRel = previousTimeRel;
 }
+
 void Player::setPrevTimeShoot(float previousTimeShoot) {
 	this->previousTimeShoot = previousTimeShoot;
 }
+
 Player::Player()
 {
 	init();

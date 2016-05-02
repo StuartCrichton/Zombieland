@@ -10,7 +10,7 @@ public:
 	Lighting();
 	void lightInitGL();
 	void update();
-	virtual ~Lighting();
+	~Lighting();
 
 protected:
 

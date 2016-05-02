@@ -41,7 +41,6 @@ MuzzleFlash::MuzzleFlash(Player *player)
 	previousTime = glutGet(GLUT_ELAPSED_TIME);
 }
 
-
 MuzzleFlash::~MuzzleFlash()
 {
 }

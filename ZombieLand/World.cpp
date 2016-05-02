@@ -16,11 +16,7 @@
 #include "PathFinder.h"
 #include <iostream>
 
-World::World()
-{
-
-}
-
+World::World(){}
 
 void World::init() {
 	this->building.loadObjFile("../Office.obj");
@@ -338,7 +334,9 @@ vector<CollisionPlane*>* World::getPlanes() {
 	return &planes;
 }
 
-World::~World()
-{
-	//dtor
+World::~World(){
+	while (planes.size() > 0) {
+		delete planes[0];
+		planes.erase(planes.begin(), planes.begin() + 1);
+	}
 }

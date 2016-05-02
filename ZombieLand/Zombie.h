@@ -22,7 +22,7 @@ protected:
 private:
 	Vector playerPos;
 	Vector spawn;
-	World* world;//for wall collision
+	World* world;
 	Path path;
 	int counter = 0;
 	int health = 3;

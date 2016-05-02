@@ -45,9 +45,11 @@ void HUD::update(int health, int ammoCartridge, int ammoTotal, int score, int wa
 bool HUD::getTimeUp() {
 	return timeUp;
 }
+
 void HUD::setRoof(bool roof) {
 	this->roof = roof;
 }
+
 int HUD::getSeconds() {
 	return seconds;
 }

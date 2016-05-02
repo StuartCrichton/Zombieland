@@ -34,17 +34,15 @@ int Wave::getZombieSpawnInterval()
 	return zombieSpawnInterval;
 }
 
-
 Wave::Wave(World* w)
 {
 	this->world = w;
 }
 
-
 Wave::~Wave()
 {
-	for (unsigned i = 0; i < v_zombies.size(); i++) {
-		delete v_zombies[i];
-		v_zombies.erase(v_zombies.begin() + i);
+	while (v_zombies.size() > 0) {
+		delete v_zombies[0];
+		v_zombies.erase(v_zombies.begin(), v_zombies.begin() + 1);
 	}
 }

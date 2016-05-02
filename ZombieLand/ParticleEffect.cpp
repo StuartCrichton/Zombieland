@@ -57,5 +57,3 @@ ParticleEffect::~ParticleEffect()
 {
 	delete this;
 }
-
-

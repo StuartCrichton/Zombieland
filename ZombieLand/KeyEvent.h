@@ -12,7 +12,7 @@ class KeyEvent
 {
 public:
 	KeyEvent();
-	KeyEvent(Player *player, World world, Wave *wave, AmmoBox *box);
+	KeyEvent(Player *player, World *world, Wave *wave, AmmoBox *box);
 	~KeyEvent();
 	void keyOperations();
 	bool *keyStates = new bool[256];
@@ -23,7 +23,7 @@ private:
 	Wave *wave;
 	AmmoBox *box;
 	vector<CollisionPlane*>* planes;
-	bool canMove = true; //keeps track if a character can move for collision detection
+	bool canMove = true;
 	void pressedForward();
 	void pressedBackwards();
 	void pressedLeft();

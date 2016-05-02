@@ -1,8 +1,6 @@
 #pragma once
 class TileNode
 {
-	
-
 public:
 	int x;
 	int y;

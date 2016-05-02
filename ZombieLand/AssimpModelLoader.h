@@ -9,6 +9,7 @@ class AssimpModelLoader
 {
 public:
 	AssimpModelLoader();
+	~AssimpModelLoader();
 	void loadObjFile(const char *filename);
 	void Draw(int id);
 protected:

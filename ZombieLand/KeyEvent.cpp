@@ -8,10 +8,10 @@ sf::Sound soundAmmo(bufferAmmo);
 
 KeyEvent::KeyEvent() {}
 
-KeyEvent::KeyEvent(Player *player, World world, Wave *wave, AmmoBox *box)
+KeyEvent::KeyEvent(Player *player, World *world, Wave *wave, AmmoBox *box)
 {
 	this->player = player;
-	this->world = world;
+	this->world = *world;
 	this->wave = wave;
 	this->box = box;
 
@@ -22,11 +22,7 @@ KeyEvent::KeyEvent(Player *player, World world, Wave *wave, AmmoBox *box)
 
 KeyEvent::~KeyEvent()
 {
-	/*delete wave;
-	wave = NULL;
-
-	delete player;
-	player = NULL;*/
+	delete[] keyStates;
 }
 
 void KeyEvent::pressedForward()
@@ -124,7 +120,6 @@ void KeyEvent::pressedRight()
 void KeyEvent::keyOperations()
 {
 	if (keyStates['r']) {
-		cout << "Reloading" << endl;
 		player->reload();
 	}
 
@@ -160,5 +155,3 @@ void KeyEvent::keyOperations()
 
 	player->lookAt();
 }
-
-

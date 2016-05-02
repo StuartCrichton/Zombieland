@@ -10,10 +10,15 @@ CollisionPlane::CollisionPlane(Vector vN, Vector a, Vector b, Vector c, Vector d
 	normal = vN;
 }
 
+CollisionPlane::~CollisionPlane()
+{
+}
+
 Vector CollisionPlane::getV1()
 {
 	return this->v1;
 }
+
 Vector CollisionPlane::getV2()
 {
 	return this->v2;

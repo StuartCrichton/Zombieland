@@ -672,7 +672,6 @@ Vector Zombie::update(Vector p, int pFloor) {
 	return pos_v;
 }
 
-
 Zombie::Zombie(float x1, float y1, float z1, World* w) {
 	this->phi = 0;
 	this->thetha = 0;

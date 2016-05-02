@@ -22,6 +22,9 @@ using namespace std;
 
 AssimpModelLoader::AssimpModelLoader() {}
 
+AssimpModelLoader::~AssimpModelLoader()
+{
+}
 
 void AssimpModelLoader::loadObjFile(const char *filename)
 {
