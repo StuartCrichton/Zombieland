@@ -466,13 +466,13 @@ int main(int argc, char** argv)
 	//cout << ammoBox.getLocation().getY() << endl;
 	//cout << ammoBox.getLocation().getZ() << endl;
 	music.openFromFile("../Horror-theme-song.wav");
-	//music.play();
+	music.play();
 	music.setVolume(25);
 	music.setLoop(true);
 
 	music2.openFromFile("../Zombie-sound.wav");
 	music2.setVolume(25);
-	//music2.play();
+	music2.play();
 	music2.setLoop(true);
 
 	glutInit(&argc, argv);
@@ -500,7 +500,7 @@ int main(int argc, char** argv)
 
 	glutTimerFunc(0, WaveTimer, 0);
 	glutTimerFunc(0, healthTimer, 0);
-	glutTimerFunc(2000, ETATimer, 0);
+	glutTimerFunc(1000, ETATimer, 0);
 	glutTimerFunc(0, Timer, 0);
 	//glutTimerFunc(1000, soundTimer, 0);
 
