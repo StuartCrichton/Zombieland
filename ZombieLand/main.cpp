@@ -43,8 +43,8 @@ HUD *hud = new HUD(player->getHealth(), player->getAmmoCartridge(), player->getA
 	player->getScore(), player->getWaveNumber(), player->getPosition(), player->getLookVector());
 
 //Stuff pertaining to audio
-sf::Music music; 
-sf::Music music2; 
+sf::Music music;
+sf::Music music2;
 
 //Stuff pertraining to the wave
 Wave *wave;
@@ -74,13 +74,11 @@ void deletePointers() {
 
 void initGL()
 {
-	// Set "clearing" or background color
 	glClearColor(0, 0.1, 0.4, 1);
 
 	glutSetCursor(GLUT_CURSOR_NONE);
-	//glClearColor(0, 0, 0, 1); // White and opaque
 
-	glEnable(GL_DEPTH_TEST); // turns on hidden surface removal so that objects behind other objects do not get displayed
+	glEnable(GL_DEPTH_TEST);
 
 	ammoBox.update();
 }
@@ -168,10 +166,6 @@ void render()
 	GLfloat color[] = { 0.5f, 0.5f, 0.5f, 1.0f };
 	glMaterialfv(GL_FRONT, GL_DIFFUSE, color);
 	world.building.Draw(1);
-	/*vector<CollisionPlane*>* planes = world.getPlanes();
-	for (CollisionPlane* p : *planes) {
-	p->debug();
-	}*/
 
 	//draw bullets
 	for (unsigned i = 0; i < bullets.size(); i++) {
@@ -242,7 +236,7 @@ void render()
 
 	ammoBox.draw();
 
-	
+
 
 	//Draw the Gun
 	glDisable(GL_DEPTH_TEST);
@@ -284,13 +278,11 @@ void display()
 {
 	if (!gameOver) {
 		if (player->getPosition().getY() > 8.5) {
-			//cout << "ROOF" << endl;
 			music.stop();
 			roof = true;
 			hud->setRoof(roof);
 		}
 		else {
-			//cout << "NOT ROOF" << endl;
 			roof = false;
 			hud->setRoof(roof);
 		}
@@ -302,7 +294,6 @@ void display()
 			//difference /= 1000;
 			//cout << player->getcanShoot() << "   " << difference << endl;
 			if (difference >= 300) {
-				//cout << difference << endl;
 				player->setNoShoot(true);
 				player->setPrevTimeShoot(newTimeShoot);
 				player->setShooting(false);
@@ -315,20 +306,19 @@ void display()
 			//difference /= 1000;
 			//cout << player->getcanShoot() << "   " << difference << endl;
 			if (difference >= 3500) {
-				//cout << difference << endl;
 				player->setNoRel(true);
 				player->setPrevTimeRel(newTimeRel);
 				player->setReloading(false);
 			}
 		}
 		keyEvents.keyOperations();
-	render();
-}
+		render();
+	}
 	if (gameOver) {
 		music.stop();
 		music2.stop();
 	}
-	}
+}
 
 void reshape(int w, int h)
 {
@@ -353,7 +343,7 @@ void reshape(int w, int h)
 
 void mouseMove(int x, int y) {
 	if (!gameOver)
-	player->lookAround(x, y);
+		player->lookAround(x, y);
 }
 
 void mouseClick(int button, int state, int x, int y) {
@@ -440,7 +430,14 @@ void ETATimer(int time) {
 
 void keyPressed(unsigned char key, int x, int y) {
 	if (key != 27) {
-		keyEvents.keyStates[key] = true;
+		if (key == 'w' || key == 'W')
+			keyEvents.keyStates['w'] = true;
+		else if (key == 'a' || key == 'A')
+			keyEvents.keyStates['a'] = true;
+		else if (key == 's' || key == 'S')
+			keyEvents.keyStates['s'] = true;
+		else if (key == 'd' || key == 'D')
+			keyEvents.keyStates['d'] = true;
 	}
 	else {
 		//deletePointers();
@@ -449,7 +446,14 @@ void keyPressed(unsigned char key, int x, int y) {
 }
 
 void keyUp(unsigned char key, int x, int y) {
-	keyEvents.keyStates[key] = false;
+	if (key == 'w' || key == 'W')
+		keyEvents.keyStates['w'] = false;
+	else if (key == 'a' || key == 'A')
+		keyEvents.keyStates['a'] = false;
+	else if (key == 's' || key == 'S')
+		keyEvents.keyStates['s'] = false;
+	else if (key == 'd' || key == 'D')
+		keyEvents.keyStates['d'] = false;
 }
 
 /* Main function: GLUT runs as a console application starting at main() */
@@ -473,7 +477,7 @@ int main(int argc, char** argv)
 	glutInitWindowSize(1024, 600);
 	glutInitWindowPosition(50, 50);
 	glutCreateWindow("ZombieLand Survivor");
-	//glutFullScreen();
+	glutFullScreen();
 
 	initRendering();
 
