@@ -96,9 +96,8 @@ void Player::shoot() {
 }
 
 void Player::reload() {
-	if (ammoCartridge != 33 && ammoTotal > 0) {//full cartridge already
+	if (ammoCartridge != 11 && ammoTotal > 0) {//full cartridge already
 		noRel = false;
-		//canShoot = false;
 		reloading = true;
 		previousTimeRel = glutGet(GLUT_ELAPSED_TIME);
 		bufferReload.loadFromFile("../Reload.wav");
@@ -106,7 +105,6 @@ void Player::reload() {
 		soundReload.play(); // Play the sound!
 		ammoTotal -= ammoCartridgeTotal;
 		ammoCartridge = ammoCartridgeTotal;
-		//previousTime = 0;
 	}
 }
 

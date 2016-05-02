@@ -360,7 +360,6 @@ void mouseMove(int x, int y) {
 void mouseClick(int button, int state, int x, int y) {
 	if (!gameOver) {
 		if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN && (player->getAmmoCartridge() > 0)) {
-			//if (player->getcanShoot() == true) {
 			if (player->getNoRel() == true && player->getNoShoot() == true) {
 				muzzleFlash = new MuzzleFlash(player);
 				player->shoot();
@@ -449,6 +448,8 @@ void keyPressed(unsigned char key, int x, int y) {
 			keyEvents.keyStates['s'] = true;
 		else if (key == 'd' || key == 'D')
 			keyEvents.keyStates['d'] = true;
+		else if (key == 'r' || key == 'R')
+			keyEvents.keyStates['r'] = true;
 	}
 	else {
 		//deletePointers();
@@ -465,6 +466,8 @@ void keyUp(unsigned char key, int x, int y) {
 		keyEvents.keyStates['s'] = false;
 	else if (key == 'd' || key == 'D')
 		keyEvents.keyStates['d'] = false;
+	else if (key == 'r' || key == 'R')
+		keyEvents.keyStates['r'] = false;
 }
 
 /* Main function: GLUT runs as a console application starting at main() */
@@ -474,13 +477,13 @@ int main(int argc, char** argv)
 	//cout << ammoBox.getLocation().getY() << endl;
 	//cout << ammoBox.getLocation().getZ() << endl;
 	music.openFromFile("../Horror-theme-song.wav");
-	//music.play();
+	music.play();
 	music.setVolume(25);
 	music.setLoop(true);
 
 	music2.openFromFile("../Zombie-sound.wav");
 	music2.setVolume(25);
-	//music2.play();
+	music2.play();
 	music2.setLoop(true);
 
 	glutInit(&argc, argv);
@@ -488,7 +491,7 @@ int main(int argc, char** argv)
 	glutInitWindowSize(1024, 600);
 	glutInitWindowPosition(50, 50);
 	glutCreateWindow("ZombieLand Survivor");
-	glutFullScreen();
+	//glutFullScreen();
 
 	initRendering();
 
@@ -508,7 +511,7 @@ int main(int argc, char** argv)
 
 	glutTimerFunc(0, WaveTimer, 0);
 	glutTimerFunc(0, healthTimer, 0);
-	glutTimerFunc(2000, ETATimer, 0);
+	glutTimerFunc(1000, ETATimer, 0);
 	glutTimerFunc(0, Timer, 0);
 	//glutTimerFunc(1000, soundTimer, 0);
 
