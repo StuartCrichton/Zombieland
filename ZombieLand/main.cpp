@@ -125,15 +125,21 @@ void render()
 	// Reset transformations
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
+
+	GLfloat ambient1[] = { 0.5f, 0.5f, 0.5f, 1.0f };
+	//glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambient1);
+
 	// Set the camera
 	player->lookAt();
+
+	light.lightInitGL();
 
 	//Sky Texture
 	glEnable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, _textureId);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glColor3f(1.0f, 1.0f, 1.0f);
+	glColor3f(0.5f, 0.5f, 0.5f);
 	glDisable(GL_LIGHTING);
 
 	int xgap = 100;
@@ -141,7 +147,9 @@ void render()
 	int x = 180;
 	int z = -200;
 	GLfloat color2[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+	
 	glMaterialfv(GL_FRONT, GL_DIFFUSE, color2);
+	glMaterialfv(GL_FRONT, GL_AMBIENT, ambient1);
 	glBegin(GL_QUADS);
 	for (int i = 0; i < 3; i++) {//z
 		for (int j = 0; j < 4; j++) {//x
@@ -160,11 +168,12 @@ void render()
 	glEnable(GL_LIGHTING);
 	glDisable(GL_TEXTURE_2D);
 
-	light.lightInitGL();
+	//light.lightInitGL();
 
 	//Draw the building
 	GLfloat color[] = { 0.5f, 0.5f, 0.5f, 1.0f };
 	glMaterialfv(GL_FRONT, GL_DIFFUSE, color);
+	glMaterialfv(GL_FRONT, GL_AMBIENT, ambient1);
 	world.building.Draw(1);
 
 	//draw bullets
@@ -269,6 +278,8 @@ void render()
 	//update and display the HUD
 	hud->update(player->getHealth(), player->getAmmoCartridge(), player->getAmmoTotal(), player->getScore(), player->getWaveNumber(), player->getPosition(), player->getLookVector());
 	hud->render();
+
+	//light.lightInitGL();
 
 	glFlush();   // ******** DO NOT FORGET THIS **********
 	glutSwapBuffers();
