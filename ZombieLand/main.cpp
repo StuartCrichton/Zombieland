@@ -185,7 +185,7 @@ void render()
 		{
 			if (bullet != nullptr) {
 				bullet->update();
-				if (bullet->getSteps() < 200) {
+				if (bullet->getSteps() < 800) {
 					for (unsigned j = 0; j < wave->v_zombies.size(); j++) {
 						if (bullet->mask.intersects(wave->v_zombies[j]->head)) {
 							bloodSplatter = new ParticleEffect(bullet->getPosition().getX(), bullet->getPosition().getY(), bullet->getPosition().getZ(), 0.05, 1.0, 0.0, 0.0, 1000, 0.5);
@@ -231,7 +231,7 @@ void render()
 		bool move = true;
 		for (unsigned j = 0; j < wave->v_zombies.size(); j++) {
 			if (i != j)
-				if (wave->v_zombies[j]->mask.intersects(CollisionMask(v, 0.4))) {
+				if (wave->v_zombies[j]->mask.intersects(CollisionMask(v, 0.3))) {
 					move = false;
 					break;
 				}
@@ -497,7 +497,7 @@ int main(int argc, char** argv)
 	glutInitWindowSize(1024, 600);
 	glutInitWindowPosition(50, 50);
 	glutCreateWindow("ZombieLand Survivor");
-	//glutFullScreen();
+	glutFullScreen();
 
 	initRendering();
 
