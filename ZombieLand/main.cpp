@@ -156,13 +156,13 @@ void render()
 	for (int i = 0; i < 3; i++) {//z
 		for (int j = 0; j < 4; j++) {//x
 			glTexCoord2f(0.0f, 0.0f);
-			glVertex3f((x - (j*xgap)), 10.0f, z);
+			glVertex3f((x - (j*xgap)), 12.0f, z);
 			glTexCoord2f(1.0f, 0.0f);
-			glVertex3f((x - (j*xgap)) - xgap, 10.0f, z);
+			glVertex3f((x - (j*xgap)) - xgap, 12.0f, z);
 			glTexCoord2f(1.0f, 1.0f);
-			glVertex3f((x - (j*xgap)) - xgap, 10.0f, z + zgap);
+			glVertex3f((x - (j*xgap)) - xgap, 12.0f, z + zgap);
 			glTexCoord2f(0.0f, 1.0f);
-			glVertex3f((x - (j*xgap)), 10.0f, z + zgap);
+			glVertex3f((x - (j*xgap)), 12.0f, z + zgap);
 		}
 		z = z + zgap;
 	}	glEnd();
