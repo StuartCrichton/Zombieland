@@ -38,11 +38,6 @@ void Player::rotateY(int angle) {        //rotates the camera a set angle in the
 	look_v.setV(look_v.getX(), sin(phi), look_v.getZ());
 }
 
-void Player::moveBackward() {
-	pos_v.setV(pos_v.getX() - look_v.getX() * step,
-		pos_v.getY(),
-		pos_v.getZ() - look_v.getZ() * step);
-}
 
 void Player::strafeLeft()
 {

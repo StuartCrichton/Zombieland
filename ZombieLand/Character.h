@@ -12,6 +12,8 @@ public:
 	void rotateX(int angle);
 	void moveForward();
 	void moveForward(float steps);
+	void moveBackward();
+	void moveBackward(float steps);
 	Vector getPosition();
 	Vector getLookVector();
 	Vector getNewPosition(int id);

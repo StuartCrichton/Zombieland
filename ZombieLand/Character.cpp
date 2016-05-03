@@ -28,6 +28,17 @@ void Character::moveForward(float steps) {
 		pos_v.getY(),
 		pos_v.getZ() + look_v.getZ() * steps);
 }
+void Character::moveBackward() {
+	pos_v.setV(pos_v.getX() - look_v.getX() * step,
+		pos_v.getY(),
+		pos_v.getZ() - look_v.getZ() * step);
+}
+
+void Character::moveBackward(float steps) {
+	pos_v.setV(pos_v.getX() - look_v.getX() * steps,
+		pos_v.getY(),
+		pos_v.getZ() - look_v.getZ() * steps);
+}
 
 Vector Character::getPosition()
 {

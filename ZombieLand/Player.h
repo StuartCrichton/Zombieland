@@ -17,7 +17,6 @@ public:
 	void setPrevTimeShoot(float previousTimeShoot);
 	void setWaveNumber(int waveNumber);
 	void rotateY(int angle);
-	void moveBackward();
 	void strafeLeft();
 	void strafeRight();
 	void lookAround(int x, int y);
