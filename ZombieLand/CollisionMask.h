@@ -15,10 +15,11 @@ public:
 	~CollisionMask();
 
 private:
-	float minN(float a, float b);
-	float maxN(float a, float b);
 	Vector position;
 	float size;
+
+	float minN(float a, float b);
+	float maxN(float a, float b);
 	float ab(float a);
 };
 

@@ -5,7 +5,14 @@
 class Character
 {
 public:
+	const int FORWARD = 0;
+	const int BACKWARD = 1;
+	const int LEFT = 2;
+	const int RIGHT = 3;
+	static Vector playerPos;
+	int floor = 0;
 	CollisionMask mask;
+
 	Character();
 	void turnLeft();
 	void turnRight();
@@ -14,20 +21,14 @@ public:
 	void moveForward(float steps);
 	void moveBackward();
 	void moveBackward(float steps);
+	void checkStairs();
 	Vector getPosition();
 	Vector getLookVector();
 	Vector getNewPosition(int id);
 	Vector getNewPosition(int id, float step);
 	Vector getUnitVector();
-	void checkStairs();
-	float getThetha();
-	const int FORWARD = 0;
-	const int BACKWARD = 1;
-	const int LEFT = 2;
-	const int RIGHT = 3;
-	static Vector playerPos;
-	int floor = 0;
 	int getFloor(float eyeLevel);
+	float getThetha();
 	virtual ~Character();
 
 protected:
