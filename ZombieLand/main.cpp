@@ -30,7 +30,6 @@ using namespace std;
 bool roof = false;
 bool gameOver = false;
 bool canMove = true;
-
 Lighting light;
 
 //Necessary pointers and classes
@@ -112,9 +111,8 @@ void initRendering() {
 	//glEnable(GL_LIGHT0);
 	//glEnable(GL_NORMALIZE);
 	//glEnable(GL_COLOR_MATERIAL);
-
-	//	Image* image = loadBMP("../sky_103.bmp");
-	Image* image = loadBMP("../sky.bmp");
+	
+		Image* image = loadBMP("../sky_101.bmp");
 	_textureId = loadTexture(image);
 	delete image;
 }
@@ -144,28 +142,80 @@ void render()
 	glColor3f(0.5f, 0.5f, 0.5f);
 	glDisable(GL_LIGHTING);
 
-	int xgap = 100;
-	int zgap = 100;
-	int x = 180;
-	int z = -200;
+	int xgap = 120;
+	int zgap = 140;
+	//int x = 180;
+	//int z = -200;
 	GLfloat color2[] = { 1.0f, 1.0f, 1.0f, 1.0f };
 	
 	glMaterialfv(GL_FRONT, GL_DIFFUSE, color2);
 	glMaterialfv(GL_FRONT, GL_AMBIENT, ambient1);
 	glBegin(GL_QUADS);
-	for (int i = 0; i < 3; i++) {//z
-		for (int j = 0; j < 4; j++) {//x
-			glTexCoord2f(0.0f, 0.0f);
-			glVertex3f((x - (j*xgap)), 12.0f, z);
-			glTexCoord2f(1.0f, 0.0f);
-			glVertex3f((x - (j*xgap)) - xgap, 12.0f, z);
-			glTexCoord2f(1.0f, 1.0f);
-			glVertex3f((x - (j*xgap)) - xgap, 12.0f, z + zgap);
-			glTexCoord2f(0.0f, 1.0f);
-			glVertex3f((x - (j*xgap)), 12.0f, z + zgap);
-		}
-		z = z + zgap;
-	}	glEnd();
+	
+	/*for (int i = 0; i < 3; i++) {//z
+	for (int j = 0; j < 4; j++) {//x
+	glTexCoord2f(0.0f, 0.0f);
+	glVertex3f((x - (j*xgap)), 12.0f, z);
+	glTexCoord2f(1.0f, 0.0f);
+	glVertex3f((x - (j*xgap)) - xgap, 12.0f, z);
+	glTexCoord2f(1.0f, 1.0f);
+	glVertex3f((x - (j*xgap)) - xgap, 12.0f, z + zgap);
+	glTexCoord2f(0.0f, 1.0f);
+	glVertex3f((x - (j*xgap)), 12.0f, z + zgap);
+	}
+	z = z + zgap;
+		}*/	
+
+	int x = 90;
+	int z = -110;
+
+	glTexCoord2f(0.0f, 0.0f);
+	glVertex3f(x, 15.0f, z);
+	glTexCoord2f(1.0f, 0.0f);
+	glVertex3f(x - xgap, 15.0f, z);
+	glTexCoord2f(1.0f, 1.0f);
+	glVertex3f(x - xgap, 15.0f, z + zgap);
+	glTexCoord2f(0.0f, 1.0f);
+	glVertex3f(x, 15.0f, z + zgap);
+
+	
+	glTexCoord2f(0.0f, 0.0f);
+	glVertex3f(x, 30.0f, z);
+	glTexCoord2f(1.0f, 0.0f);
+	glVertex3f(x, 0.0f, z);
+	glTexCoord2f(1.0f, 1.0f);
+	glVertex3f(x - xgap, 0.0f, z);
+	glTexCoord2f(0.0f, 1.0f);
+	glVertex3f(x - xgap, 30.0f, z);
+
+	glTexCoord2f(0.0f, 0.0f);
+	glVertex3f(x, 30.0f, z + zgap);
+	glTexCoord2f(1.0f, 0.0f);
+	glVertex3f(x, 0.0f, z + zgap);
+	glTexCoord2f(1.0f, 1.0f);
+	glVertex3f(x - xgap, 0.0f, z + zgap);
+	glTexCoord2f(0.0f, 1.0f);
+	glVertex3f(x - xgap, 30.0f, z + zgap);
+
+	glTexCoord2f(0.0f, 0.0f);
+	glVertex3f(x, 30.0f, z);
+	glTexCoord2f(1.0f, 0.0f);
+	glVertex3f(x, 0.0f, z);
+	glTexCoord2f(1.0f, 1.0f);
+	glVertex3f(x, 0.0f, z + zgap);
+	glTexCoord2f(0.0f, 1.0f);
+	glVertex3f(x, 30.0f, z + zgap);
+
+	glTexCoord2f(0.0f, 0.0f);
+	glVertex3f(x - xgap, 30.0f, z);
+	glTexCoord2f(1.0f, 0.0f);
+	glVertex3f(x - xgap, 0.0f, z);
+	glTexCoord2f(1.0f, 1.0f);
+	glVertex3f(x - xgap, 0.0f, z + zgap);
+	glTexCoord2f(0.0f, 1.0f);
+	glVertex3f(x - xgap, 30.0f, z + zgap);
+
+			glEnd();
 
 	glEnable(GL_LIGHTING);
 	glDisable(GL_TEXTURE_2D);
@@ -498,7 +548,7 @@ int main(int argc, char** argv)
 	glutInitWindowSize(1024, 600);
 	glutInitWindowPosition(50, 50);
 	glutCreateWindow("ZombieLand Survivor");
-	glutFullScreen();
+	//glutFullScreen();
 
 	initRendering();
 
