@@ -66,7 +66,6 @@ void HUD::updateETA()
 	}
 	else
 		this->seconds--;
-	//this->seconds--;
 }
 
 void HUD::renderCrosshair() {
