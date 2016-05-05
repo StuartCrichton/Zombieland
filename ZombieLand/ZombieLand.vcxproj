@@ -166,7 +166,6 @@
     <ClCompile Include="Path.cpp" />
     <ClCompile Include="PathFinder.cpp" />
     <ClCompile Include="Player.cpp" />
-    <ClCompile Include="Ray.cpp" />
     <ClCompile Include="TileNode.cpp" />
     <ClCompile Include="Vector.cpp" />
     <ClCompile Include="Wave.cpp" />
@@ -190,7 +189,6 @@
     <ClInclude Include="Path.h" />
     <ClInclude Include="PathFinder.h" />
     <ClInclude Include="Player.h" />
-    <ClInclude Include="Ray.h" />
     <ClInclude Include="TileNode.h" />
     <ClInclude Include="Vector.h" />
     <ClInclude Include="Wave.h" />

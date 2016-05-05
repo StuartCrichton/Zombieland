@@ -13,7 +13,6 @@
 #include "World.h"
 #include "Vector.h"
 #include "HUD.h"
-//#include "Ray.h"
 #include "Bullet.h"
 #include "Wave.h";
 #include "AmmoBox.h"
@@ -275,7 +274,6 @@ void render()
 			bullet->render();
 	}
 
-
 	for (int i = 0; i < wave->v_zombies.size(); i++) {
 		Vector v = wave->v_zombies[i]->update(player->getPosition(), player->floor);
 		if (v == wave->v_zombies[i]->getPosition()) {
@@ -286,15 +284,13 @@ void render()
 			if (i != j)
 				if (wave->v_zombies[j]->mask.intersects(CollisionMask(v, 0.7))) {
 					move = false;
-					//wave->v_zombies[j]->moveBackward(1);
 					break;
 				}
 		}
-		if (move)
+		if (move) 
 			wave->v_zombies[i]->set(&v);
 		wave->v_zombies[i]->render();
 	}
-
 
 	//debug ray cast
 	/*glPushMatrix();
