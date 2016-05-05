@@ -12,10 +12,11 @@ class Wave
 public:
 	Wave(World* w);
 	~Wave();
-	vector<Zombie*> v_zombies;
 	void addNewZombie();
 	void incrementWaveNumber();
 	int getZombieSpawnInterval();
+
+	vector<Zombie*> v_zombies;
 	int waveNumber = 1;
 	int numOfZombies = 10;
 	const float WAVE_DURATION = 30000.0;

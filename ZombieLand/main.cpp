@@ -32,7 +32,6 @@ using namespace std;
 bool roof = false;
 bool gameOver = false;
 bool canMove = true;
-Lighting light;
 
 //Necessary pointers and classes
 Player *player = new Player();
@@ -63,6 +62,9 @@ AmmoBox ammoBox;
 
 //Multiple key pressed stuff
 KeyEvent *keyEvents;
+
+//Lighting stuff
+Lighting light;
 
 void deletePointers() {
 	delete player;
@@ -525,8 +527,6 @@ void keyUp(unsigned char key, int x, int y) {
 	else if (key == 'r' || key == 'R')
 		keyEvents->keyStates['r'] = false;
 }
-
-
 
 /* Main function: GLUT runs as a console application starting at main() */
 int main(int argc, char** argv)

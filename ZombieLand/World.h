@@ -15,9 +15,10 @@ public:
 	AssimpModelLoader gun;
 	AssimpModelLoader zombie;
 	vector<CollisionPlane*> planes;
-	vector<CollisionPlane*>* getPlanes();
 	char obstacles[3][60][80];
+
 	void init();
+	vector<CollisionPlane*>* getPlanes();
 	~World();
 
 protected:
