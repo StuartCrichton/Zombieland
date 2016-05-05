@@ -173,50 +173,50 @@ void render()
 	int z = -110;
 
 	glTexCoord2f(0.0f, 0.0f);
-	glVertex3f(x, 15.0f, z);
+	glVertex3f(x, 20.0f, z);
 	glTexCoord2f(1.0f, 0.0f);
-	glVertex3f(x - xgap, 15.0f, z);
+	glVertex3f(x - xgap, 20.0f, z);
 	glTexCoord2f(1.0f, 1.0f);
-	glVertex3f(x - xgap, 15.0f, z + zgap);
+	glVertex3f(x - xgap, 20.0f, z + zgap);
 	glTexCoord2f(0.0f, 1.0f);
-	glVertex3f(x, 15.0f, z + zgap);
+	glVertex3f(x, 20.0f, z + zgap);
 
 	
 	glTexCoord2f(0.0f, 0.0f);
-	glVertex3f(x, 30.0f, z);
+	glVertex3f(x, 60.0f, z);
 	glTexCoord2f(1.0f, 0.0f);
 	glVertex3f(x, 0.0f, z);
 	glTexCoord2f(1.0f, 1.0f);
 	glVertex3f(x - xgap, 0.0f, z);
 	glTexCoord2f(0.0f, 1.0f);
-	glVertex3f(x - xgap, 30.0f, z);
+	glVertex3f(x - xgap, 60.0f, z);
 
 	glTexCoord2f(0.0f, 0.0f);
-	glVertex3f(x, 30.0f, z + zgap);
+	glVertex3f(x, 60.0f, z + zgap);
 	glTexCoord2f(1.0f, 0.0f);
 	glVertex3f(x, 0.0f, z + zgap);
 	glTexCoord2f(1.0f, 1.0f);
 	glVertex3f(x - xgap, 0.0f, z + zgap);
 	glTexCoord2f(0.0f, 1.0f);
-	glVertex3f(x - xgap, 30.0f, z + zgap);
+	glVertex3f(x - xgap, 60.0f, z + zgap);
 
 	glTexCoord2f(0.0f, 0.0f);
-	glVertex3f(x, 30.0f, z);
+	glVertex3f(x, 60.0f, z);
 	glTexCoord2f(1.0f, 0.0f);
 	glVertex3f(x, 0.0f, z);
 	glTexCoord2f(1.0f, 1.0f);
 	glVertex3f(x, 0.0f, z + zgap);
 	glTexCoord2f(0.0f, 1.0f);
-	glVertex3f(x, 30.0f, z + zgap);
+	glVertex3f(x, 60.0f, z + zgap);
 
 	glTexCoord2f(0.0f, 0.0f);
-	glVertex3f(x - xgap, 30.0f, z);
+	glVertex3f(x - xgap, 60.0f, z);
 	glTexCoord2f(1.0f, 0.0f);
 	glVertex3f(x - xgap, 0.0f, z);
 	glTexCoord2f(1.0f, 1.0f);
 	glVertex3f(x - xgap, 0.0f, z + zgap);
 	glTexCoord2f(0.0f, 1.0f);
-	glVertex3f(x - xgap, 30.0f, z + zgap);
+	glVertex3f(x - xgap, 60.0f, z + zgap);
 
 			glEnd();
 
