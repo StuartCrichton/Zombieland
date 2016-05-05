@@ -24,6 +24,9 @@
 #include "MuzzleFlash.h"
 #include "Lighting.h"
 #include "Imageloader.h"
+#include "SDL.h"
+#include "SDL_thread.h"
+#include "SDL_timer.h"
 
 using namespace std;
 // Global variables
@@ -527,6 +530,8 @@ void keyUp(unsigned char key, int x, int y) {
 		keyEvents->keyStates['r'] = false;
 }
 
+
+
 /* Main function: GLUT runs as a console application starting at main() */
 int main(int argc, char** argv)
 {
@@ -573,8 +578,7 @@ int main(int argc, char** argv)
 	//glutTimerFunc(1000, soundTimer, 0);
 
 	initGL();
-
-	glutMainLoop();
+glutMainLoop();
 	deletePointers();
 
 	return 0;
