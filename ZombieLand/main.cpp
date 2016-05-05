@@ -406,7 +406,7 @@ void reshape(int w, int h)
 	glLoadIdentity();
 
 	// Set the clipping volume
-	gluPerspective(45, ratio, 0.1, 100);
+	gluPerspective(45, ratio, 0.1, 200);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 }
