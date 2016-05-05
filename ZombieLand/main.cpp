@@ -13,6 +13,7 @@
 #include "World.h"
 #include "Vector.h"
 #include "HUD.h"
+//#include "Ray.h"
 #include "Bullet.h"
 #include "Wave.h";
 #include "AmmoBox.h"
@@ -32,6 +33,7 @@ using namespace std;
 bool roof = false;
 bool gameOver = false;
 bool canMove = true;
+Lighting light;
 
 //Necessary pointers and classes
 Player *player = new Player();
@@ -62,9 +64,6 @@ AmmoBox ammoBox;
 
 //Multiple key pressed stuff
 KeyEvent *keyEvents;
-
-//Lighting stuff
-Lighting light;
 
 void deletePointers() {
 	delete player;
@@ -276,6 +275,7 @@ void render()
 			bullet->render();
 	}
 
+
 	for (int i = 0; i < wave->v_zombies.size(); i++) {
 		Vector v = wave->v_zombies[i]->update(player->getPosition(), player->floor);
 		if (v == wave->v_zombies[i]->getPosition()) {
@@ -286,13 +286,15 @@ void render()
 			if (i != j)
 				if (wave->v_zombies[j]->mask.intersects(CollisionMask(v, 0.7))) {
 					move = false;
+					//wave->v_zombies[j]->moveBackward(1);
 					break;
 				}
 		}
-		if (move) 
+		if (move)
 			wave->v_zombies[i]->set(&v);
 		wave->v_zombies[i]->render();
 	}
+
 
 	//debug ray cast
 	/*glPushMatrix();
@@ -527,6 +529,8 @@ void keyUp(unsigned char key, int x, int y) {
 	else if (key == 'r' || key == 'R')
 		keyEvents->keyStates['r'] = false;
 }
+
+
 
 /* Main function: GLUT runs as a console application starting at main() */
 int main(int argc, char** argv)
