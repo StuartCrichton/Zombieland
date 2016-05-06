@@ -286,7 +286,6 @@ void render()
 			if (i != j)
 				if (wave->v_zombies[j]->mask.intersects(CollisionMask(v, 0.7))) {
 					move = false;
-					//wave->v_zombies[j]->moveBackward(1);
 					break;
 				}
 		}
@@ -553,7 +552,7 @@ int main(int argc, char** argv)
 	glutInitWindowSize(1024, 600);
 	glutInitWindowPosition(50, 50);
 	glutCreateWindow("ZombieLand Survivor");
-	//glutFullScreen();
+	glutFullScreen();
 
 	initRendering();
 
