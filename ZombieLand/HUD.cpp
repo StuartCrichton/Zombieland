@@ -14,6 +14,8 @@ using namespace std;
 
 sf::SoundBuffer bufferEnd;
 sf::Sound soundEnd(bufferEnd);
+sf::SoundBuffer bufferHeli;
+sf::Sound soundHeli(bufferHeli);
 
 HUD::HUD() {
 
@@ -523,8 +525,11 @@ void HUD::render() {
 		renderEndGameScreen();
 		if (!roof || health == 0)
 			bufferEnd.loadFromFile("../GAME OVER.wav");
-		else if(roof)
+		else if (roof) {
 			bufferEnd.loadFromFile("../You_Win.wav");
+			bufferHeli.loadFromFile("../Helicopter.wav");
+		}
 		soundEnd.play();
+		soundHeli.play();
 	}
 }
