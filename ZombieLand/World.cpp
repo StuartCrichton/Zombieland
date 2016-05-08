@@ -279,7 +279,7 @@ void World::setObstacles() {
 			}
 
 
-	//set char[i][j] as w for a wall
+	//set char[floor][i][j] as w for a wall
 	for (unsigned i = 0; i < planes.size(); i++) {
 		CollisionPlane *p = planes[i];
 		int xNormal = p->getNormal().getX();

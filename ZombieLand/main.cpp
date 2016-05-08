@@ -147,27 +147,11 @@ void render()
 
 	int xgap = 120;
 	int zgap = 140;
-	//int x = 180;
-	//int z = -200;
 	GLfloat color2[] = { 1.0f, 1.0f, 1.0f, 1.0f };
 	
 	glMaterialfv(GL_FRONT, GL_DIFFUSE, color2);
 	glMaterialfv(GL_FRONT, GL_AMBIENT, ambient1);
 	glBegin(GL_QUADS);
-	
-	/*for (int i = 0; i < 3; i++) {//z
-	for (int j = 0; j < 4; j++) {//x
-	glTexCoord2f(0.0f, 0.0f);
-	glVertex3f((x - (j*xgap)), 12.0f, z);
-	glTexCoord2f(1.0f, 0.0f);
-	glVertex3f((x - (j*xgap)) - xgap, 12.0f, z);
-	glTexCoord2f(1.0f, 1.0f);
-	glVertex3f((x - (j*xgap)) - xgap, 12.0f, z + zgap);
-	glTexCoord2f(0.0f, 1.0f);
-	glVertex3f((x - (j*xgap)), 12.0f, z + zgap);
-	}
-	z = z + zgap;
-		}*/	
 
 	int x = 90;
 	int z = -110;
@@ -218,7 +202,7 @@ void render()
 	glTexCoord2f(0.0f, 1.0f);
 	glVertex3f(x - xgap, 60.0f, z + zgap);
 
-			glEnd();
+	glEnd();
 
 	glEnable(GL_LIGHTING);
 	glDisable(GL_TEXTURE_2D);
