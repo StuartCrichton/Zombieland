@@ -16,7 +16,6 @@ void Particle::update()
 	this->Ypos = this->Ypos + this->Ymov - this->Deceleration;
 	this->Xpos = this->Xpos + this->Xmov;
 	this->Zpos = this->Zpos + this->Zmov;
-	this->Direction = this->Direction + ((((((int)(0.5 - 0.1 + 0.1) * rand() % 11) + 1) - 1 + 1) * rand() % 11) + 1);
 	this->Deceleration += 0.02;
 }
 
@@ -58,11 +57,6 @@ double Particle::getZpos()
 	return this->Zpos;
 }
 
-double Particle::getDirection()
-{
-	return this->Direction;
-}
-
 double Particle::getScalez()
 {
 	return this->Scalez;
@@ -75,7 +69,6 @@ void Particle::draw()
 	glMaterialfv(GL_FRONT, GL_DIFFUSE, color);
 	glMaterialfv(GL_FRONT, GL_SPECULAR, color);
 	glTranslatef(Xpos, Ypos, Zpos);
-	//glRotatef(Direction - 90, 0, 0, 1);
 	glScalef(Scalez, Scalez, Scalez);
 
 	//Draw Shere
@@ -103,8 +96,6 @@ Particle::Particle(double Xpos, double Ypos, double Zpos, double Scalez, double 
 	this->Blue = Blue;
 
 	this->Scalez = Scalez;
-	this->Direction = 0;
-	this->Acceleration = ((((((8 - 5 + 2) * rand() % 11) + 5) - 1 + 1) * rand() % 11) + 1) * 0.02;
 	this->Deceleration = 0.02;
 }
 

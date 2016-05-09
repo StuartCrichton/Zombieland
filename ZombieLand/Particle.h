@@ -43,10 +43,8 @@ private:
 	double Blue;
 	double Green;
 
-	double Direction;//Angle of rotation.
-	double Acceleration;//Acceleration upwards
-	double Deceleration;//deceleration downwards
-	double Scalez;//How much we wish to scale it.
+	double Deceleration;
+	double Scalez;
 };
 #endif // BLOODPARTICLE_
 
