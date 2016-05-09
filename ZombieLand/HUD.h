@@ -21,8 +21,8 @@ public:
 private:
 	Vector pos_v, look_v;
 	int health = 100, ammoCartridge = 11, ammoTotal = 44, score = 0, waveNumber = 1;
-	int minutes = 5;
-	int seconds = 0;
+	int minutes = 0;
+	int seconds = 30;
 	bool roof = false;
 	bool timeUp = false;
 	void renderCrosshair();
