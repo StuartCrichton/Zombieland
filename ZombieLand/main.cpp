@@ -70,10 +70,10 @@ void deletePointers() {
 	delete wave;
 	delete world;
 	delete hud;
-	delete bullet;	
+	delete bullet;
 	delete bloodSplatter;
 	delete muzzleFlash;
-	delete keyEvents;	
+	delete keyEvents;
 }
 
 void initGL()
@@ -114,8 +114,8 @@ void initRendering() {
 	//glEnable(GL_LIGHT0);
 	//glEnable(GL_NORMALIZE);
 	//glEnable(GL_COLOR_MATERIAL);
-	
-		Image* image = loadBMP("../sky_101.bmp");
+
+	Image* image = loadBMP("../Resources/Sky.bmp");
 	_textureId = loadTexture(image);
 	delete image;
 }
@@ -148,7 +148,7 @@ void render()
 	int xgap = 120;
 	int zgap = 140;
 	GLfloat color2[] = { 1.0f, 1.0f, 1.0f, 1.0f };
-	
+
 	glMaterialfv(GL_FRONT, GL_DIFFUSE, color2);
 	glMaterialfv(GL_FRONT, GL_AMBIENT, ambient1);
 	glBegin(GL_QUADS);
@@ -165,7 +165,7 @@ void render()
 	glTexCoord2f(0.0f, 1.0f);
 	glVertex3f(x, 20.0f, z + zgap);
 
-	
+
 	glTexCoord2f(0.0f, 0.0f);
 	glVertex3f(x, 60.0f, z);
 	glTexCoord2f(1.0f, 0.0f);
@@ -216,7 +216,7 @@ void render()
 	world->building.Draw(1);
 
 	//draw bullets
-	if(bullet != nullptr) {
+	if (bullet != nullptr) {
 		/////////////////////////////////////////////create series of spheres 
 		for (int i = 0; i < 30; i++)//check 20 tiny steps of bullet
 		{
@@ -255,7 +255,7 @@ void render()
 				}
 			}
 		}
-		if (bullet!=nullptr)
+		if (bullet != nullptr)
 			bullet->render();
 	}
 
@@ -513,8 +513,6 @@ void keyUp(unsigned char key, int x, int y) {
 		keyEvents->keyStates['r'] = false;
 }
 
-
-
 /* Main function: GLUT runs as a console application starting at main() */
 int main(int argc, char** argv)
 {
@@ -561,7 +559,7 @@ int main(int argc, char** argv)
 	//glutTimerFunc(1000, soundTimer, 0);
 
 	initGL();
-glutMainLoop();
+	glutMainLoop();
 	deletePointers();
 
 	return 0;
