@@ -103,7 +103,7 @@ GLuint loadTexture(Image* image) {
 
 void initRendering() {
 	glEnable(GL_SMOOTH);
-	Image* image = loadBMP("../Resources/Sky.bmp");//create image
+	Image* image = loadBMP("C:/Program Files/ZombieLand/Resources/Sky.bmp");//create image
 	_textureId = loadTexture(image);
 	delete image;
 }
@@ -482,12 +482,12 @@ void keyUp(unsigned char key, int x, int y) {
 int main(int argc, char** argv)
 {
 	//SFML music class to play sounds
-	music.openFromFile("../Horror-theme-song.wav");
+	music.openFromFile("C:/Program Files/ZombieLand/Horror-theme-song.wav");
 	music.play();
 	music.setVolume(25);
 	music.setLoop(true);
 
-	music2.openFromFile("../Zombie-sound.wav");
+	music2.openFromFile("C:/Program Files/ZombieLand/Zombie-sound.wav");
 	music2.setVolume(25);
 	music2.play();
 	music2.setLoop(true);

@@ -525,12 +525,12 @@ void HUD::render() {
 	if (health == 0 || timeUp) {
 		renderEndGameScreen();
 		if (!roof || health == 0)//player loses
-			bufferEnd.loadFromFile("../GAME OVER.wav");
+			bufferEnd.loadFromFile("C:/Program Files/ZombieLand/GAME OVER.wav");
 		else if (roof) {//player wins
-			bufferEnd.loadFromFile("../You_Win.wav");
+			bufferEnd.loadFromFile("C:/Program Files/ZombieLand/You_Win.wav");
 			}
 		soundEnd.play();
-		bufferHeli.loadFromFile("../Helicopter.wav");
+		bufferHeli.loadFromFile("C:/Program Files/ZombieLand/Helicopter.wav");
 		soundHeli.play();
 	}
 }

@@ -19,10 +19,10 @@
 World::World(){}
 
 void World::init() {
-	this->building.loadObjFile("../Office.obj");
-	this->ammoBox.loadObjFile("../AmmoBox.obj");
-	this->gun.loadObjFile("../Gun3.obj");
-	//this->zombie.loadObjFile("../Zombie.obj");
+	this->building.loadObjFile("C:/Program Files/ZombieLand/Office.obj");
+	this->ammoBox.loadObjFile("C:/Program Files/ZombieLand/AmmoBox.obj");
+	this->gun.loadObjFile("C:/Program Files/ZombieLand/Gun3.obj");
+	//this->zombie.loadObjFile("C:/Program Files/ZombieLand/Zombie.obj");
 	setPlanes();
 	setObstacles();
 }
