@@ -96,7 +96,7 @@ GLuint loadTexture(Image* image) {
 	GLuint textureId;
 	glGenTextures(1, &textureId); //Make room for texture
 	glBindTexture(GL_TEXTURE_2D, textureId); //Tell OpenGL which texture to edit
-	 //Map the image to the texture
+											 //Map the image to the texture
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, image->width, image->height, 0, GL_RGB, GL_UNSIGNED_BYTE, image->pixels);
 	return textureId;
 }
@@ -118,7 +118,7 @@ void render()
 	glLoadIdentity();
 
 	GLfloat ambient1[] = { 0.5f, 0.5f, 0.5f, 1.0f };
-	
+
 	// Set the camera
 	player->lookAt();
 
@@ -519,7 +519,7 @@ int main(int argc, char** argv)
 	glutTimerFunc(0, healthTimer, 0);
 	glutTimerFunc(1000, ETATimer, 0);
 	glutTimerFunc(0, Timer, 0);
-	
+
 	initGL();
 	glutMainLoop();
 	deletePointers();
