@@ -29,6 +29,7 @@
 #include "SDL_timer.h"
 
 using namespace std;
+
 // Global variables
 bool roof = false;
 bool gameOver = false;
@@ -65,6 +66,9 @@ AmmoBox ammoBox;
 //Multiple key pressed stuff
 KeyEvent *keyEvents;
 
+//Stuff pertaining to sky texture
+GLuint _textureId;
+
 void deletePointers() {
 	delete player;
 	delete wave;
@@ -87,32 +91,19 @@ void initGL()
 	ammoBox.update();
 }
 
-//Makes the image into a texture, and returns the id of the texture
+//Make the image into a texture, and return texture id
 GLuint loadTexture(Image* image) {
 	GLuint textureId;
-	glGenTextures(1, &textureId); //Make room for our texture
+	glGenTextures(1, &textureId); //Make room for texture
 	glBindTexture(GL_TEXTURE_2D, textureId); //Tell OpenGL which texture to edit
 											 //Map the image to the texture
-	glTexImage2D(GL_TEXTURE_2D,                //Always GL_TEXTURE_2D
-		0,                            //0 for now
-		GL_RGB,                       //Format OpenGL uses for image
-		image->width, image->height,  //Width and height
-		0,                            //The border of the image
-		GL_RGB, //GL_RGB, because pixels are stored in RGB format
-		GL_UNSIGNED_BYTE, //GL_UNSIGNED_BYTE, because pixels are stored
-						  //as unsigned numbers
-		image->pixels);               //The actual pixel data
-	return textureId; //Returns the id of the texture
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, image->width, image->height, 0, GL_RGB, GL_UNSIGNED_BYTE, image->pixels);
+	return textureId;
 }
-
-GLuint _textureId; //The id of the texture
 
 void initRendering() {
 	glEnable(GL_SMOOTH);
-	glEnable(GL_DEPTH_TEST);
-
-
-	Image* image = loadBMP("../Resources/Sky.bmp");
+	Image* image = loadBMP("../Resources/Sky.bmp");//create image
 	_textureId = loadTexture(image);
 	delete image;
 }
@@ -152,6 +143,7 @@ void render()
 	int x = 90;
 	int z = -110;
 
+	//Plane above 
 	glTexCoord2f(0.0f, 0.0f);
 	glVertex3f(x, 20.0f, z);
 	glTexCoord2f(1.0f, 0.0f);
@@ -161,7 +153,7 @@ void render()
 	glTexCoord2f(0.0f, 1.0f);
 	glVertex3f(x, 20.0f, z + zgap);
 
-
+	//cube
 	glTexCoord2f(0.0f, 0.0f);
 	glVertex3f(x, 60.0f, z);
 	glTexCoord2f(1.0f, 0.0f);
@@ -203,8 +195,6 @@ void render()
 	glEnable(GL_LIGHTING);
 	glDisable(GL_TEXTURE_2D);
 
-	//light.lightInitGL();
-
 	//Draw the building
 	GLfloat color[] = { 0.5f, 0.5f, 0.5f, 1.0f };
 	glMaterialfv(GL_FRONT, GL_DIFFUSE, color);
@@ -213,7 +203,6 @@ void render()
 
 	//draw bullets
 	if (bullet != nullptr) {
-		/////////////////////////////////////////////create series of spheres 
 		for (int i = 0; i < 30; i++)//check 20 tiny steps of bullet
 		{
 			if (bullet != nullptr) {
@@ -274,19 +263,7 @@ void render()
 		wave->v_zombies[i]->render();
 	}
 
-
-	//debug ray cast
-	/*glPushMatrix();
-	glTranslatef(player->getPosition().getX() + 20 * player->getUnitVector().getX(),
-		player->getPosition().getY() + 20 * player->getUnitVector().getY(),
-		player->getPosition().getZ() + 20 * player->getUnitVector().getZ());
-	glutSolidSphere(1, 16, 16);
-	glPopMatrix();*/
-
-
 	ammoBox.draw();
-
-
 
 	//Draw the Gun
 	glDisable(GL_DEPTH_TEST);
@@ -303,6 +280,7 @@ void render()
 	glEnable(GL_DEPTH_TEST);
 
 	int a;
+	//draw blood splatter
 	if (bloodSplatter != nullptr) {
 		a = bloodSplatter->update();
 		if (a == 1)
@@ -310,6 +288,7 @@ void render()
 	}
 
 	int b = 0;
+	//draw muzzle flash
 	if (muzzleFlash != nullptr) {
 		b = muzzleFlash->update();
 		if (b == 1)
@@ -320,15 +299,13 @@ void render()
 	hud->update(player->getHealth(), player->getAmmoCartridge(), player->getAmmoTotal(), player->getScore(), player->getWaveNumber(), player->getPosition(), player->getLookVector());
 	hud->render();
 
-
-	//glFlush();   // ******** DO NOT FORGET THIS **********
 	glutSwapBuffers();
 }
 
 void display()
 {
 	if (!gameOver) {
-		if (player->getPosition().getY() > 8.5) {
+		if (player->getPosition().getY() > 8.5) {//check if player is on roof
 			roof = true;
 			hud->setRoof(roof);
 		}
@@ -337,13 +314,10 @@ void display()
 			hud->setRoof(roof);
 		}
 
-		if (player->getShooting() == true) {
+		if (player->getShooting() == true) {//synchronise bullets
 			float newTimeShoot = glutGet(GLUT_ELAPSED_TIME);
 			float difference = newTimeShoot - player->getPrevTimeShoot();
-			//player->previousTime = newTime;
-			//difference /= 1000;
-			//cout << player->getcanShoot() << "   " << difference << endl;
-			if (difference >= 300) {
+			if (difference >= 300) {//one bullets evry 0.3s
 				player->setNoShoot(true);
 				player->setPrevTimeShoot(newTimeShoot);
 				player->setShooting(false);
@@ -352,10 +326,7 @@ void display()
 		if (player->getReloading() == true) {
 			float newTimeRel = glutGet(GLUT_ELAPSED_TIME);
 			float difference = newTimeRel - player->getPrevTimeRel();
-			//player->previousTime = newTime;
-			//difference /= 1000;
-			//cout << player->getcanShoot() << "   " << difference << endl;
-			if (difference >= 3500) {
+			if (difference >= 3500) {//cannot shoot for 3.5s while reloading
 				player->setNoRel(true);
 				player->setPrevTimeRel(newTimeRel);
 				player->setReloading(false);
@@ -373,7 +344,6 @@ void display()
 void reshape(int w, int h)
 {
 	// Prevent a divide by zero, when window is too short
-	// (you cant make a window of zero width).
 	if (h == 0)	h = 1;
 
 	GLfloat ratio = 1.0f * (GLfloat)w / (GLfloat)h;
@@ -397,7 +367,7 @@ void mouseMove(int x, int y) {
 }
 
 void mouseClick(int button, int state, int x, int y) {
-	if (!gameOver) {
+	if (!gameOver) {//shoot the gun 
 		if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN && (player->getAmmoCartridge() > 0)) {
 			if (player->getNoRel() == true && player->getNoShoot() == true) {
 				muzzleFlash = new MuzzleFlash(player);
@@ -410,7 +380,7 @@ void mouseClick(int button, int state, int x, int y) {
 
 void healthTimer(int value) {
 	if (!gameOver) {
-		player->regainHealth();
+		player->regainHealth();//health regeneration
 		glutTimerFunc(2000, healthTimer, 0);
 	}
 }
@@ -511,9 +481,7 @@ void keyUp(unsigned char key, int x, int y) {
 /* Main function: GLUT runs as a console application starting at main() */
 int main(int argc, char** argv)
 {
-	//cout << ammoBox.getLocation().getX() << endl;
-	//cout << ammoBox.getLocation().getY() << endl;
-	//cout << ammoBox.getLocation().getZ() << endl;
+	//SFML music class to play sounds
 	music.openFromFile("../Horror-theme-song.wav");
 	music.play();
 	music.setVolume(25);
@@ -529,7 +497,7 @@ int main(int argc, char** argv)
 	glutInitWindowSize(1024, 600);
 	glutInitWindowPosition(50, 50);
 	glutCreateWindow("ZombieLand Survivor");
-	//glutFullScreen();
+	glutFullScreen();
 
 	initRendering();
 
@@ -551,7 +519,6 @@ int main(int argc, char** argv)
 	glutTimerFunc(0, healthTimer, 0);
 	glutTimerFunc(1000, ETATimer, 0);
 	glutTimerFunc(0, Timer, 0);
-	//glutTimerFunc(1000, soundTimer, 0);
 
 	initGL();
 	glutMainLoop();

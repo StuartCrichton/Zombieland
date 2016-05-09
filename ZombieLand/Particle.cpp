@@ -34,6 +34,7 @@ double Particle::getBlue()
 	return this->Blue;
 }
 
+//calculates distance of current particle
 float Particle::currentRadius()
 {
 	Vector v1 = Vector(Xpos, Ypos, Zpos);
@@ -92,6 +93,7 @@ Particle::Particle(double Xpos, double Ypos, double Zpos, double Scalez, double 
 	this->initYpos = Ypos;
 	this->initZpos = Zpos;
 
+	//randomise movement steps along x, y and z axis
 	this->Xmov = (rand() % 20 - 10)*0.01;
 	this->Zmov = (rand() % 20 - 10)*0.01;
 	this->Ymov = (rand() % 20 - 10)*0.01;
