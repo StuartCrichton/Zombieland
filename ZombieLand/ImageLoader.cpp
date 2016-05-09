@@ -107,7 +107,9 @@ namespace {
 		}
 	};
 }
-
+//Given a filename, it returns an Image object
+//Width and height of the image
+//array pixels, which stores the pixels' colors in the format we want.
 Image* loadBMP(const char* filename) {
 	ifstream input;
 	input.open(filename, ifstream::binary);

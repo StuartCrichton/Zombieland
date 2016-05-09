@@ -84,7 +84,7 @@ void Player::shoot() {
 		if (ammoCartridge > 0) {
 			ammoCartridge--;
 			bufferGun.loadFromFile("../Gun.wav");
-			soundGun.play(); // Play the sound!
+			soundGun.play(); // Play the gun sound!
 			if (ammoCartridge == 0)
 				if (ammoTotal > 0)
 					reload();
@@ -99,9 +99,9 @@ void Player::reload() {
 		previousTimeRel = glutGet(GLUT_ELAPSED_TIME);
 		bufferReload.loadFromFile("../Reload.wav");
 		soundReload.setVolume(100);
-		soundReload.play();  //Play the sound!
+		soundReload.play();  //Play the reload sound!
 			int diff = ammoCartridgeTotal - ammoCartridge;
-		if (!ammoTotal - diff < 0) {
+		if (!ammoTotal - diff < 0) {//set maximum cartridge
 			ammoCartridge += diff;
 			ammoTotal -= diff;
 		}
