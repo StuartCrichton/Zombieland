@@ -8,17 +8,19 @@
 
 using namespace std;
 
-
+//updates all particles
 int ParticleEffect::update()
 {
 	for (int i = 0; i < particles.size(); i++) {
 		particles[i].update();
 
+		//check if particle has exceeded it prefefined distance
 		if (particles[i].currentRadius() >= particleRadius)
 		{
 			particles.erase(particles.begin() + i);
 		}
 
+		//remove left over particles after a certain number have been removed
 		if (particles.size() < (this->particleCount/1.2)) {
 			particles.clear();
 		}

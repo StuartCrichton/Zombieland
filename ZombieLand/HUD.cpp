@@ -427,6 +427,7 @@ void HUD::renderETA()
 	glRotatef(180, 1.0f, 0.0f, 0.0f);
 	glScalef(0.3f, 0.3f, 1.0f);
 	string timer;
+	//proper display
 	if (seconds == 0)
 		timer = to_string(this->minutes) + ":" + to_string(this->seconds) + "0";
 	else
@@ -523,13 +524,13 @@ void HUD::render() {
 	renderETA();
 	if (health == 0 || timeUp) {
 		renderEndGameScreen();
-		if (!roof || health == 0)
+		if (!roof || health == 0)//player loses
 			bufferEnd.loadFromFile("../GAME OVER.wav");
-		else if (roof) {
+		else if (roof) {//player wins
 			bufferEnd.loadFromFile("../You_Win.wav");
-			bufferHeli.loadFromFile("../Helicopter.wav");
-		}
+			}
 		soundEnd.play();
+		bufferHeli.loadFromFile("../Helicopter.wav");
 		soundHeli.play();
 	}
 }

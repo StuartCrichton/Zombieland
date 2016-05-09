@@ -16,6 +16,7 @@ void AmmoBox::draw() {
 	glPopMatrix();
 }
 
+//move ammo box to new location
 void AmmoBox::update() {
 	unsigned int time_ui = unsigned int(time(NULL));
 	srand(time_ui);
