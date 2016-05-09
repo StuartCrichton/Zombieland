@@ -43,6 +43,8 @@ private:
 	double Blue;
 	double Green;
 
+	double Direction;
+	double Acceleration;
 	double Deceleration;
 	double Scalez;
 };

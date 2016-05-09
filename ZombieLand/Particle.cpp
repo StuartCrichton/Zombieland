@@ -57,6 +57,11 @@ double Particle::getZpos()
 	return this->Zpos;
 }
 
+double Particle::getDirection()
+{
+	return this->Direction;
+}
+
 double Particle::getScalez()
 {
 	return this->Scalez;
