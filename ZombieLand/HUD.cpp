@@ -527,9 +527,9 @@ void HUD::render() {
 			bufferEnd.loadFromFile("../GAME OVER.wav");
 		else if (roof) {
 			bufferEnd.loadFromFile("../You_Win.wav");
-			bufferHeli.loadFromFile("../Helicopter.wav");
-		}
+			}
 		soundEnd.play();
+		bufferHeli.loadFromFile("../Helicopter.wav");
 		soundHeli.play();
 	}
 }
