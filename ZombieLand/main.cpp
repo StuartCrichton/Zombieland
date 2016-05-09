@@ -110,10 +110,7 @@ GLuint _textureId; //The id of the texture
 void initRendering() {
 	glEnable(GL_SMOOTH);
 	glEnable(GL_DEPTH_TEST);
-	//glEnable(GL_LIGHTING);
-	//glEnable(GL_LIGHT0);
-	//glEnable(GL_NORMALIZE);
-	//glEnable(GL_COLOR_MATERIAL);
+
 
 	Image* image = loadBMP("../Resources/Sky.bmp");
 	_textureId = loadTexture(image);
@@ -130,7 +127,6 @@ void render()
 	glLoadIdentity();
 
 	GLfloat ambient1[] = { 0.5f, 0.5f, 0.5f, 1.0f };
-	//glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambient1);
 
 	// Set the camera
 	player->lookAt();
@@ -324,7 +320,6 @@ void render()
 	hud->update(player->getHealth(), player->getAmmoCartridge(), player->getAmmoTotal(), player->getScore(), player->getWaveNumber(), player->getPosition(), player->getLookVector());
 	hud->render();
 
-	//light.lightInitGL();
 
 	//glFlush();   // ******** DO NOT FORGET THIS **********
 	glutSwapBuffers();

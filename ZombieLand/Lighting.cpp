@@ -17,11 +17,8 @@ void Lighting::lightInitGL()
 
 	glEnable(GL_FLAT);
 	glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE);
-	//glLightModeli(GL_LIGHT_MODEL_AMBIENT, 7);
-	//glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, 0);
 
-	//glEnable(GL_DEPTH_TEST | GL_LIGHTING);
-	//glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHTING);
 	glEnable(GL_DEPTH_TEST);
 	glEnableClientState(GL_NORMAL_ARRAY);
 	glShadeModel(GL_SMOOTH);
@@ -29,8 +26,7 @@ void Lighting::lightInitGL()
 
 	glEnable(GL_LIGHT0);//corner1
 	glEnable(GL_LIGHT1);//middle
-	//glEnable(GL_LIGHT2);//corner2
-	glEnable(GL_LIGHT3);//ambient
+	glEnable(GL_LIGHT3);
 	glEnable(GL_LIGHT4);
 	glEnable(GL_LIGHT5);
 	glEnable(GL_LIGHT6);
@@ -49,34 +45,23 @@ void Lighting::lightInitGL()
 	GLfloat posSun[] = { light_X, 100, light_Z, 1.0 };
 	glLightfv(GL_LIGHT1, GL_POSITION, posSun);
 
-	//GLfloat sunDirection[] = { 30.0, 5.0, -40.0 };
-	//glLightfv(GL_LIGHT1, GL_SPOT_DIRECTION, sunDirection);
 
 	GLfloat sunCutoff[] = { 360 };
 	glLightfv(GL_LIGHT1, GL_SPOT_CUTOFF, sunCutoff);
 
-	//GLfloat sunConstAtten[] = { 1 };
-	//glLightfv(GL_LIGHT1, GL_CONSTANT_ATTENUATION, sunConstAtten);
-
-	//GLfloat sunExponent[] = { 100.0f };
-	//glLightfv(GL_LIGHT1, GL_SPOT_EXPONENT, sunExponent);
 
 	update();
 
-	//int dimx = 60;
-	//int dimz = 80;
-	//GLfloat light_position1[] = { 0, 15, 0, 1 };
+
 	GLfloat light_position1[] = { 55, 10, -75, 1 };
 	glLightfv(GL_LIGHT0, GL_POSITION, light_position1);
 
 
-	//glEnable(GL_COLOR_MATERIAL);
-	//glEnable(GL_LIGHTING); // turns on the lighting model in OpenGL
+
 
 	GLfloat diffuse[] = { 0.3, 0.3, 0.3, 0.5 };
 	GLfloat specular[] = { 0.3, 0.3, 0.3, 0.2 };
-	//GLfloat ambient0[] = { 0.3,0.3,0.3,0.3 };
-	//GLfloat ambient[] = { 0.5, 0.5, 0.5, 0.5 };
+
 
 	GLfloat spot_direction[] = { 15, -50, 40, 0 };
 	GLfloat spot_exponent[] = { 150.0f };
@@ -86,14 +71,11 @@ void Lighting::lightInitGL()
 
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse);
 	glLightfv(GL_LIGHT0, GL_SPECULAR, specular);
-	//glLightfv(GL_LIGHT0, GL_AMBIENT, ambient0);
 	glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, spot_direction);
 	glLightfv(GL_LIGHT0, GL_SPOT_EXPONENT, spot_exponent);
 	glLightfv(GL_LIGHT0, GL_SPOT_CUTOFF, spot_cutoff);
 
 	glLightf(GL_LIGHT0, GL_CONSTANT_ATTENUATION, 0.2);
-	//glLightf(GL_LIGHT0, GL_LINEAR_ATTENUATION, 0.5);
-	//glLightf(GL_LIGHT0, GL_QUADRATIC_ATTENUATION, 0.5);
 
 
 	GLfloat ambientColor[] = { 0.4f, 0.4f, 0.4f, 0.3f }; //Color (0.2, 0.2, 0.2)
@@ -108,9 +90,7 @@ void Lighting::lightInitGL()
 	glLightfv(GL_LIGHT3, GL_POSITION, ambientPos);
 
 	///////////////////////////////////////////////////////
-	//GLfloat ambientColor[] = { 0.5f, 0.5f, 0.5f, 0.5f }; //Color (0.2, 0.2, 0.2)
-	//GLfloat ambientDiff[] = { 0.5f, 0.5f, 0.5f, 0.8f };
-	//glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambientColor);
+
 	glLightfv(GL_LIGHT4, GL_DIFFUSE, ambientDiff);
 	glLightfv(GL_LIGHT4, GL_AMBIENT, ambientColor);
 
@@ -141,16 +121,9 @@ void Lighting::lightInitGL()
 	glLightfv(GL_LIGHT7, GL_POSITION, ambientPos5);
 
 	glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
-	//glEnable(GL_COLOR);
 
-	//glEnable(GL_COLOR_MATERIAL);
 
 	glEnable(GL_LIGHTING);
-
-
-	//GLfloat mat_amb[] = { 0.2,0.2,0.2,0.2 };
-	//glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, ambientColor);
-
 
 }
 
