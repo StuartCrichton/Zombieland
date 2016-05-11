@@ -6,5 +6,5 @@ newmtl Metal_Rough
 Ka 0.000000 0.000000 0.000000
 Kd 0.600000 0.615686 0.627451
 Ks 0.330000 0.330000 0.330000
-map_Kd C:/Program Files/ZombieLand/Resources/AmmoBox/Metal_Rough.jpg
+map_Kd ../Resources/AmmoBox/Metal_Rough.jpg
 

@@ -103,7 +103,7 @@ GLuint loadTexture(Image* image) {
 
 void initRendering() {
 	glEnable(GL_SMOOTH);
-	Image* image = loadBMP("C:/Program Files/ZombieLand/Resources/Sky.bmp");//create image
+	Image* image = loadBMP("../Resources/Sky.bmp");//create image
 	_textureId = loadTexture(image);
 	delete image;
 }

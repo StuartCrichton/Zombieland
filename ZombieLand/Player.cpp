@@ -101,9 +101,13 @@ void Player::reload() {
 		soundReload.setVolume(100);
 		soundReload.play();  //Play the reload sound!
 			int diff = ammoCartridgeTotal - ammoCartridge;
-		if (!ammoTotal - diff < 0) {//set maximum cartridge
+		if (!(ammoTotal - diff < 0)) {//set maximum cartridge
 			ammoCartridge += diff;
 			ammoTotal -= diff;
+		}
+		else {
+			ammoCartridge += ammoTotal;
+			ammoTotal = 0;
 		}
 	}
 }

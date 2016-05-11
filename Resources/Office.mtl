@@ -6,13 +6,13 @@ newmtl Wood_Floor
 Ka 0.000000 0.000000 0.000000
 Kd 0.607843 0.411765 0.239216
 Ks 0.330000 0.330000 0.330000
-map_Kd C:/Program Files/ZombieLand/Resources/Office/Wood_Floor.jpg
+map_Kd ../Resources/Office/Wood_Floor.jpg
 
 newmtl Rough_Square_Concrete_Block
 Ka 0.000000 0.000000 0.000000
 Kd 0.482353 0.470588 0.443137
 Ks 0.330000 0.330000 0.330000
-map_Kd C:/Program Files/ZombieLand/Resources/Office/Rough_Square_Concrete_Block.jpg
+map_Kd ../Resources/Office/Rough_Square_Concrete_Block.jpg
 
 newmtl FrontColor
 Ka 0.000000 0.000000 0.000000
@@ -28,13 +28,13 @@ newmtl Stone_Sandstone_Ashlar_Light
 Ka 0.000000 0.000000 0.000000
 Kd 0.807843 0.698039 0.501961
 Ks 0.330000 0.330000 0.330000
-map_Kd C:/Program Files/ZombieLand/Resources/Office/Stone_Sandstone_Ashlar_Light.jpg
+map_Kd ../Resources/Office/Stone_Sandstone_Ashlar_Light.jpg
 
 newmtl Slate
 Ka 0.000000 0.000000 0.000000
 Kd 0.400000 0.431373 0.423529
 Ks 0.330000 0.330000 0.330000
-map_Kd C:/Program Files/ZombieLand/Resources/Office/Slate.jpg
+map_Kd ../Resources/Office/Slate.jpg
 
 newmtl Color_M06
 Ka 0.000000 0.000000 0.000000
@@ -45,7 +45,7 @@ newmtl Fencing_Wood_Old
 Ka 0.000000 0.000000 0.000000
 Kd 0.517647 0.501961 0.494118
 Ks 0.330000 0.330000 0.330000
-map_Kd C:/Program Files/ZombieLand/Resources/Office/Fencing_Wood_Old.jpg
+map_Kd ../Resources/Office/Fencing_Wood_Old.jpg
 
 newmtl Color_M00
 Ka 0.000000 0.000000 0.000000
@@ -56,23 +56,23 @@ newmtl Formica_Speckled_Grey
 Ka 0.000000 0.000000 0.000000
 Kd 0.368627 0.411765 0.435294
 Ks 0.330000 0.330000 0.330000
-map_Kd C:/Program Files/ZombieLand/Resources/Office/Formica_Speckled_Grey.jpg
+map_Kd ../Resources/Office/Formica_Speckled_Grey.jpg
 
 newmtl Wood_Veneer_01
 Ka 0.000000 0.000000 0.000000
 Kd 0.470588 0.274510 0.145098
 Ks 0.330000 0.330000 0.330000
-map_Kd C:/Program Files/ZombieLand/Resources/Office/Wood_Veneer_01.jpg
+map_Kd ../Resources/Office/Wood_Veneer_01.jpg
 
 newmtl Cladding_Siding_Tan
 Ka 0.000000 0.000000 0.000000
 Kd 0.635294 0.494118 0.372549
 Ks 0.330000 0.330000 0.330000
-map_Kd C:/Program Files/ZombieLand/Resources/Office/Cladding_Siding_Tan.jpg
+map_Kd ../Resources/Office/Cladding_Siding_Tan.jpg
 
 newmtl Grass_Dark_Green
 Ka 0.000000 0.000000 0.000000
 Kd 0.415686 0.615686 0.215686
 Ks 0.330000 0.330000 0.330000
-map_Kd C:/Program Files/ZombieLand/Resources/Office/Grass_Dark_Green.jpg
+map_Kd ../Resources/Office/Grass_Dark_Green.jpg
 
