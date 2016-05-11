@@ -97,7 +97,7 @@ void Player::reload() {
 			noRel = false;
 		reloading = true;
 		previousTimeRel = glutGet(GLUT_ELAPSED_TIME);
-		bufferReload.loadFromFile("../ZombieLand/Reload.wav");
+		bufferReload.loadFromFile("../Reload.wav");
 		soundReload.setVolume(100);
 		soundReload.play();  //Play the reload sound!
 			int diff = ammoCartridgeTotal - ammoCartridge;
