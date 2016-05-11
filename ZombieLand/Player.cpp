@@ -83,7 +83,7 @@ void Player::shoot() {
 		previousTimeShoot = glutGet(GLUT_ELAPSED_TIME);
 		if (ammoCartridge > 0) {
 			ammoCartridge--;
-			bufferGun.loadFromFile("../Gun.wav");
+			bufferGun.loadFromFile("C:/Program Files/ZombieLand/Gun.wav");
 			soundGun.play(); // Play the gun sound!
 			if (ammoCartridge == 0)
 				if (ammoTotal > 0)
@@ -97,15 +97,18 @@ void Player::reload() {
 			noRel = false;
 		reloading = true;
 		previousTimeRel = glutGet(GLUT_ELAPSED_TIME);
-		bufferReload.loadFromFile("../Reload.wav");
+		bufferReload.loadFromFile("C:/Program Files/ZombieLand/Reload.wav");
 		soundReload.setVolume(100);
 		soundReload.play();  //Play the reload sound!
 			int diff = ammoCartridgeTotal - ammoCartridge;
-		//if (!ammoTotal - diff < 0) {//set maximum cartridge
+		if (!(ammoTotal - diff < 0)) {//set maximum cartridge
 			ammoCartridge += diff;
 			ammoTotal -= diff;
-			if (ammoTotal < 0)
-				ammoTotal = 0;
+		}
+		else {
+			ammoCartridge += ammoTotal;
+			ammoTotal = 0;
+		}
 	}
 }
 
